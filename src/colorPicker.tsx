@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import { useGlobals } from "@storybook/api";
-import { Icons, IconButton } from "@storybook/components";
+import { Icons, IconButton, WithTooltip } from "@storybook/components";
 import { TOOL_ID } from "./constants";
+import Tooltip from './tooltip/tooltip';
 
 const ColorPicker = () => {
 	const [{ isColorPickerActive }, updateGlobals] = useGlobals();
@@ -15,14 +16,22 @@ const ColorPicker = () => {
 	);
 
 	return (
-		<IconButton
-			key={TOOL_ID}
-			active={isColorPickerActive}
-			title="Apply outlines to the preview"
-			onClick={toggleColorPicker}
+		<WithTooltip
+			placement="top"
+			trigger="click"
+			tooltipShown={true}
+			tooltip={<Tooltip />}
+			closeOnClick
 		>
-			<Icons icon="paintbrush" />
-		</IconButton>
+			<IconButton
+				key={TOOL_ID}
+				active={isColorPickerActive}
+				title="Apply outlines to the preview"
+				onClick={toggleColorPicker}
+			>
+				<Icons icon="paintbrush" />
+			</IconButton>
+		</WithTooltip>
 	);
 };
 
