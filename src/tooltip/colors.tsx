@@ -6,16 +6,29 @@ import Shade from "./shade";
 /** @jsx jsx */
 
 type ColorsType = {
-    colors: [string, Shades],
+    colors: [string, Shades | string],
 };
 
 const Colors = (props: ColorsType) => {
-    const getColors = (shades: Shades) => Object.entries(shades).map(shade => (
-        <Shade
-            shade={shade} 
-            key={`Color_${shade[1]}`}
-        />
-    ));
+    const getColors = (shades: Shades | string) => {
+        const isString = (typeof shades) === 'string';
+
+        if (isString) {
+            return (
+                <Shade
+                    shade={[props.colors[0], (shades as string)]}
+                    key={`Color_${shades}`}
+                />
+            )
+        }
+
+        return Object.entries(shades).map(shade => (
+            <Shade
+                shade={shade}
+                key={`Color_${shade[1]}`}
+            />
+        ));
+    }
 
     return (
         <div
