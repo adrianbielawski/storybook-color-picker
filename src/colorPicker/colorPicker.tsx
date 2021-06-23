@@ -7,7 +7,7 @@ import Colors from './colors';
 export type Shades = Record<string, string>;
 export type ColorsPalette = Record<string, Shades>;
 
-const Tooltip = () => {
+const ColorPicker = () => {
     const colorPalette: ColorsPalette = useParameter('colorPalette');
 
     const getColorPalettes = () => (
@@ -36,4 +36,4 @@ const Tooltip = () => {
     );
 };
 
-export default Tooltip;
+export default ColorPicker;

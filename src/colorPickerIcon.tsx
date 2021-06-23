@@ -2,9 +2,9 @@ import React, { useCallback } from "react";
 import { useGlobals } from "@storybook/api";
 import { Icons, IconButton, WithTooltip } from "@storybook/components";
 import { TOOL_ID } from "./constants";
-import Tooltip from './tooltip/tooltip';
+import ColorPicker from './colorPicker/colorPicker';
 
-const ColorPicker = () => {
+const ColorPickerIcon = () => {
 	const [{ isColorPickerActive }, updateGlobals] = useGlobals();
 
 	const toggleColorPicker = useCallback(
@@ -20,7 +20,7 @@ const ColorPicker = () => {
 			placement="top"
 			trigger="click"
 			tooltipShown={true}
-			tooltip={<Tooltip />}
+			tooltip={<ColorPicker />}
 			closeOnClick
 		>
 			<IconButton
@@ -35,4 +35,4 @@ const ColorPicker = () => {
 	);
 };
 
-export default ColorPicker;
+export default ColorPickerIcon;
