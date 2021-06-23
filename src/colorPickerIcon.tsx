@@ -17,7 +17,7 @@ const ColorPickerIcon = () => {
 
 	return (
 		<WithTooltip
-			placement="top"
+			placement="bottom"
 			trigger="click"
 			tooltipShown={true}
 			tooltip={<ColorPicker />}
