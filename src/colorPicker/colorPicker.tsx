@@ -20,18 +20,41 @@ const ColorPicker = () => {
     );
 
     return (
-        <div css={css`padding: 1em;`}>
+        <div
+            css={css`
+                max-height: 50vh;
+                max-width: 40vw;
+                padding: 0 1em 1em 1em;
+                overflow-x: hidden;
+                overflow-y: auto;
+                &::-webkit-scrollbar {
+                    width: 8px;
+                    height: 8px;
+                }
+                &::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: #ccc;
+                    border-radius: 4px;
+                    &:hover {
+                        background-color: #666;
+                    }
+                }
+            `}
+        >
             <div
                 css={css`
-                    font-size: 1.1em;
-                    font-weight: 700;
-                    margin-bottom: 1em;
+                    font-size: 1.2em;
+                    margin: 1em;
                     text-align: center;
                 `}
             >
                 Click on color to copy to clipboard
             </div>
-            {getColorPalettes()}
+            <div>
+                {getColorPalettes()}
+            </div>
         </div>
     );
 };

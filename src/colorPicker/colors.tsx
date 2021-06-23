@@ -35,17 +35,29 @@ const Colors = (props: ColorsType) => {
             css={css`
                 display: flex;
                 align-items: center;
+                border-bottom: 1px solid #eee;
+                margin-top: .5em;
             `}
         >
             <div
                 css={css`
-                    font-weight: 700;
+                    flex-shrink: 0;
+                    font-size: 1.1em;
+                    width: 70px;
                     margin-right: .5em;
+                    overflow-wrap: anywhere;
                 `}
             >
                 {capitalize(props.colors[0])}
             </div>
-            {getColors(props.colors[1])}
+            <div
+                css={css`
+                    display: flex;
+                    flex-wrap: wrap;
+                `}
+            >
+                {getColors(props.colors[1])}
+            </div>
         </div>
     )
 };
