@@ -26,6 +26,7 @@ const Tooltip = () => {
                     font-size: 1.1em;
                     font-weight: 700;
                     margin-bottom: 1em;
+                    text-align: center;
                 `}
             >
                 Click on color to copy to clipboard
