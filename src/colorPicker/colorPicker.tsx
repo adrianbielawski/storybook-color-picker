@@ -1,7 +1,7 @@
 import React from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
-import Colors from './colors';
+import Colors from './Colors';
 /** @jsx jsx */
 
 export type Shades = Record<string, string>;

@@ -1,8 +1,7 @@
 import React from "react";
 import { css, jsx } from '@emotion/react'
 import { capitalize } from "../utils";
-import { Shades } from "./colorPicker";
-import Shade from "./shade";
+import Shade from "./Shade";
 /** @jsx jsx */
 
 type ColorsType = {

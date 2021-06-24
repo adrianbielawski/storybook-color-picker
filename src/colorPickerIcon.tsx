@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useGlobals } from "@storybook/api";
 import { Icons, IconButton, WithTooltip } from "@storybook/components";
 import { TOOL_ID } from "./constants";
-import ColorPicker from './colorPicker/colorPicker';
+import ColorPicker from './colorPicker/ColorPicker';
 
 const ColorPickerIcon = () => {
 	const [{ isColorPickerActive }, updateGlobals] = useGlobals();

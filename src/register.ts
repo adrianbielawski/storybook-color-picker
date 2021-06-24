@@ -1,5 +1,5 @@
 import addons, { types } from "@storybook/addons";
-import ColorPicker from "./colorPickerIcon";
+import ColorPicker from "./ColorPickerIcon";
 import { ADDON_ID, TOOL_ID } from "./constants";
 
 addons.register(ADDON_ID, () => {
