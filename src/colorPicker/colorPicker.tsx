@@ -22,6 +22,8 @@ const ColorPicker = () => {
     return (
         <div
             css={css`
+                background: #fff;
+                border-radius: 10px;
                 max-height: 50vh;
                 max-width: 40vw;
                 padding: 0 1em 1em 1em;
