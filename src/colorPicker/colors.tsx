@@ -1,6 +1,5 @@
 import React from "react";
 import { css, jsx } from '@emotion/react'
-import { capitalize } from "../utils";
 import { ColorPaletteAsArray, ShadeType } from "./ColorPicker";
 import Shade from "./Shade";
 /** @jsx jsx */
@@ -33,9 +32,10 @@ const Colors = (props: ColorsType) => {
                     width: 70px;
                     margin-right: .5em;
                     overflow-wrap: anywhere;
+                    text-transform: capitalize;
                 `}
             >
-                {capitalize(props.colors.label)}
+                {props.colors.label}
             </div>
             <div
                 css={css`

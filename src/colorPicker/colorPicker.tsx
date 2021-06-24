@@ -1,7 +1,7 @@
 import React from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
-import { transformPalette } from "src/utils";
+import { transformPalette } from "../utils";
 import Colors from './Colors';
 /** @jsx jsx */
 

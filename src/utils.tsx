@@ -1,7 +1,5 @@
 import { ColorsPalette } from "./colorPicker/ColorPicker";
 
-export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
 export const transformPalette = (colorPalette: ColorsPalette) => {
   if (Array.isArray(colorPalette)) {
       return colorPalette;
