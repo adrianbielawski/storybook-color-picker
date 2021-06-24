@@ -1,23 +1,35 @@
 import React from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
+import { transformPalette } from "src/utils";
 import Colors from './Colors';
 /** @jsx jsx */
 
-export type Shades = Record<string, string>;
-export type ColorsPalette = Record<string, Shades>;
+export type ShadeType = {
+    label: string,
+    value: string,
+}
+
+export type ColorPaletteAsArray = {
+    label: string,
+    values: ShadeType[]
+}
+
+export type ShadesType = Record<string, string> | string;
+export type ColorsPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
 
 const ColorPicker = () => {
     const colorPalette: ColorsPalette = useParameter('colorPalette');
 
-    const getColorPalettes = () => (
-        Object.entries(colorPalette).map(colors => (
+    const getColors = () => {
+        const transformedPalette = transformPalette(colorPalette);
+        return transformedPalette.map(colors => (
             <Colors
                 colors={colors}
-                key={`Shades_${colors[0]}`}
+                key={`Shades_${colors.label}`}
             />
         ))
-    );
+    };
 
     return (
         <div
@@ -55,7 +67,7 @@ const ColorPicker = () => {
                 Click on color to copy to clipboard
             </div>
             <div>
-                {getColorPalettes()}
+                {getColors()}
             </div>
         </div>
     );

@@ -4,10 +4,11 @@ import { css, jsx } from '@emotion/react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import 'react-popper-tooltip/dist/styles.css';
 import ShadeTooltip from "./ShadeTooltip";
+import { ShadeType } from "./ColorPicker";
 /** @jsx jsx */
 
 type ColorType = {
-    shade: [string, string],
+    shade: ShadeType,
 };
 
 const Shade = (props: ColorType) => {
@@ -39,7 +40,7 @@ const Shade = (props: ColorType) => {
     };
 
     return (
-        <CopyToClipboard text={props.shade[1]}>
+        <CopyToClipboard text={props.shade.value}>
             <div>
                 <div
                     onClick={handleClick}
@@ -49,7 +50,7 @@ const Shade = (props: ColorType) => {
                         height: 1.5em;
                         margin: .3em;
                         border: 1px solid #ddd;
-                        background-color: ${props.shade[1]};
+                        background-color: ${props.shade.value};
                         position: relative;
                         &:hover {
                             cursor: copy;

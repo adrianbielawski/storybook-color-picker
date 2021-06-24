@@ -1,9 +1,10 @@
 import React from "react";
 import { css, jsx } from '@emotion/react';
+import { ShadeType } from "./ColorPicker";
 /** @jsx jsx */
 
 type Props = {
-    shade: [string, string],
+    shade: ShadeType,
     copied: boolean,
 };
 
@@ -12,7 +13,7 @@ const ShadeTooltip = (props: Props) => (
         css={css`
             padding: .2em .5em;
             border-radius: .3em;
-            background-color: ${props.shade[1]};
+            background-color: ${props.shade.value};
         `}
     >
         <p
@@ -20,13 +21,13 @@ const ShadeTooltip = (props: Props) => (
                 white-space: nowrap;
                 font-size: 1.2em;
                 line-height: 0;
-                color: ${props.shade[1]};
+                color: ${props.shade.value};
                 filter: saturate(0) grayscale(1) brightness(1) contrast(100000%) invert(1);
             `}
         >
             {props.copied
                 ? 'Copied'
-                : `${props.shade[0]}: ${props.shade[1]}`
+                : `${props.shade.label}: ${props.shade.value}`
             }
         </p>
     </div>

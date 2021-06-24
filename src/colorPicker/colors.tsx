@@ -1,33 +1,21 @@
 import React from "react";
 import { css, jsx } from '@emotion/react'
 import { capitalize } from "../utils";
+import { ColorPaletteAsArray, ShadeType } from "./ColorPicker";
 import Shade from "./Shade";
 /** @jsx jsx */
 
 type ColorsType = {
-    colors: [string, Shades | string],
+    colors: ColorPaletteAsArray,
 };
 
 const Colors = (props: ColorsType) => {
-    const getColors = (shades: Shades | string) => {
-        const isString = (typeof shades) === 'string';
-
-        if (isString) {
-            return (
-                <Shade
-                    shade={[props.colors[0], (shades as string)]}
-                    key={`Color_${shades}`}
-                />
-            )
-        }
-
-        return Object.entries(shades).map(shade => (
-            <Shade
-                shade={shade}
-                key={`Color_${shade[1]}`}
-            />
-        ));
-    }
+    const getColors = (shades: ShadeType[]) => shades.map(shade => (
+        <Shade
+            shade={shade}
+            key={`Color_${shade.value}`}
+        />
+    ));
 
     return (
         <div
@@ -47,7 +35,7 @@ const Colors = (props: ColorsType) => {
                     overflow-wrap: anywhere;
                 `}
             >
-                {capitalize(props.colors[0])}
+                {capitalize(props.colors.label)}
             </div>
             <div
                 css={css`
@@ -55,7 +43,7 @@ const Colors = (props: ColorsType) => {
                     flex-wrap: wrap;
                 `}
             >
-                {getColors(props.colors[1])}
+                {getColors(props.colors.values)}
             </div>
         </div>
     )
