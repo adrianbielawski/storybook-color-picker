@@ -8,7 +8,7 @@ An addon for Storybook that allows you to quickly find and copy to clipboard any
 
 ## Technology
 
-Created with TypeScript and React and Storybook.
+Created with TypeScript, React and Storybook.
 
 ## Usage
 
