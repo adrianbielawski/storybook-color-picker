@@ -16,10 +16,10 @@ export type ColorPaletteAsArray = {
 }
 
 export type ShadesType = Record<string, string> | string;
-export type ColorsPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
+export type ColorPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
 
 const ColorPicker = () => {
-    const colorPalette: ColorsPalette = useParameter('colorPalette');
+    const colorPalette: ColorPalette = useParameter('colorPalette');
 
     const getColors = () => {
         const transformedPalette = transformPalette(colorPalette);

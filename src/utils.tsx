@@ -1,6 +1,6 @@
-import { ColorsPalette } from "./colorPicker/ColorPicker";
+import { ColorPalette } from "./colorPicker/ColorPicker";
 
-export const transformPalette = (colorPalette: ColorsPalette) => {
+export const transformPalette = (colorPalette: ColorPalette) => {
   if (Array.isArray(colorPalette)) {
       return colorPalette;
   }

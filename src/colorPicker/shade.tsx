@@ -8,11 +8,11 @@ import { ShadeType } from "./ColorPicker";
 import { useCallback } from "react";
 /** @jsx jsx */
 
-type ColorType = {
+type Props = {
     shade: ShadeType,
 };
 
-const Shade = (props: ColorType) => {
+const Shade = (props: Props) => {
     const [copied, setCopied] = useState(false);
     const {
         getArrowProps,

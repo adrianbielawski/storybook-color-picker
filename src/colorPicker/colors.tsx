@@ -4,11 +4,11 @@ import { ColorPaletteAsArray, ShadeType } from "./ColorPicker";
 import Shade from "./Shade";
 /** @jsx jsx */
 
-type ColorsType = {
+type Props = {
     colors: ColorPaletteAsArray,
 };
 
-const Colors = (props: ColorsType) => {
+const Colors = (props: Props) => {
     const getShades = (shades: ShadeType[]) => shades.map((shade, i) => (
         <Shade
             shade={shade}
