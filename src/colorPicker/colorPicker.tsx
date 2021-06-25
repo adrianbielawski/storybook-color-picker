@@ -23,10 +23,10 @@ const ColorPicker = () => {
 
     const getColors = () => {
         const transformedPalette = transformPalette(colorPalette);
-        return transformedPalette.map(colors => (
+        return transformedPalette.map((colors, i) => (
             <Colors
                 colors={colors}
-                key={`Shades_${colors.label}`}
+                key={`Colors_${colors.label}_${i}`}
             />
         ))
     };

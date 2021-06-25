@@ -9,10 +9,10 @@ type ColorsType = {
 };
 
 const Colors = (props: ColorsType) => {
-    const getColors = (shades: ShadeType[]) => shades.map(shade => (
+    const getShades = (shades: ShadeType[]) => shades.map((shade, i) => (
         <Shade
             shade={shade}
-            key={`Color_${shade.value}`}
+            key={`Shade_${shade.value}_${i}`}
         />
     ));
 
@@ -43,7 +43,7 @@ const Colors = (props: ColorsType) => {
                     flex-wrap: wrap;
                 `}
             >
-                {getColors(props.colors.values)}
+                {getShades(props.colors.values)}
             </div>
         </div>
     )
