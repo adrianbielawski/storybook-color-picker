@@ -1,7 +1,7 @@
 {
   "name": "storybook-color-picker",
   "description": "Custom palette color picker addon for storybook",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Adrian_Bielawski",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -43,6 +43,9 @@
     "babel-loader": "^8.2.2"
   },
   "peerDependencies": {
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
     "@storybook/react": "^6.2.9",
     "react": "^17.0.2"
   },

@@ -28,7 +28,7 @@ const Shade = (props: Props) => {
         if (copied) {
             timeout = setTimeout(() => {
                 setCopied(false)
-            }, 500);
+            }, 750);
         }
 
         return () => {
