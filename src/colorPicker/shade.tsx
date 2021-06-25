@@ -5,6 +5,7 @@ import { usePopperTooltip } from 'react-popper-tooltip';
 import 'react-popper-tooltip/dist/styles.css';
 import ShadeTooltip from "./ShadeTooltip";
 import { ShadeType } from "./ColorPicker";
+import { useCallback } from "react";
 /** @jsx jsx */
 
 type ColorType = {
@@ -35,9 +36,9 @@ const Shade = (props: ColorType) => {
         }
     }, [copied])
 
-    const handleClick = () => {
+    const handleClick = useCallback(() => {
         setCopied(true);
-    };
+    }, []);
 
     return (
         <CopyToClipboard text={props.shade.value}>
