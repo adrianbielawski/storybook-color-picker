@@ -2,7 +2,7 @@ import React from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 import { transformPalette } from "../utils";
-import Colors from './Colors';
+import Colors from './colors';
 /** @jsx jsx */
 
 export type ShadeType = {
