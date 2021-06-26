@@ -1,7 +1,7 @@
 import React from "react";
 import { css, jsx } from '@emotion/react'
-import { ColorPaletteAsArray, ShadeType } from "./ColorPicker";
-import Shade from "./Shade";
+import { ColorPaletteAsArray, ShadeType } from "./colorPicker";
+import Shade from "./shade";
 /** @jsx jsx */
 
 type Props = {
