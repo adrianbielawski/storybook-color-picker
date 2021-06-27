@@ -1,7 +1,7 @@
 {
   "name": "storybook-color-picker",
   "description": "Custom palette color picker addon for storybook",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Adrian_Bielawski",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -58,14 +58,23 @@
     "type": "git",
     "url": "git+https://github.com/adrianbielawski/storybook-color-picker.git"
   },
-  "keywords": [
-    "storybook",
-    "addon",
-    "color",
-    "picker"
-  ],
   "bugs": {
     "url": "https://github.com/adrianbielawski/storybook-color-picker/issues"
   },
-  "homepage": "https://github.com/adrianbielawski/storybook-color-picker#readme"
+  "homepage": "https://github.com/adrianbielawski/storybook-color-picker#readme",
+  "keywords": [
+    "storybook-addons",
+    "essentials",
+    "design",
+    "style",
+    "storybook",
+    "addon",
+    "color",
+    "picker",
+    "palette"
+  ],
+  "storybook": {
+    "displayName": "Color picker",
+    "icon": "https://user-images.githubusercontent.com/57548494/123546997-dbd10500-d756-11eb-9935-2c74087f295e.png"
+  }
 }
