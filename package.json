@@ -1,7 +1,7 @@
 {
   "name": "storybook-color-picker",
   "description": "Custom palette color picker addon for storybook",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Adrian_Bielawski",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -21,7 +21,7 @@
     "prebuild": "yarn clean",
     "build": "concurrently \"yarn buildBabel\" \"yarn buildTsc\"",
     "build:watch": "concurrently \"yarn buildBabel:esm -- --watch\" \"yarn buildTsc -- --watch\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "storybook": "start-storybook -p 6006",
     "start": "concurrently \"yarn build:watch\" \"yarn storybook -- --no-manager-cache --quiet\"",
     "build-storybook": "build-storybook",
@@ -42,9 +42,15 @@
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
     "@storybook/react": "^6.2.9",
-    "babel-loader": "^8.2.2"
-  },
-  "peerDependencies": {
+    "@testing-library/react": "^12.0.0",
+    "@types/jest": "^26.0.23",
+    "babel-jest": "^27.0.5",
+    "babel-loader": "^8.2.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
+    "jest": "^27.0.5",
+    "jest-environment-jsdom-global": "^2.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -52,14 +58,23 @@
     "type": "git",
     "url": "git+https://github.com/adrianbielawski/storybook-color-picker.git"
   },
-  "keywords": [
-    "storybook",
-    "addon",
-    "color",
-    "picker"
-  ],
   "bugs": {
     "url": "https://github.com/adrianbielawski/storybook-color-picker/issues"
   },
-  "homepage": "https://github.com/adrianbielawski/storybook-color-picker#readme"
+  "homepage": "https://github.com/adrianbielawski/storybook-color-picker#readme",
+  "keywords": [
+    "storybook-addons",
+    "essentials",
+    "design",
+    "style",
+    "storybook",
+    "addon",
+    "color",
+    "picker",
+    "palette"
+  ],
+  "storybook": {
+    "displayName": "Color picker",
+    "icon": "https://user-images.githubusercontent.com/57548494/123546997-dbd10500-d756-11eb-9935-2c74087f295e.png"
+  }
 }

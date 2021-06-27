@@ -2,7 +2,7 @@
 
 ## Description
 
-An addon for Storybook that allows you to quickly find and copy to clipboard any color from your custom color palette.
+An addon for a Storybook that allows you to quickly find and copy to clipboard any color from your custom color palette.
 
 ![storybook-color-picker](./assets/readme-image.png)
 
@@ -14,7 +14,7 @@ Created with TypeScript, React and Storybook.
 
 `$ npm i storybook-color-picker`
 
-In your .storybook folder find main.js file and add this addon like below
+In your `.storybook` folder find `main.js` file and add this addon like below
 
 ```tsx
   module.exports = {
@@ -27,7 +27,7 @@ In your .storybook folder find main.js file and add this addon like below
 ```
 
 
-In your .storybook folder find preview.js file and add your color palette to parameters like below.
+In your `.storybook` folder find `preview.js` file and add your color palette to parameters like below.
 Scroll down to find out how your corol palette must look like.
 
 ```tsx
