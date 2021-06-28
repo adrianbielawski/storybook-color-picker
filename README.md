@@ -2,9 +2,9 @@
 
 ## Description
 
-An addon for a Storybook that allows you to quickly find and copy to clipboard any color from your custom color palette.
+A Storybook addon. It allows you to quickly find and copy to clipboard any color from your custom color palette.
 
-![storybook-color-picker](./assets/readme-image.png)
+![storybook-color-picker](./assets/presentation.gif)
 
 ## Technology
 

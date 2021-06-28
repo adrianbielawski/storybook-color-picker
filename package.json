@@ -1,6 +1,6 @@
 {
   "name": "storybook-color-picker",
-  "description": "Custom palette color picker addon for storybook",
+  "description": "Choose a color from custom color palette and copy it to clipboard with a simple click.",
   "version": "1.0.10",
   "author": "Adrian_Bielawski",
   "main": "dist/cjs/index.js",
