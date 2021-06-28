@@ -3,12 +3,20 @@ import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 import { transformPalette } from "../utils/utils";
 import Colors from './colors';
+import PalettesList from "./palettesList/palettesList";
 import { ColorPalettes } from "./types";
 /** @jsx jsx */
 
 const ColorPicker = () => {
     const colorPalettes: ColorPalettes = useParameter('colorPalettes');
     const [current, setCurrent] = useState(colorPalettes.default);
+
+    const handlePaletteChange = useCallback(
+        (newCurrent: number) => {
+            setCurrent(newCurrent)
+        },
+        [],
+    )
 
     const getColors = () => {
         const currentPalette = colorPalettes.palettes[current];
@@ -24,6 +32,7 @@ const ColorPicker = () => {
 
     return (
         <div
+            id="color-picker"
             css={css`
                 background: #fff;
                 border-radius: 10px;
@@ -57,6 +66,11 @@ const ColorPicker = () => {
             >
                 Click on color to copy to clipboard
             </div>
+            <PalettesList
+                palettes={colorPalettes.palettes}
+                current={current}
+                onChange={handlePaletteChange}    
+            />
             <div>
                 {getColors()}
             </div>
