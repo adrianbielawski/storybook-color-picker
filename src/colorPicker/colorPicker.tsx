@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
-import { transformPalette } from "../utils/utils";
+import { findDefaultPaletteIndex, transformPalette } from "../utils/utils";
 import Colors from './colors';
+import PalettesList from "./palettesList/palettesList";
+import { ColorPalettes } from "./types";
 /** @jsx jsx */
 
-export type ShadeType = {
-    label: string,
-    value: string,
-}
-
-export type ColorPaletteAsArray = {
-    label: string,
-    values: ShadeType[]
-}
-
-export type ShadesType = Record<string, string> | string;
-export type ColorPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
-
 const ColorPicker = () => {
-    const colorPalette: ColorPalette = useParameter('colorPalette');
+    const colorPalettes: ColorPalettes = useParameter('colorPalettes');
+    const [current, setCurrent] = useState(findDefaultPaletteIndex(colorPalettes.palettes, colorPalettes.default));
+
+    const handlePaletteChange = useCallback(
+        (newCurrent: number) => {
+            setCurrent(newCurrent)
+        },
+        [],
+    );
 
     const getColors = () => {
-        const transformedPalette = transformPalette(colorPalette);
+        const currentPalette = colorPalettes.palettes[current];
+        const transformedPalette = transformPalette(currentPalette.palette);
+
         return transformedPalette.map((colors, i) => (
             <Colors
                 colors={colors}
@@ -33,6 +32,7 @@ const ColorPicker = () => {
 
     return (
         <div
+            id="color-picker"
             css={css`
                 background: #fff;
                 border-radius: 10px;
@@ -66,6 +66,11 @@ const ColorPicker = () => {
             >
                 Click on color to copy to clipboard
             </div>
+            <PalettesList
+                palettes={colorPalettes.palettes}
+                current={current}
+                onChange={handlePaletteChange}    
+            />
             <div>
                 {getColors()}
             </div>

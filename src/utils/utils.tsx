@@ -1,4 +1,4 @@
-import { ColorPalette } from "../colorPicker/colorPicker";
+import { ColorPalette, PaletteObj } from "src/colorPicker/types";
 
 export const transformPalette = (colorPalette: ColorPalette) => {
   if (Array.isArray(colorPalette)) {
@@ -26,4 +26,14 @@ export const transformPalette = (colorPalette: ColorPalette) => {
       label: colors[0],
       values: transformValues(colors[0], colors[1]),
   }))
+};
+
+export const findDefaultPaletteIndex = (palettes: PaletteObj[], name: string) => {
+    const index = palettes.findIndex(palette =>  palette.name === name);
+
+    if (index < 0) {
+        return 0
+    }
+
+    return index;
 };
