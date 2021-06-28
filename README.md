@@ -10,11 +10,15 @@ A Storybook addon. It allows you to quickly find and copy to clipboard any color
 
 Created with TypeScript, React and Storybook.
 
+## Migrate from v1 to v2
+
+To migrate from v1 to v2 adjust parameters in preview.js to match the pattern shown in [Usage section](#usage) below.
+
 ## Usage
 
 `$ npm i storybook-color-picker`
 
-In your `.storybook` folder find `main.js` file and add this addon like below
+In your `.storybook` folder find `main.js` file and add this addon like below.
 
 ```tsx
   module.exports = {
@@ -31,15 +35,28 @@ In your `.storybook` folder find `preview.js` file and add your color palette to
 Scroll down to find out how your corol palette must look like.
 
 ```tsx
-import yourFancyColorPalette from './yourFancyColorPalette.json';
+import yourFirstColorPalette from './yourFirstColorPalette.json';
+import yourSecondColorPalette from './yourSecondColorPalette.json';
 
 export const parameters = {
   ...
-  colorPalette: yourFancyColorPalette,
+  colorPalettes: {
+    default: 'First palette', // Name of palette. Fallback to first palette in array.
+    palettes: [
+      {
+        name: 'First palette',
+        palette: yourFirstColorPalette,
+      },
+      {
+        name: 'Second palette',
+        palette: yourSecondColorPalette,
+      },
+    ]
+  }
 }
 ```
 
-## Color palette
+## Palette
 
 ### as Object
 
@@ -50,20 +67,20 @@ Example:
 
 ```tsx
   {
-      "light": {
-          " 500": "#aaa",
-          " 100": "#eee",
-          " 400": "#bbb",
-          " 200": "#ddd",
-          " 300": "#ccc"
-      },
-      "dark": {
-          "0100": "#888",
-          "0500": "#000",
-          "0400": "#222",
-          "0200": "#666",
-          "0300": "#444"
-      }
+    "light": {
+      " 500": "#aaa",
+      " 100": "#eee",
+      " 400": "#bbb",
+      " 200": "#ddd",
+      " 300": "#ccc"
+    },
+    "dark": {
+      "0100": "#888",
+      "0500": "#000",
+      "0400": "#222",
+      "0200": "#666",
+      "0300": "#444"
+    }
   }
 ```
 
@@ -74,13 +91,13 @@ Example:
 
 ```tsx
   type ColorPaletteAsArray = {
-      label: string,
-      values: [
-        {
-          label: string,
-          value: string, // valid hex value
-        }
-      ],
+    label: string,
+    values: [
+      {
+        label: string,
+        value: string, // valid hex value
+      }
+    ],
   }
 ```
 Example:
