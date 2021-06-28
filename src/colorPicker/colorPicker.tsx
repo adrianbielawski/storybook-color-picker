@@ -3,20 +3,8 @@ import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 import { transformPalette } from "../utils/utils";
 import Colors from './colors';
+import { ColorPalettes } from "./types";
 /** @jsx jsx */
-
-export type ShadeType = {
-    label: string,
-    value: string,
-}
-
-export type ColorPaletteAsArray = {
-    label: string,
-    values: ShadeType[]
-}
-
-export type ShadesType = Record<string, string> | string;
-export type ColorPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
 
 const ColorPicker = () => {
     const colorPalette: ColorPalette = useParameter('colorPalette');

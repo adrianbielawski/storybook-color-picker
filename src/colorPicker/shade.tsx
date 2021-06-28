@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/react';
 import { usePopperTooltip } from 'react-popper-tooltip';
 import 'react-popper-tooltip/dist/styles.css';
 import ShadeTooltip from "./shadeTooltip";
-import { ShadeType } from "./colorPicker";
+import { ShadeType } from "./types";
 import { useCallback } from "react";
 /** @jsx jsx */
 
