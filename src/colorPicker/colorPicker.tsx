@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
-import { transformPalette } from "../utils/utils";
+import { findDefaultPaletteIndex, transformPalette } from "../utils/utils";
 import Colors from './colors';
 import PalettesList from "./palettesList/palettesList";
 import { ColorPalettes } from "./types";
@@ -9,14 +9,14 @@ import { ColorPalettes } from "./types";
 
 const ColorPicker = () => {
     const colorPalettes: ColorPalettes = useParameter('colorPalettes');
-    const [current, setCurrent] = useState(colorPalettes.default);
+    const [current, setCurrent] = useState(findDefaultPaletteIndex(colorPalettes.palettes, colorPalettes.default));
 
     const handlePaletteChange = useCallback(
         (newCurrent: number) => {
             setCurrent(newCurrent)
         },
         [],
-    )
+    );
 
     const getColors = () => {
         const currentPalette = colorPalettes.palettes[current];

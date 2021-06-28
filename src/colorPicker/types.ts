@@ -17,6 +17,6 @@ export type PaletteObj = {
 }
 
 export type ColorPalettes = {
-    default: number,
+    default: string,
     palettes: PaletteObj[]
 }
