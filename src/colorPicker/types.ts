@@ -11,3 +11,12 @@ export type ColorPaletteAsArray = {
 export type ShadesType = Record<string, string> | string;
 export type ColorPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
 
+export type PaletteObj = {
+    name: string,
+    palette: ColorPalette,
+}
+
+export type ColorPalettes = {
+    default: number,
+    palettes: PaletteObj[]
+}

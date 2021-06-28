@@ -9,5 +9,17 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  colorPalette: colorPaletteArray,
+  colorPalettes: {
+    default: 0,
+    palettes: [
+      {
+        name: 'Colorfull palette',
+        palette: colorPalette,
+      },
+      {
+        name: 'Greyscale palette',
+        palette: colorPaletteArray,
+      },
+    ],
+  }
 }

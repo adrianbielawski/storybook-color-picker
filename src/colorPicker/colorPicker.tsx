@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useParameter } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 import { transformPalette } from "../utils/utils";
@@ -7,10 +7,13 @@ import { ColorPalettes } from "./types";
 /** @jsx jsx */
 
 const ColorPicker = () => {
-    const colorPalette: ColorPalette = useParameter('colorPalette');
+    const colorPalettes: ColorPalettes = useParameter('colorPalettes');
+    const [current, setCurrent] = useState(colorPalettes.default);
 
     const getColors = () => {
-        const transformedPalette = transformPalette(colorPalette);
+        const currentPalette = colorPalettes.palettes[current];
+        const transformedPalette = transformPalette(currentPalette.palette);
+
         return transformedPalette.map((colors, i) => (
             <Colors
                 colors={colors}
