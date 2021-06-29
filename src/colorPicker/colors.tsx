@@ -1,6 +1,6 @@
 import React from "react";
 import { css, jsx } from '@emotion/react'
-import { ColorPaletteAsArray, ShadeType } from "./types";
+import { ColorPaletteAsArray } from "./types";
 import Shade from "./shade";
 /** @jsx jsx */
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Colors = (props: Props) => {
-    const getShades = (shades: ShadeType[]) => shades.map((shade, i) => (
+    const getShades = () => props.colors.values.map((shade, i) => (
         <Shade
             shade={shade}
             key={`Shade_${shade.value}_${i}`}
@@ -43,7 +43,7 @@ const Colors = (props: Props) => {
                     flex-wrap: wrap;
                 `}
             >
-                {getShades(props.colors.values)}
+                {getShades()}
             </div>
         </div>
     )
