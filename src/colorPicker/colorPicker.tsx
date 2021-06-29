@@ -9,8 +9,12 @@ import { ColorPalettes } from "./types";
 
 const ColorPicker = () => {
     const colorPalettes: ColorPalettes = useParameter('colorPalettes');
-    const [current, setCurrent] = useState(findDefaultPaletteIndex(colorPalettes.palettes, colorPalettes.default));
-
+    const defaultColorPalette = useParameter('defaultColorPalette', undefined);
+    const [current, setCurrent] = useState(findDefaultPaletteIndex(
+        colorPalettes.palettes,
+        defaultColorPalette || colorPalettes.default
+    ));
+    
     const handlePaletteChange = useCallback(
         (newCurrent: number) => {
             setCurrent(newCurrent)

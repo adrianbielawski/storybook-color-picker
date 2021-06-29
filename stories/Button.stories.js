@@ -8,6 +8,9 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
+  parameters: {
+    defaultColorPalette: 'Greyscale palette',
+  }
 };
 
 const Template = (args) => <Button {...args} />;
@@ -22,6 +25,10 @@ export const Secondary = Template.bind({});
 Secondary.args = {
   label: 'Button',
 };
+
+Secondary.parameters = {
+  defaultColorPalette: 'Colorfull palette',
+}
 
 export const Large = Template.bind({});
 Large.args = {

@@ -1,7 +1,7 @@
 {
   "name": "storybook-color-picker",
   "description": "Choose a color from custom color palette and copy it to clipboard with a simple click.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Adrian_Bielawski",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -79,6 +79,9 @@
   ],
   "storybook": {
     "displayName": "Color picker",
+    "unsupportedFrameworks": [
+      "react-native"
+    ],
     "icon": "https://user-images.githubusercontent.com/57548494/123546997-dbd10500-d756-11eb-9935-2c74087f295e.png"
   }
 }
