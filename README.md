@@ -4,6 +4,8 @@
 
 A Storybook addon. It allows you to quickly find and copy to clipboard any color from your custom color palette.
 
+Add one or multiple color palettes and set the default palette globaly, for component or single story.
+
 ![storybook-color-picker](./assets/presentation.gif)
 
 ## Technology
@@ -12,11 +14,13 @@ Created with TypeScript, React and Storybook.
 
 ## Migrate from v1 to v2
 
-To migrate from v1 to v2 adjust parameters in preview.js to match the pattern shown in [Usage section](#usage) below.
+To migrate from v1 to v2 adjust `parameters` in `preview.js` to match the pattern shown in [Usage section](#usage) below.
 
 ## Usage
 
 `$ npm i storybook-color-picker`
+
+### Add addon to Storybook
 
 In your `.storybook` folder find `main.js` file and add this addon like below.
 
@@ -27,12 +31,14 @@ In your `.storybook` folder find `main.js` file and add this addon like below.
       ...
       "storybook-color-picker"
     ]
-  }
+  };
 ```
 
 
+### Add palettes
+
 In your `.storybook` folder find `preview.js` file and add your color palette to parameters like below.
-Scroll down to find out how your corol palette must look like.
+Scroll down to find out how your color [palette](#palette) must look like.
 
 ```tsx
 import yourFirstColorPalette from './yourFirstColorPalette.json';
@@ -41,19 +47,19 @@ import yourSecondColorPalette from './yourSecondColorPalette.json';
 export const parameters = {
   ...
   colorPalettes: {
-    default: 'First palette', // Name of palette. Fallback to first palette in array.
+    default: 'Your first palette name', // Name of default palette for all components and its stories. Optional (fallback to first palette from the palettes array).
     palettes: [
       {
-        name: 'First palette',
-        palette: yourFirstColorPalette,
+        name: 'Your first palette name', // string
+        palette: yourFirstColorPalette, // Palette as an Object or an Array. See bellow.
       },
       {
-        name: 'Second palette',
+        name: 'Your second palette name',
         palette: yourSecondColorPalette,
       },
     ]
   }
-}
+};
 ```
 
 ## Palette
@@ -61,7 +67,7 @@ export const parameters = {
 ### as Object
 
 ```tsx
-type ColorPaletteAsObjecy = Record<string, Record<string, string> | string>;
+type ColorPaletteAsObject = Record<string, Record<string, string> | string>;
 ```
 Example:
 
@@ -98,7 +104,7 @@ Example:
         value: string, // valid hex value
       }
     ],
-  }
+  };
 ```
 Example:
 
@@ -132,3 +138,42 @@ Example:
     }
   ]
 ```
+
+### Set default palette on component or its stories
+
+#### On component
+
+This will apply for all component's stories.
+
+In `MyComponent.stories.js` add:
+
+```tsx
+export default {
+  ...
+  parameters: {
+    defaultColorPalette: 'Your second palette name',
+  }
+};
+```
+
+#### On story
+
+This will apply for specific story.
+
+In `MyComponent.stories.js` add:
+
+```tsx
+export const Primary = Template.bind({});
+
+Primary.parameters = {
+  defaultColorPalette: 'Your first palette name',
+}
+```
+
+#### Default palette specificity:
+
+The following list increases by specificity.
+
+1. `default` set on parameters in `preview.js`
+2. `defaultColorPalette` set on component `parameters`
+3. `defaultColorPalette` set on story `MyComponent.parameters`
