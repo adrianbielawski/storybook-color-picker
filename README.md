@@ -6,6 +6,7 @@ A Storybook addon. It allows you to quickly find and copy to clipboard any color
 
 Add one or multiple color palettes and set the default palette globaly, for component or single story.
 
+
 ![storybook-color-picker](./assets/presentation.gif)
 
 ## Technology
@@ -14,7 +15,7 @@ Created with TypeScript, React and Storybook.
 
 ## Migrate from v1 to v2
 
-To migrate from v1 to v2 adjust `parameters` in `preview.js` to match the pattern shown in [Usage section](#usage) below.
+To migrate from v1 to v2 adjust `parameters` in `preview.js` to match the pattern shown in [Add palettes](#add-palettes) in usage section below.
 
 ## Usage
 
