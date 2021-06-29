@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.1
+
+29.06.2021.
+
+**Added**
+
+* Support for default color palette on stories.
+
+-----
+
 ### v2.0.0
 
 28.06.2021.
