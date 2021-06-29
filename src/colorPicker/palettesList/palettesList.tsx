@@ -1,11 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { css, jsx } from '@emotion/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import List from "./list";
-import { useOutsideClick } from "../../utils/useOutsideClick";
+import React, { useCallback } from "react";
 import { PaletteObj } from "../types";
-/** @jsx jsx */
+import Dropdown from "../dropdown/dropdown";
+import Palette from "./palette";
 
 type Props = {
     palettes: PaletteObj[],
@@ -14,99 +10,26 @@ type Props = {
 };
 
 const PalettesList = (props: Props) => {
-    const [active, setActive] = useState(false);
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-    useEffect(() => {
-        const colorPicker = document.getElementById('color-picker');
-
-        const handleScroll = () => {
-            setActive(false);
-        };
-
-        if (colorPicker && active) {
-            colorPicker.addEventListener('scroll', handleScroll);
-        }
-
-        return () => {
-            colorPicker.removeEventListener('scroll', handleScroll);
-        }
-    }, [active])
-
-    const closeList = useCallback(
-        () => {
-            setActive(false);
-        },
-        [],
-    )
-    
-    useOutsideClick(buttonRef, closeList);
-
-    const toggleActive = useCallback(
-        (e: React.MouseEvent) => {
-            e.preventDefault();
-            setActive(!active);
-        },
-        [active],
-    )
-
     const handleChange = useCallback(
-        (newCurrent: number) => {
-            props.onChange(newCurrent);
-            closeList();
+        (_, index: number) => {
+            props.onChange(index);
         },
         [props.onChange],
     )
 
-    return (
-        <div
-            css={css`
-                position: relative;
-                margin-bottom: .5em;
-                display: inline-block;
-            `}
-        >
-            {props.palettes.length > 1 ? (
-                <>
-                    <button
-                        ref={buttonRef}
-                        onClick={toggleActive}
-                        css={css`
-                            background-color: #fff;
-                            border: none;
-                            font-size: 1.1em;
-                            padding: 0;
+    const label = props.palettes.length > 1
+        ? props.palettes[props.current].name
+        : props.palettes[0].name
 
-                            &:hover {
-                                cursor: pointer;
-                            }
-                        `}
-                    >
-                        <p
-                            css={css`
-                                display: inline;
-                                margin-right: .5em;
-                            `}
-                        >{props.palettes[props.current].name}</p>
-                        <FontAwesomeIcon icon={faChevronDown} color="#777" />
-                    </button>
-                    <List
-                        palettes={props.palettes}
-                        active={active}
-                        onChange={handleChange}
-                    />
-                </>
-            ) : (
-                <p
-                    css={css`
-                        display: inline;
-                        font-size: 1.1em;
-                    `}
-                >
-                    {props.palettes[0].name}
-                </p>
-            )}
-        </div>
+    return (
+        <Dropdown
+            label={label || `Palette No${props.current + 1}`}
+            items={props.palettes}
+            itemComponent={Palette}
+            closeOnItemClick={true}
+            renderList=">1"
+            onItemClick={handleChange}
+        />
     );
 };
 
