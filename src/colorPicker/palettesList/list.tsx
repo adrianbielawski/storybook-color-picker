@@ -50,7 +50,7 @@ const PalettesList = (props: Props) => {
                         border-bottom: 1px solid #eee;
                     `}
                 >
-                    {palette.name}
+                    {palette.name || `Palette No${i + 1}`}
                 </p>
             </button>
         )
