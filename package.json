@@ -79,6 +79,9 @@
   ],
   "storybook": {
     "displayName": "Color picker",
+    "unsupportedFrameworks": [
+      "react-native"
+    ],
     "icon": "https://user-images.githubusercontent.com/57548494/123546997-dbd10500-d756-11eb-9935-2c74087f295e.png"
   }
 }
