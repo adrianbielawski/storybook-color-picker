@@ -35,7 +35,7 @@ const Colors = (props: Props) => {
                     text-transform: capitalize;
                 `}
             >
-                {props.colors.label}
+                {props.colors.label || 'Unnamed'}
             </div>
             <div
                 css={css`
