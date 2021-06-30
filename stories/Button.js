@@ -5,13 +5,13 @@ import './button.css';
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
+export const Button = ({ primary, backgroundColor, textColor, size, label, ...props }) => {
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={backgroundColor && { backgroundColor }}
+      style={{ backgroundColor, color: textColor }}
       {...props}
     >
       {label}
@@ -28,6 +28,7 @@ Button.propTypes = {
    * What background color to use
    */
   backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
   /**
    * How large should the button be?
    */
@@ -44,6 +45,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   backgroundColor: null,
+  textColor: null,
   primary: false,
   size: 'medium',
   onClick: undefined,

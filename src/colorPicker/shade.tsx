@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
-import CopyToClipboard from "react-copy-to-clipboard";
+import React, { useEffect, useState, useCallback } from "react";
 import { css, jsx } from '@emotion/react';
+import { useArgs, useGlobals } from '@storybook/api';
+// Types
+import { ShadeType } from "./types";
+// Components
+import ShadeTooltip from "./shadeTooltip";
+import CopyToClipboard from "react-copy-to-clipboard";
 import { usePopperTooltip } from 'react-popper-tooltip';
 import 'react-popper-tooltip/dist/styles.css';
-import ShadeTooltip from "./shadeTooltip";
-import { ShadeType } from "./types";
-import { useCallback } from "react";
 /** @jsx jsx */
 
 type Props = {
@@ -13,6 +15,9 @@ type Props = {
 };
 
 const Shade = (props: Props) => {
+    const [_, updateArgs] = useArgs();
+    const [globals] = useGlobals();
+
     const [copied, setCopied] = useState(false);
     const {
         getArrowProps,
@@ -37,8 +42,15 @@ const Shade = (props: Props) => {
     }, [copied])
 
     const handleClick = useCallback(() => {
+        const newArgs: Record<string, string> = {};
+
+        (globals.selectedArgs as string[]).map(arg => {
+            newArgs[arg] = props.shade.value;
+        });
+
+        updateArgs(newArgs)
         setCopied(true);
-    }, []);
+    }, [globals.selectedArgs]);
 
     return (
         <CopyToClipboard text={props.shade.value}>
@@ -52,7 +64,6 @@ const Shade = (props: Props) => {
                         margin: .3em;
                         border: 1px solid #ddd;
                         background-color: ${props.shade.value};
-                        position: relative;
                         &:hover {
                             cursor: copy;
                             > * {
