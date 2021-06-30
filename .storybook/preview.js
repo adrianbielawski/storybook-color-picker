@@ -13,6 +13,7 @@ export const parameters = {
     default: 'Colorfull palette',
     palettes: [
       {
+        name: 'Colorfull palette',
         palette: colorPalette,
       },
       {

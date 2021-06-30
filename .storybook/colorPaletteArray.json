@@ -3,12 +3,44 @@
     "label": "light",
     "values": [
       {
+        "label": "50",
+        "value": "#fff"
+      },
+      {
         "label": "100",
-        "value": "#ccc"
+        "value": "#f5f5f5"
       },
       {
         "label": "200",
-        "value": "#aaa"
+        "value": "#eee"
+      },
+      {
+        "label": "300",
+        "value": "#e5e5e5"
+      },
+      {
+        "label": "400",
+        "value": "#ddd"
+      },
+      {
+        "label": "500",
+        "value": "#d5d5d5"
+      },
+      {
+        "label": "600",
+        "value": "#ccc"
+      },
+      {
+        "label": "700",
+        "value": "#c5c5c5"
+      },
+      {
+        "label": "800",
+        "value": "#bbb"
+      },
+      {
+        "label": "900",
+        "value": "#b5b5b5"
       }
     ]
   },
@@ -16,11 +48,43 @@
     "label": "dark",
     "values": [
       {
+        "label": "50",
+        "value": "#aaa"
+      },
+      {
         "label": "100",
-        "value": "#666"
+        "value": "#999"
       },
       {
         "label": "200",
+        "value": "#888"
+      },
+      {
+        "label": "300",
+        "value": "#777"
+      },
+      {
+        "label": "400",
+        "value": "#777"
+      },
+      {
+        "label": "500",
+        "value": "#666"
+      },
+      {
+        "label": "600",
+        "value": "#555"
+      },
+      {
+        "label": "700",
+        "value": "#444"
+      },
+      {
+        "label": "800",
+        "value": "#222"
+      },
+      {
+        "label": "900",
         "value": "#000"
       }
     ]

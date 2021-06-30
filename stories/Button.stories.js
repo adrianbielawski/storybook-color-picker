@@ -13,6 +13,7 @@ export default {
     defaultColorPalette: 'Greyscale palette',
     applyColorTo: [
       'backgroundColor',
+      'textColor'
     ]
   }
 };
@@ -27,12 +28,6 @@ Primary.args = {
   textColor: '#333',
 };
 
-Primary.parameters = {
-  applyColorTo: [
-    'textColor'
-  ]
-}
-
 export const Secondary = Template.bind({});
 Secondary.args = {
   label: 'Button',
@@ -40,10 +35,6 @@ Secondary.args = {
 
 Secondary.parameters = {
   defaultColorPalette: 'Colorfull palette',
-  applyColorTo: [
-    'backgroundColor',
-    'textColor'
-  ]
 }
 
 export const Large = Template.bind({});
