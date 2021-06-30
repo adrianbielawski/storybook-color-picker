@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { css, jsx } from '@emotion/react';
 import { useArgs, useGlobals } from '@storybook/api';
+// Utils
+import copy from 'copy-to-clipboard';
 // Types
 import { ShadeType } from "./types";
 // Components
 import ShadeTooltip from "./shadeTooltip";
-import CopyToClipboard from "react-copy-to-clipboard";
 import { usePopperTooltip } from 'react-popper-tooltip';
 import 'react-popper-tooltip/dist/styles.css';
 /** @jsx jsx */
@@ -17,7 +18,6 @@ type Props = {
 const Shade = (props: Props) => {
     const [_, updateArgs] = useArgs();
     const [globals] = useGlobals();
-
     const [copied, setCopied] = useState(false);
     const {
         getArrowProps,
@@ -49,50 +49,52 @@ const Shade = (props: Props) => {
         });
 
         updateArgs(newArgs)
-        setCopied(true);
+
+        if (globals.copyOnClick) {
+            setCopied(true);
+            copy(props.shade.value)
+        }
     }, [globals.selectedArgs]);
 
     return (
-        <CopyToClipboard text={props.shade.value}>
-            <div>
-                <div
-                    onClick={handleClick}
-                    ref={setTriggerRef}
-                    css={css`
-                        width: 1.5em;
-                        height: 1.5em;
-                        margin: .3em;
-                        border: 1px solid #ddd;
-                        background-color: ${props.shade.value};
-                        &:hover {
-                            cursor: copy;
-                            > * {
-                                display: block;
-                            }
+        <div>
+            <div
+                onClick={handleClick}
+                ref={setTriggerRef}
+                css={css`
+                    width: 1.5em;
+                    height: 1.5em;
+                    margin: .3em;
+                    border: 1px solid #ddd;
+                    background-color: ${props.shade.value};
+                    &:hover {
+                        cursor: copy;
+                        > * {
+                            display: block;
                         }
+                    }
+                `}
+            >
+            </div>
+            {visible && (
+                <div
+                    ref={setTooltipRef}
+                    {...getTooltipProps({ className: 'tooltip-container' })}
+                    css={css`
+                        background: #fff;
+                        border-radius: 5px;
+                        border: none;
+                        box-shadow: 0px 0px 4px 1px #ddd;
                     `}
                 >
+                    <div {...getArrowProps({ className: 'tooltip-arrow' })} />
+                    <ShadeTooltip
+                        shade={props.shade}
+                        copied={copied}
+                    />
                 </div>
-                {visible && (
-                    <div
-                        ref={setTooltipRef}
-                        {...getTooltipProps({ className: 'tooltip-container' })}
-                        css={css`
-                            background: #fff;
-                            border-radius: 5px;
-                            border: none;
-                            box-shadow: 0px 0px 4px 1px #ddd;
-                        `}
-                    >
-                        <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-                        <ShadeTooltip
-                            shade={props.shade}
-                            copied={copied}
-                        />
-                    </div>
-                )}
-            </div>
-        </CopyToClipboard>
+            )}
+        </div>
     );
 };
 
