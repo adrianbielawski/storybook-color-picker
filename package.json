@@ -1,7 +1,7 @@
 {
   "name": "storybook-color-picker",
-  "description": "Choose a color from custom color palette and copy it to clipboard with a simple click.",
-  "version": "2.0.2",
+  "description": "Choose a color from custom color palette and set it on component's control and/or copy it to clipboard.",
+  "version": "2.1.0",
   "author": "Adrian_Bielawski",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

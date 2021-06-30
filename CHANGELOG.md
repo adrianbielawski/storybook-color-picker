@@ -1,5 +1,19 @@
 # Changelog
 
+### v2.1.0
+
+30.06.2021.
+
+**Added**
+
+* Set color on selected component's control.
+
+**Changed**
+
+* Copy color to clipboard is now optional.
+
+-----
+
 ### v2.0.2
 
 29.06.2021.

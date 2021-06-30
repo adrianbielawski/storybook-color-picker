@@ -178,3 +178,48 @@ The following list increases by specificity.
 1. `default` set on parameters in `preview.js`
 2. `defaultColorPalette` set on component `parameters`
 3. `defaultColorPalette` set on story `MyComponent.parameters`
+
+
+## Apply selected color to component's control
+
+Create list of agrs to witch color may be applied.
+
+### On component
+
+Add list to all component's stories.
+
+In `MyComponent.stories.js` add:
+
+```jsx
+export default {
+  ...
+  argTypes: {
+    backgroundColor: { control: 'color' },
+    textColor: { control: 'color' },
+  },
+  parameters: {
+    ...
+    applyColorTo: [
+      'backgroundColor', // Must match argType key
+      'textColor',
+    ]
+  }
+};
+```
+
+### On story
+
+Add list to selected story or overwrite list added to component globaly as in example above.
+
+In `MyComponent.stories.js` add:
+
+```jsx
+export const Primary = Template.bind({});
+
+Primary.parameters = {
+  ...
+  applyColorTo: [
+    'textColor'
+  ]
+}
+```
