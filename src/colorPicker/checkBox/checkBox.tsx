@@ -7,7 +7,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 type Props = {
     label?: string,
     checked: boolean,
-    onClick: () => void,
+    onClick?: () => void,
 }
 
 const CheckBox = (props: Props) => (
