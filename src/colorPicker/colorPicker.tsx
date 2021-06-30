@@ -9,6 +9,7 @@ import { ColorPalettes } from "./types";
 import Colors from './colors';
 import ArgsList from "./argsList/argsList";
 import PalettesList from "./palettesList/palettesList";
+import CheckBox from "./checkBox/checkBox";
 /** @jsx jsx */
 
 const ColorPicker = () => {
@@ -27,19 +28,27 @@ const ColorPicker = () => {
     }
 
     useEffect(() => {
-        updateGlobals({ selectedArgs: [] })
+        const copyOnClick = globals.copyOnClick !== undefined
+            ? globals.copyOnClick
+            : true;
+        
+        updateGlobals({ selectedArgs: [], copyOnClick });
     }, [state.storyId])
 
     const handleArgsChange = (newArgs: string[]) => {
-        updateGlobals({ selectedArgs: newArgs })
+        updateGlobals({ selectedArgs: newArgs });
     }
 
     const handlePaletteChange = useCallback(
         (newCurrent: number) => {
-            setCurrent(newCurrent)
+            setCurrent(newCurrent);
         },
         [],
     );
+
+    const handleCopyBoxClick = () => {
+        updateGlobals({ copyOnClick: !globals.copyOnClick });
+    }
 
     const getColors = () => {
         const currentPalette = colorPalettes.palettes[current];
@@ -60,7 +69,7 @@ const ColorPicker = () => {
                 background: #fff;
                 border-radius: 10px;
                 max-height: 50vh;
-                max-width: 40vw;
+                max-width: 70vw;
                 padding: 0 1em 1em 1em;
                 overflow-x: hidden;
                 overflow-y: auto;
@@ -80,18 +89,12 @@ const ColorPicker = () => {
                 }
             `}
         >
-            <div
-                css={css`
-                    font-size: 1.2em;
-                    margin: 1em;
-                    text-align: center;
-                `}
-            >
-                Click on color to copy to clipboard
-            </div>
             <div css={css`
                     display: flex;
+                    justify-content: space-between;
+                    align-items: center;
                     gap: 2em;
+                    margin: 1em 0;
                 `}
             >
                 <PalettesList
@@ -106,6 +109,11 @@ const ColorPicker = () => {
                         onChange={handleArgsChange}
                     />
                 )}
+                <CheckBox
+                    label="Copy on click"
+                    checked={globals.copyOnClick}
+                    onClick={handleCopyBoxClick}
+                />
             </div>
             <div>
                 {getColors()}

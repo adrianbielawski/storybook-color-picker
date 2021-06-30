@@ -37,6 +37,8 @@ const ArgsList = (props: Props) => {
     return (
         <div css={css`
             min-width: 13em;
+            display: flex;
+            justify-content: center;
         `}>
             <Dropdown
                 label={label}
