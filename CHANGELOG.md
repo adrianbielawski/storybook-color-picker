@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.1.2
+
+30.06.2021.
+
+**Bug fix**
+
+* Do not render addon if no color palette received.
+
+-----
+
 ### v2.1.1
 
 30.06.2021.

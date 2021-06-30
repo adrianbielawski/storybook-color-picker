@@ -1,11 +1,13 @@
 import React, { useCallback } from "react";
-import { useGlobals } from "@storybook/api";
+import { useGlobals, useParameter } from "@storybook/api";
 import { Icons, IconButton, WithTooltip } from "@storybook/components";
 import { TOOL_ID } from "./constants";
 import ColorPicker from './colorPicker/colorPicker';
+import { ColorPalettes } from "./colorPicker/types";
 
 const ColorPickerIcon = () => {
 	const [{ isColorPickerActive }, updateGlobals] = useGlobals();
+    const colorPalettes: ColorPalettes = useParameter('colorPalettes');
 
 	const toggleColorPicker = useCallback(
 		() =>
@@ -14,6 +16,10 @@ const ColorPickerIcon = () => {
 			}),
 		[isColorPickerActive]
 	);
+
+	if (!colorPalettes || !colorPalettes?.palettes.length) {
+		return null
+	}
 
 	return (
 		<WithTooltip
@@ -26,7 +32,7 @@ const ColorPickerIcon = () => {
 			<IconButton
 				key={TOOL_ID}
 				active={isColorPickerActive}
-				title="Apply outlines to the preview"
+				title="Color palettes"
 				onClick={toggleColorPicker}
 			>
 				<Icons icon="paintbrush" />
