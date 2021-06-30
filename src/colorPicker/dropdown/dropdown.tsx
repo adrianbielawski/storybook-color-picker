@@ -69,7 +69,6 @@ const Dropdown = (props: Props<any>) => {
         <div
             ref={wrapperRef}
             css={css`
-                margin-bottom: .5em;
                 display: inline-block;
             `}
         >
