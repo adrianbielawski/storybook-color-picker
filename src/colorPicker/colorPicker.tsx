@@ -89,15 +89,6 @@ const ColorPicker = () => {
                 }
             `}
         >
-            <div
-                css={css`
-                    font-size: 1.2em;
-                    margin: 1em;
-                    text-align: center;
-                `}
-            >
-                Click on color to copy to clipboard
-            </div>
             <div css={css`
                     display: flex;
                     justify-content: space-between;
