@@ -2,7 +2,7 @@
 
 ## Description
 
-A Storybook addon. It allows you to quickly find and copy to clipboard any color from your custom color palette.
+A Storybook addon. It allows you to quickly find any color from your custom color palette and set it on component's controls and/or copy to clipboard.
 
 Add one or multiple color palettes and set the default palette globaly, for component or single story.
 
@@ -21,7 +21,7 @@ To migrate from v1 to v2 adjust `parameters` in `preview.js` to match the patter
 
 `$ npm i storybook-color-picker`
 
-### Add addon to Storybook
+### Add to your Storybook
 
 In your `.storybook` folder find `main.js` file and add this addon like below.
 
@@ -37,6 +37,10 @@ In your `.storybook` folder find `main.js` file and add this addon like below.
 
 
 ### Add palettes
+
+#### Globaly
+
+This will add color picker and palettes everywhere in your storybook.
 
 In your `.storybook` folder find `preview.js` file and add your color palette to parameters like below.
 Scroll down to find out how your color [palette](#palette) must look like.
@@ -63,6 +67,56 @@ export const parameters = {
 };
 ```
 
+#### On component
+
+This will add color picker and palettes to all component's stories.
+
+In `MyComponent.stories.js` add:
+
+```tsx
+export default {
+  ...
+  parameters: {
+    ...
+    colorPalettes: {
+      default: 'Your first palette name',
+      palettes: [
+        {
+          name: 'Your first palette name',
+          palette: yourFirstColorPalette,
+        },
+        {
+          name: 'Your second palette name',
+          palette: yourSecondColorPalette,
+        },
+      ]
+    }
+  }
+};
+```
+
+#### On story
+
+This will add color picker and palettes to specific story.
+
+In `MyComponent.stories.js` add:
+
+```tsx
+export const Primary = Template.bind({});
+
+Primary.parameters = {
+  ...
+    colorPalettes: {
+      palettes: [
+        {
+          name: 'Your first palette name',
+          palette: yourFirstColorPalette,
+        },
+      ]
+    }
+}
+```
+
 ## Palette
 
 ### as Object
@@ -74,6 +128,8 @@ Example:
 
 ```tsx
   {
+    "white": "#fff",
+    "black": "#000",
     "light": {
       " 500": "#aaa",
       " 100": "#eee",
