@@ -20,3 +20,7 @@ export type ColorPalettes = {
     default: string,
     palettes: PaletteObj[]
 }
+
+export type AddonState = {
+    currentPalette: number
+} | undefined

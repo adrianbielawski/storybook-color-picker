@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useParameter, useGlobals, useStorybookState } from '@storybook/api';
+import React, { useCallback, useEffect } from "react";
+import { useParameter, useGlobals, useStorybookState, useAddonState } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 // Utils
 import { findDefaultPaletteIndex, transformPalette } from "../utils/utils";
+import { ADDON_ID } from "../constants";
 // Types
-import { ColorPalettes } from "./types";
+import { AddonState, ColorPalettes } from "./types";
 // Components
 import Colors from './colors';
 import ArgsList from "./argsList/argsList";
@@ -18,14 +19,23 @@ const ColorPicker = () => {
     const applyColorTo: string[] = useParameter('applyColorTo');
     const [globals, updateGlobals] = useGlobals();
     const state = useStorybookState();
-    const [current, setCurrent] = useState(findDefaultPaletteIndex(
-        colorPalettes.palettes,
-        defaultColorPalette || colorPalettes.default
-    ));
+    const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, { currentPalette: 0 });
 
     if (!colorPalettes.palettes.length) {
         return null
     }
+
+    useEffect(() => {
+        const currentPalette = findDefaultPaletteIndex(
+            colorPalettes.palettes,
+            defaultColorPalette || colorPalettes.default
+        );
+
+        setAddonState({
+            ...addonState,
+            currentPalette,
+        });
+    }, [])
 
     useEffect(() => {
         const copyOnClick = globals.copyOnClick !== undefined
@@ -41,9 +51,12 @@ const ColorPicker = () => {
 
     const handlePaletteChange = useCallback(
         (newCurrent: number) => {
-            setCurrent(newCurrent);
+            setAddonState({
+                ...addonState,
+                currentPalette: newCurrent,
+            })
         },
-        [],
+        [addonState],
     );
 
     const handleCopyBoxClick = () => {
@@ -51,7 +64,7 @@ const ColorPicker = () => {
     }
 
     const getColors = () => {
-        const currentPalette = colorPalettes.palettes[current];
+        const currentPalette = colorPalettes.palettes[addonState.currentPalette];
         const transformedPalette = transformPalette(currentPalette.palette);
 
         return transformedPalette.map((colors, i) => (
@@ -99,7 +112,7 @@ const ColorPicker = () => {
             >
                 <PalettesList
                     palettes={colorPalettes.palettes}
-                    current={current}
+                    current={addonState.currentPalette}
                     onChange={handlePaletteChange}
                 />
                 {(applyColorTo && applyColorTo.length > 0) && (
