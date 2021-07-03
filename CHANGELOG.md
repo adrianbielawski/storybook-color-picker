@@ -1,5 +1,17 @@
 # Changelog
 
+### v2.1.3
+
+30.06.2021.
+
+**Changed**
+
+* Styles
+    1. Highlight selected palette.
+    2. Fixed dropdowns display on mobile.
+
+-----
+
 ### v2.1.2
 
 30.06.2021.
