@@ -30,6 +30,7 @@ const Palette = (props: Props) => {
                 padding: .25em 1em;
                 font-size: 1.1em;
                 background-color: ${backgroundColor};
+                white-space: nowrap;
 
                 &:hover {
                     cursor: pointer;

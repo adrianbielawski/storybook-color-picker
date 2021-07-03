@@ -100,6 +100,10 @@ const ColorPicker = () => {
                         background-color: #666;
                     }
                 }
+                @media (max-width: 800px) {
+                    max-width: 95vw;
+                    padding: 0 .5em .5em .5em;
+                }
             `}
         >
             <div css={css`
@@ -108,6 +112,7 @@ const ColorPicker = () => {
                     align-items: center;
                     gap: 2em;
                     margin: 1em 0;
+                    flex-wrap: wrap-reverse;
                 `}
             >
                 <PalettesList

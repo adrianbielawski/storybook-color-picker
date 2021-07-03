@@ -39,6 +39,9 @@ const ArgsList = (props: Props) => {
             min-width: 13em;
             display: flex;
             justify-content: center;
+            @media (max-width: 800px) {
+                justify-content: unset;
+            }
         `}>
             <Dropdown
                 label={label}
