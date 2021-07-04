@@ -1,9 +1,9 @@
-import React, { ElementType, useCallback, useEffect, useRef, useState } from "react";
+import React, { ElementType, useCallback, useEffect, useState } from "react";
 import { css, jsx } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 // Utils
-import { useOutsideClick } from "../../utils/useOutsideClick";
+import useOutsideClick from "../../utils/useOutsideClick";
 // Components
 import List from "./list";
 /** @jsx jsx */
@@ -20,7 +20,6 @@ type Props<I> = {
 
 const Dropdown = (props: Props<any>) => {
     const [active, setActive] = useState(false);
-    const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const colorPicker = document.getElementById('color-picker');
@@ -45,7 +44,7 @@ const Dropdown = (props: Props<any>) => {
         [],
     );
 
-    useOutsideClick(wrapperRef, closeList);
+    const wrapperRef = useOutsideClick(closeList);
 
     const toggleActive = useCallback(
         (e: React.MouseEvent) => {
