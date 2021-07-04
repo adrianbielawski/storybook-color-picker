@@ -128,14 +128,14 @@ Example:
 
 ```tsx
   {
-    "white": "#fff",
+    "white": "#fff", // valid hex, rgb, rgba, hsl, hsla
     "black": "#000",
     "light": {
       " 500": "#aaa",
-      " 100": "#eee",
-      " 400": "#bbb",
-      " 200": "#ddd",
-      " 300": "#ccc"
+      " 100": "rgba(238, 238, 238, .8)",
+      " 200": "rgb(238, 238, 238)",
+      " 300": "hsla(0, 0%, 73%, .8)",
+      " 400": "hsl(0, 0%, 73%)"
     },
     "dark": {
       "0100": "#888",
@@ -158,7 +158,7 @@ Example:
     values: [
       {
         label: string,
-        value: string, // valid hex value
+        value: string,
       }
     ],
   };
