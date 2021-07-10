@@ -22,5 +22,6 @@ export type ColorPalettes = {
 }
 
 export type AddonState = {
-    currentPalette: number
+    currentPalette: number,
+    applyColorTo?: string[],
 } | undefined

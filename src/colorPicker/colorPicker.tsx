@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
-import { useParameter, useGlobals, useStorybookState, useAddonState } from '@storybook/api';
+import { useParameter, useGlobals, useStorybookState, useAddonState, useStorybookApi } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 // Utils
-import { findDefaultPaletteIndex, transformPalette } from "../utils/utils";
+import { findDefaultPaletteIndex, getColorControls, transformPalette } from "../utils/utils";
 import { ADDON_ID } from "../constants";
 // Types
 import { AddonState, ColorPalettes } from "./types";
@@ -14,26 +14,26 @@ import CheckBox from "./checkBox/checkBox";
 /** @jsx jsx */
 
 const ColorPicker = () => {
-    const colorPalettes: ColorPalettes = useParameter('colorPalettes');
-    const defaultColorPalette = useParameter('defaultColorPalette', undefined);
-    const applyColorTo: string[] = useParameter('applyColorTo');
+    const colorPalettes = useParameter<ColorPalettes>('colorPalettes');
+    const defaultColorPalette = useParameter<string>('defaultColorPalette', undefined);
+    const additionalApplyColorTo = useParameter<string[]>('applyColorTo');
+    const storybookApi = useStorybookApi();
     const [globals, updateGlobals] = useGlobals();
     const state = useStorybookState();
     const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, { currentPalette: 0 });
-
-    if (!colorPalettes.palettes.length) {
-        return null
-    }
 
     useEffect(() => {
         const currentPalette = findDefaultPaletteIndex(
             colorPalettes.palettes,
             defaultColorPalette || colorPalettes.default
         );
+        
+        const applyColorTo = getColorControls(storybookApi.getCurrentStoryData(), additionalApplyColorTo);
 
         setAddonState({
             ...addonState,
             currentPalette,
+            applyColorTo,
         });
     }, [])
 
@@ -41,7 +41,7 @@ const ColorPicker = () => {
         const copyOnClick = globals.copyOnClick !== undefined
             ? globals.copyOnClick
             : true;
-        
+
         updateGlobals({ selectedArgs: [], copyOnClick });
     }, [state.storyId])
 
@@ -74,6 +74,10 @@ const ColorPicker = () => {
             />
         ))
     };
+
+    if (!colorPalettes.palettes.length) {
+        return null
+    }
 
     return (
         <div
@@ -120,9 +124,9 @@ const ColorPicker = () => {
                     current={addonState.currentPalette}
                     onChange={handlePaletteChange}
                 />
-                {(applyColorTo && applyColorTo.length > 0) && (
+                {(addonState.applyColorTo?.length > 0) && (
                     <ArgsList
-                        args={applyColorTo}
+                        args={addonState.applyColorTo}
                         selected={globals.selectedArgs || []}
                         onChange={handleArgsChange}
                     />

@@ -11,10 +11,6 @@ export default {
   },
   parameters: {
     defaultColorPalette: 'Greyscale palette',
-    applyColorTo: [
-      'backgroundColor',
-      'textColor'
-    ]
   }
 };
 
@@ -35,6 +31,7 @@ Secondary.args = {
 
 Secondary.parameters = {
   defaultColorPalette: 'Colorfull palette',
+  applyColorTo: ['label'],
 }
 
 export const Large = Template.bind({});
