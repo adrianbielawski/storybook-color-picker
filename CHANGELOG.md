@@ -1,5 +1,16 @@
 # Changelog
 
+### v2.1.4
+
+10.07.2021.
+
+**Changed**
+
+* Auto detect color controls.
+
+-----
+# Changelog
+
 ### v2.1.3
 
 30.06.2021.

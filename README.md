@@ -238,11 +238,12 @@ The following list increases by specificity.
 
 ## Apply selected color to component's control
 
-Create list of agrs to witch color may be applied.
+All controls with type of "color" will be detected automatically.
+You can add extra controls to whitch color may be applied. Only controls of type "text" may be added as extra.
 
 ### On component
 
-Add list to all component's stories.
+Add list of extra controls to all component's stories.
 
 In `MyComponent.stories.js` add:
 
@@ -250,22 +251,20 @@ In `MyComponent.stories.js` add:
 export default {
   ...
   argTypes: {
-    backgroundColor: { control: 'color' },
-    textColor: { control: 'color' },
+    backgroundColor: { control: 'color' }, // Color controls will be detected automatically
+    label: { control: 'text' }, // Text controls may be added as extra
+    text: { control: 'text' }, // Text controls may be added as extra
   },
   parameters: {
     ...
-    applyColorTo: [
-      'backgroundColor', // Must match argType key
-      'textColor',
-    ]
+    applyColorTo: ['label'] // Must match argType key
   }
 };
 ```
 
 ### On story
 
-Add list to selected story or overwrite list added to component globaly as in example above.
+Add list of extra controls to selected story to overwrite list added to component globaly as in example above.
 
 In `MyComponent.stories.js` add:
 
@@ -274,8 +273,6 @@ export const Primary = Template.bind({});
 
 Primary.parameters = {
   ...
-  applyColorTo: [
-    'textColor'
-  ]
-}
+  applyColorTo: ['text'], // Pass empty array to clear extra controls
+};
 ```
