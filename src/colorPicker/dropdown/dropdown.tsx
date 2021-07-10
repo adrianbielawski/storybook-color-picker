@@ -14,7 +14,7 @@ type Props<I> = {
     itemComponent: ElementType<I>;
     closeOnItemClick?: boolean,
     renderList?: '>1' | 'allways',
-    onLabelClick?: () => void,
+    onLabelClick?: (active: boolean) => void,
     onItemClick: (item: I, index: number) => void,
 };
 
@@ -33,7 +33,9 @@ const Dropdown = (props: Props<any>) => {
         }
 
         return () => {
-            colorPicker.removeEventListener('scroll', handleScroll);
+            if (colorPicker) {
+                colorPicker.removeEventListener('scroll', handleScroll);
+            }
         }
     }, [active]);
 
@@ -50,6 +52,7 @@ const Dropdown = (props: Props<any>) => {
         (e: React.MouseEvent) => {
             e.preventDefault();
             setActive(!active);
+            props.onLabelClick?.(!active)
         },
         [active],
     );
@@ -70,8 +73,10 @@ const Dropdown = (props: Props<any>) => {
             css={css`
                 display: inline-block;
             `}
+            data-automation="dropdown"
         >
             <button
+                data-automation="dropdownButton"
                 onClick={toggleActive}
                 css={css`
                     background-color: #fff;
@@ -87,6 +92,7 @@ const Dropdown = (props: Props<any>) => {
                 `}
             >
                 <p
+                    data-automation="dropdownLabel"
                     css={css`
                         display: inline;
                         margin-right: .5em;
@@ -98,6 +104,7 @@ const Dropdown = (props: Props<any>) => {
                     <FontAwesomeIcon
                         icon={faChevronDown}
                         color="#777"
+                        data-automation="dropdownChevron"
                     />
                 )}
             </button>
@@ -107,6 +114,7 @@ const Dropdown = (props: Props<any>) => {
                     items={props.items}
                     itemComponent={props.itemComponent}
                     onItemClick={handleItemClick}
+                    data-automation="dropdownList"
                 />
             )}
         </div>
@@ -119,8 +127,8 @@ Dropdown.defaultProps = {
     itemComponent: null,
     closeOnItemClick: false,
     renderList: 'allways',
-    onLabelClick: () => {},
-    onItemClick: () => {},
+    onLabelClick: () => { },
+    onItemClick: () => { },
 }
 
 export default Dropdown;
