@@ -1,5 +1,17 @@
 # Changelog
 
+### v2.1.5
+
+30.11.2021.
+
+**Changed**
+
+No breaking changes
+
+* Dependencies update.
+
+-----
+
 ### v2.1.4
 
 10.07.2021.
@@ -9,7 +21,6 @@
 * Auto detect color controls.
 
 -----
-# Changelog
 
 ### v2.1.3
 
