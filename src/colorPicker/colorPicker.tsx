@@ -23,7 +23,7 @@ const ColorPicker = () => {
     const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, { currentPalette: 0 });
 
     useEffect(() => {
-        const palettesAsArray = colorPalettes.palettes.map(p => transformPalette(p.palette));
+        const palettesAsArray = colorPalettes.palettes.map(p => transformPalette(p));
         state.palettesAsArray = palettesAsArray
     }, [colorPalettes])
 
