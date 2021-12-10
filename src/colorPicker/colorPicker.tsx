@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/react';
 import { findDefaultPaletteIndex, getColorControls, transformPalette } from "../utils/utils";
 import { ADDON_ID } from "../constants";
 // Types
-import { AddonState, ColorPalettes } from "./types";
+import { AddonState, ColorPalettes, StorybookState } from "./types";
 // Components
 import Colors from './colors';
 import ArgsList from "./argsList/argsList";
@@ -19,8 +19,13 @@ const ColorPicker = () => {
     const additionalApplyColorTo = useParameter<string[]>('applyColorTo');
     const storybookApi = useStorybookApi();
     const [globals, updateGlobals] = useGlobals();
-    const state = useStorybookState();
+    const state = useStorybookState() as StorybookState;
     const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, { currentPalette: 0 });
+
+    useEffect(() => {
+        const palettesAsArray = colorPalettes.palettes.map(p => transformPalette(p.palette));
+        state.palettesAsArray = palettesAsArray
+    }, [colorPalettes])
 
     useEffect(() => {
         const currentPalette = findDefaultPaletteIndex(
@@ -64,10 +69,9 @@ const ColorPicker = () => {
     }
 
     const getColors = () => {
-        const currentPalette = colorPalettes.palettes[addonState.currentPalette];
-        const transformedPalette = transformPalette(currentPalette.palette);
+        const currentPalette = state.palettesAsArray[addonState.currentPalette];
 
-        return transformedPalette.map((colors, i) => (
+        return currentPalette.map((colors, i) => (
             <Colors
                 colors={colors}
                 key={`Colors_${colors.label}_${i}`}
@@ -75,7 +79,7 @@ const ColorPicker = () => {
         ))
     };
 
-    if (!colorPalettes.palettes.length) {
+    if (!state.palettesAsArray?.length) {
         return null
     }
 

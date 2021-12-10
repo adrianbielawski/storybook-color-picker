@@ -1,3 +1,5 @@
+import { State } from '@storybook/api';
+
 export type ShadeType = {
     label: string,
     value: string,
@@ -25,3 +27,7 @@ export type AddonState = {
     currentPalette: number,
     applyColorTo?: string[],
 } | undefined
+
+export interface StorybookState extends State {
+    palettesAsArray: ColorPaletteAsArray[][]
+}
