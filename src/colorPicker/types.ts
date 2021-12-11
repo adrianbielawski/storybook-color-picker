@@ -25,13 +25,6 @@ export type ColorPalettes = {
     palettes: PaletteObj[]
 }
 
-export type AddonState =
-    | {
-          currentPalette: number
-          applyColorTo?: string[]
-      }
-    | undefined
-
 export interface StatePalette {
     name: string
     colors: ColorPaletteAsArray[]
@@ -42,6 +35,18 @@ export interface StatePalettes {
     palettes: StatePalette[]
 }
 
+export type StoryState = {
+    currentPalette: number
+    controls?: string[]
+    storyPalettes: StatePalettes
+}
+
+export type StoryStates = Record<string, StoryState>
+
 export interface StorybookState extends State {
     colorPalettes: StatePalettes
+}
+
+export interface AddonState {
+    storyStates: StoryStates
 }

@@ -13,21 +13,30 @@ import PalettesList from "./palettesList/palettesList";
 import CheckBox from "./checkBox/checkBox";
 /** @jsx jsx */
 
+const initialAddonState = { storyStates: {} }
+
 const ColorPicker = () => {
     const colorPalettes = useParameter<ColorPalettes>('colorPalettes');
     const defaultColorPalette = useParameter<string>('defaultColorPalette', undefined);
-    const additionalApplyColorTo = useParameter<string[]>('applyColorTo');
+    const additionalControls = useParameter<string[]>('applyColorTo');
     const storybookApi = useStorybookApi();
     const [globals, updateGlobals] = useGlobals();
     const state = useStorybookState() as StorybookState;
-    const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, { currentPalette: 0 });
+    const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, initialAddonState);
+    const storyId = state.storyId
+    const storyState = addonState?.storyStates?.[storyId]
+    const storyPalettes = storyState?.storyPalettes
 
     useEffect(() => {
+        if (storyPalettes?.palettes.length) {
+            return
+        }
+
         const transformedPalettes: StatePalettes = {
             default: defaultColorPalette,
             palettes: []
         }
-        
+
         colorPalettes.palettes.forEach(p => {
             const transformed = transformPalette(p)
 
@@ -41,41 +50,34 @@ const ColorPicker = () => {
             }
         })
 
+        const controls = getColorControls(
+            storybookApi.getCurrentStoryData(),
+            additionalControls
+        );
+
         const defaultPalette = transformedPalettes.palettes.length
             ? findDefaultPaletteIndex(transformedPalettes)
                 ? transformedPalettes.default
                 : transformedPalettes.palettes[0].name
             : null
 
-        state.colorPalettes = {
-            ...transformedPalettes,
-            default: defaultPalette,
-        }
-    }, [colorPalettes])
-
-    useEffect(() => {
-        if (!state.colorPalettes) {
-            return
-        }
-
-        const index = findDefaultPaletteIndex(state.colorPalettes)
-        const currentPalette = state.colorPalettes.palettes.length
-            ? index >= 0
-                ? index
-                : 0
-            : null
-        
-        const applyColorTo = getColorControls(
-            storybookApi.getCurrentStoryData(),
-            additionalApplyColorTo
-        );
-
-        setAddonState({
+        const newState = {
             ...addonState,
-            currentPalette: currentPalette,
-            applyColorTo,
-        });
-    }, [state.colorPalettes])
+            storyStates: {
+                ...addonState.storyStates,
+                [storyId]: {
+                    currentPalette: 0,
+                    controls,
+                    storyPalettes: {
+                        ...transformedPalettes,
+                        default: defaultPalette,
+                    }
+                }
+            }
+        }
+
+        setAddonState(newState)
+    }, [colorPalettes])
 
     useEffect(() => {
         const copyOnClick = globals.copyOnClick !== undefined
@@ -83,7 +85,7 @@ const ColorPicker = () => {
             : true;
 
         updateGlobals({ selectedArgs: [], copyOnClick });
-    }, [state.storyId])
+    }, [storyId])
 
     const handleArgsChange = (newArgs: string[]) => {
         updateGlobals({ selectedArgs: newArgs });
@@ -91,10 +93,16 @@ const ColorPicker = () => {
 
     const handlePaletteChange = useCallback(
         (newCurrent: number) => {
-            setAddonState({
+            const newState = {
                 ...addonState,
+            }
+    
+            newState.storyStates[storyId] = {
+                ...newState.storyStates[storyId],
                 currentPalette: newCurrent,
-            })
+            }
+    
+            setAddonState(newState);
         },
         [addonState],
     );
@@ -104,7 +112,7 @@ const ColorPicker = () => {
     }
 
     const getColors = () => {
-        const currentPalette = state.colorPalettes.palettes[addonState.currentPalette];
+        const currentPalette = storyPalettes?.palettes[storyState.currentPalette];
 
         return currentPalette.colors.map((colors, i) => (
             <Colors
@@ -113,8 +121,8 @@ const ColorPicker = () => {
             />
         ))
     };
-    
-    if (!state.colorPalettes?.palettes?.length) {
+
+    if (!storyPalettes?.palettes?.length || storyState?.currentPalette === undefined) {
         return null
     }
 
@@ -159,13 +167,13 @@ const ColorPicker = () => {
                 `}
             >
                 <PalettesList
-                    palettes={state.colorPalettes.palettes}
-                    current={addonState.currentPalette}
+                    palettes={storyPalettes.palettes}
+                    current={storyState.currentPalette}
                     onChange={handlePaletteChange}
                 />
-                {(addonState.applyColorTo?.length > 0) && (
+                {(storyState.controls?.length > 0) && (
                     <ArgsList
-                        args={addonState.applyColorTo}
+                        args={storyState.controls}
                         selected={globals.selectedArgs || []}
                         onChange={handleArgsChange}
                     />
