@@ -1,6 +1,5 @@
 import { ColorPaletteAsArray, PaletteObj, ShadeType } from "src/colorPicker/types";
 import { Story, Group } from "@storybook/api/dist/ts3.9/lib/stories";
-import validateColor from "validate-color";
 
 const getInvalidColorMessage = (paletteName: string, colorLabel: string, shadeLabel: string) => (
     `%cInvalid color value in ${paletteName}: ${colorLabel} -> ${shadeLabel}. It has been removed from palette.`
@@ -21,7 +20,7 @@ const validateArrayPalettes = (paletteObj: PaletteObj) => {
         const shades: ShadeType[] = []
 
         p.values.forEach((v, j) => {
-            if (!validateColor(v.value)) {
+            if (!CSS.supports('color', v.value)) {
                 const message = getInvalidColorMessage(paletteObj.name, p.label, v.label)
                 warn(message)
                 return
