@@ -38,6 +38,8 @@ export interface StatePalettes {
 export type StoryState = {
     currentPalette: number
     controls?: string[]
+    selectedControls: string[]
+    copyOnClick: boolean
     storyPalettes: StatePalettes
 }
 

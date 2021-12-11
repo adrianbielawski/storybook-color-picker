@@ -68,6 +68,8 @@ const ColorPicker = () => {
                 [storyId]: {
                     currentPalette: 0,
                     controls,
+                    selectedControls: [] as string[],
+                    copyOnClick: true,
                     storyPalettes: {
                         ...transformedPalettes,
                         default: defaultPalette,
@@ -80,14 +82,24 @@ const ColorPicker = () => {
     }, [colorPalettes])
 
     useEffect(() => {
-        const copyOnClick = globals.copyOnClick !== undefined
-            ? globals.copyOnClick
-            : true;
+        const copyOnClick = storyState?.copyOnClick !== undefined
+            ? storyState?.copyOnClick
+            : true
 
-        updateGlobals({ selectedArgs: [], copyOnClick });
+        updateGlobals({
+            selectedArgs: storyState?.selectedControls || [],
+            copyOnClick,
+        });
     }, [storyId])
 
     const handleArgsChange = (newArgs: string[]) => {
+        const newState = {
+            ...addonState,
+        };
+        const selectedControls = newArgs
+        newState.storyStates[storyId].selectedControls = selectedControls
+        
+        setAddonState(newState);
         updateGlobals({ selectedArgs: newArgs });
     }
 
@@ -108,7 +120,14 @@ const ColorPicker = () => {
     );
 
     const handleCopyBoxClick = () => {
-        updateGlobals({ copyOnClick: !globals.copyOnClick });
+        const newState = {
+            ...addonState,
+        };
+        const coppy = !newState.storyStates[storyId].copyOnClick
+        newState.storyStates[storyId].copyOnClick = coppy
+        
+        setAddonState(newState);
+        updateGlobals({ copyOnClick: coppy });
     }
 
     const getColors = () => {
@@ -174,7 +193,7 @@ const ColorPicker = () => {
                 {(storyState.controls?.length > 0) && (
                     <ArgsList
                         args={storyState.controls}
-                        selected={globals.selectedArgs || []}
+                        selected={storyState.selectedControls || []}
                         onChange={handleArgsChange}
                     />
                 )}
