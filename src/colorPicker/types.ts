@@ -5,13 +5,15 @@ export type ShadeType = {
     value: string,
 }
 
+export type ColorPaletteAsObject = Record<string, ShadesType>
+
 export type ColorPaletteAsArray = {
     label: string,
     values: ShadeType[]
 }
 
 export type ShadesType = Record<string, string> | string;
-export type ColorPalette = Record<string, ShadesType> | ColorPaletteAsArray[];
+export type ColorPalette = ColorPaletteAsObject | ColorPaletteAsArray[];
 
 export type PaletteObj = {
     name: string,
