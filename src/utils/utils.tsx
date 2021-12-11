@@ -5,6 +5,10 @@ const getInvalidColorMessage = (paletteName: string, colorLabel: string, shadeLa
     `%cInvalid color value in ${paletteName}: ${colorLabel} -> ${shadeLabel}. It has been removed from palette.`
 )
 
+const getInvalidPaletteCollorMessage = (paletteName: string, colorName: string) => (
+    `%cNo valid colors in ${paletteName} -> ${colorName}. It has been removed from palette.`
+)
+
 const getInvalidPaletteMessage = (paletteName: string) => (
     `%cNo valid colors in ${paletteName}. Palette has been removed.`
 )
@@ -13,14 +17,15 @@ const warn = (message: string) => console.warn(message, 'color: red')
 
 const validateArrayPalettes = (paletteObj: PaletteObj) => {
     const palette = paletteObj.palette as ColorPaletteAsArray[]
-    const validatedPalettes: ColorPaletteAsArray[] = []
+    const validatedPalette: ColorPaletteAsArray[] = []
 
     palette.forEach((p, i) => {
-        validatedPalettes.push({ label: p.label, values: [] })
+        validatedPalette.push({ label: p.label, values: [] })
         const shades: ShadeType[] = []
 
         p.values.forEach((v, j) => {
-            if (!CSS.supports('color', v.value)) {
+            const isValid = CSS.supports('color', v.value)
+            if (!isValid) {
                 const message = getInvalidColorMessage(paletteObj.name, p.label, v.label)
                 warn(message)
                 return
@@ -29,22 +34,23 @@ const validateArrayPalettes = (paletteObj: PaletteObj) => {
         })
 
         if (!shades.length) {
-            delete validatedPalettes[i]
-            const message = getInvalidPaletteMessage(paletteObj.name)
+            validatedPalette.splice(i, 1)
+            const message = getInvalidPaletteCollorMessage(paletteObj.name, p.label)
             warn(message)
             return
         }
 
-        validatedPalettes[i].values = shades
+        validatedPalette[i].values = shades
     })
 
-    return validatedPalettes;
-}
-
-export const transformPalette = (paletteObj: PaletteObj) => {
-    if (Array.isArray(paletteObj.palette)) {
-        return validateArrayPalettes(paletteObj);
+    if (!validatedPalette.length) {
+        const message = getInvalidPaletteMessage(paletteObj.name)
+        warn(message)
+        return
     }
+
+    return validatedPalette;
+}
 
     const transformValues = (label: string, value: Record<string, string> | string) => {
         const isString = (typeof value) === 'string';
