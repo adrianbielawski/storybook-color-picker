@@ -1,10 +1,10 @@
 import React, { useCallback } from "react";
-import { PaletteObj } from "../types";
+import { StatePalette } from "../types";
 import Dropdown from "../dropdown/dropdown";
 import Palette from "./palette";
 
 type Props = {
-    palettes: PaletteObj[],
+    palettes: StatePalette[],
     current: number,
     onChange: (newCurrent: number) => void;
 };

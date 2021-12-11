@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/react';
 import { findDefaultPaletteIndex, getColorControls, transformPalette } from "../utils/utils";
 import { ADDON_ID } from "../constants";
 // Types
-import { AddonState, ColorPalettes, StorybookState } from "./types";
+import { AddonState, ColorPalettes, StatePalettes, StorybookState } from "./types";
 // Components
 import Colors from './colors';
 import ArgsList from "./argsList/argsList";
@@ -23,24 +23,59 @@ const ColorPicker = () => {
     const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, { currentPalette: 0 });
 
     useEffect(() => {
-        const palettesAsArray = colorPalettes.palettes.map(p => transformPalette(p));
-        state.palettesAsArray = palettesAsArray
+        const transformedPalettes: StatePalettes = {
+            default: defaultColorPalette,
+            palettes: []
+        }
+        
+        colorPalettes.palettes.forEach(p => {
+            const transformed = transformPalette(p)
+
+            if (transformed) {
+                const palette = {
+                    name: p.name,
+                    colors: transformed,
+                }
+
+                transformedPalettes.palettes.push(palette)
+            }
+        })
+
+        const defaultPalette = transformedPalettes.palettes.length
+            ? findDefaultPaletteIndex(transformedPalettes)
+                ? transformedPalettes.default
+                : transformedPalettes.palettes[0].name
+            : null
+
+        state.colorPalettes = {
+            ...transformedPalettes,
+            default: defaultPalette,
+        }
     }, [colorPalettes])
 
     useEffect(() => {
-        const currentPalette = findDefaultPaletteIndex(
-            colorPalettes.palettes,
-            defaultColorPalette || colorPalettes.default
-        );
+        if (!state.colorPalettes) {
+            return
+        }
+
+        const index = findDefaultPaletteIndex(state.colorPalettes)
+        const currentPalette = state.colorPalettes.palettes.length
+            ? index >= 0
+                ? index
+                : 0
+            : null
         
-        const applyColorTo = getColorControls(storybookApi.getCurrentStoryData(), additionalApplyColorTo);
+        const applyColorTo = getColorControls(
+            storybookApi.getCurrentStoryData(),
+            additionalApplyColorTo
+        );
 
         setAddonState({
             ...addonState,
-            currentPalette,
+            currentPalette: currentPalette,
             applyColorTo,
         });
-    }, [])
+    }, [state.colorPalettes])
 
     useEffect(() => {
         const copyOnClick = globals.copyOnClick !== undefined
@@ -69,17 +104,17 @@ const ColorPicker = () => {
     }
 
     const getColors = () => {
-        const currentPalette = state.palettesAsArray[addonState.currentPalette];
+        const currentPalette = state.colorPalettes.palettes[addonState.currentPalette];
 
-        return currentPalette.map((colors, i) => (
+        return currentPalette.colors.map((colors, i) => (
             <Colors
                 colors={colors}
                 key={`Colors_${colors.label}_${i}`}
             />
         ))
     };
-
-    if (!state.palettesAsArray?.length) {
+    
+    if (!state.colorPalettes?.palettes?.length) {
         return null
     }
 
@@ -124,7 +159,7 @@ const ColorPicker = () => {
                 `}
             >
                 <PalettesList
-                    palettes={colorPalettes.palettes}
+                    palettes={state.colorPalettes.palettes}
                     current={addonState.currentPalette}
                     onChange={handlePaletteChange}
                 />

@@ -1,4 +1,4 @@
-import { ColorPaletteAsArray, PaletteObj, ShadesType, ShadeType } from "src/colorPicker/types";
+import { ColorPaletteAsArray, PaletteObj, ShadesType, ShadeType, StatePalettes } from "src/colorPicker/types";
 import { Story, Group } from "@storybook/api/dist/ts3.9/lib/stories";
 
 const getInvalidColorMessage = (paletteName: string, colorLabel: string, shadeLabel: string) => (
@@ -128,12 +128,8 @@ export const transformPalette = (paletteObj: PaletteObj) => {
     return transformObjectPalette(paletteObj)
 };
 
-export const findDefaultPaletteIndex = (palettes: PaletteObj[], name: string) => {
-    const index = palettes.findIndex(palette => palette.name === name);
-
-    if (index < 0) {
-        return 0
-    }
+export const findDefaultPaletteIndex = (palettes: StatePalettes) => {
+    const index = palettes.palettes.findIndex(palette => palette.name === palettes.default)
 
     return index;
 };

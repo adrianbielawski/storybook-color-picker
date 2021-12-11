@@ -4,18 +4,18 @@ import { css, jsx } from '@emotion/react';
 // Constants
 import { ADDON_ID } from "../../constants";
 // Types
-import { AddonState, PaletteObj } from "../types";
+import { AddonState, StatePalette } from "../types";
 /** @jsx jsx */
 
 type Props = {
-    item: PaletteObj,
+    item: StatePalette,
     index: number,
 };
 
 const Palette = (props: Props) => {
     const [addonState] = useAddonState<AddonState>(ADDON_ID)
 
-    if (!props.item.palette) {
+    if (!props.item.colors) {
         return null
     }
 
