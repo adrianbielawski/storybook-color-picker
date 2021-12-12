@@ -27,7 +27,7 @@ export type ColorPalettes = {
 
 export interface StatePalette {
     name: string
-    colors: ColorPaletteAsArray[]
+    palette: ColorPaletteAsArray[]
 }
 
 export interface StatePalettes {

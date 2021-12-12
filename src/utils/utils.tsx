@@ -49,7 +49,10 @@ const validateArrayPalettes = (paletteObj: PaletteObj) => {
         return
     }
 
-    return validatedPalette;
+    return {
+        name: paletteObj.name,
+        palette: validatedPalette
+    }
 }
 
 const validatedStringValues = (paletteName: string, label: string, value: string) => {
@@ -117,7 +120,10 @@ const transformObjectPalette = (paletteObj: PaletteObj) => {
         return
     }
 
-    return validatedPalette
+    return {
+        name: paletteObj.name,
+        palette: validatedPalette
+    }
 }
 
 export const transformPalette = (paletteObj: PaletteObj) => {

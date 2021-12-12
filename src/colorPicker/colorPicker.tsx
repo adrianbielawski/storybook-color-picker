@@ -13,19 +13,19 @@ import PalettesList from "./palettesList/palettesList";
 import CheckBox from "./checkBox/checkBox";
 /** @jsx jsx */
 
-const initialAddonState = { storyStates: {} }
+const initialAddonState = { storyStates: {} };
 
 const ColorPicker = () => {
     const colorPalettes = useParameter<ColorPalettes>('colorPalettes');
     const defaultColorPalette = useParameter<string>('defaultColorPalette', undefined);
     const additionalControls = useParameter<string[]>('applyColorTo');
     const storybookApi = useStorybookApi();
-    const [globals, updateGlobals] = useGlobals();
+    const [_, updateGlobals] = useGlobals();
     const state = useStorybookState() as StorybookState;
     const [addonState, setAddonState] = useAddonState<AddonState>(ADDON_ID, initialAddonState);
-    const storyId = state.storyId
-    const storyState = addonState?.storyStates?.[storyId]
-    const storyPalettes = storyState?.storyPalettes
+    const storyId = state.storyId;
+    const storyState = addonState?.storyStates?.[storyId];
+    const storyPalettes = storyState?.storyPalettes;
 
     useEffect(() => {
         if (storyPalettes?.palettes.length) {
@@ -35,20 +35,15 @@ const ColorPicker = () => {
         const transformedPalettes: StatePalettes = {
             default: defaultColorPalette,
             palettes: []
-        }
+        };
 
         colorPalettes.palettes.forEach(p => {
-            const transformed = transformPalette(p)
+            const transformed = transformPalette(p);
 
             if (transformed) {
-                const palette = {
-                    name: p.name,
-                    colors: transformed,
-                }
-
-                transformedPalettes.palettes.push(palette)
+                transformedPalettes.palettes.push(transformed)
             }
-        })
+        });
 
         const controls = getColorControls(
             storybookApi.getCurrentStoryData(),
@@ -59,7 +54,7 @@ const ColorPicker = () => {
             ? findDefaultPaletteIndex(transformedPalettes)
                 ? transformedPalettes.default
                 : transformedPalettes.palettes[0].name
-            : null
+            : null;
 
         const newState = {
             ...addonState,
@@ -76,7 +71,7 @@ const ColorPicker = () => {
                     }
                 }
             }
-        }
+        };
 
         setAddonState(newState)
     }, [colorPalettes])
@@ -84,7 +79,7 @@ const ColorPicker = () => {
     useEffect(() => {
         const copyOnClick = storyState?.copyOnClick !== undefined
             ? storyState?.copyOnClick
-            : true
+            : true;
 
         updateGlobals({
             selectedArgs: storyState?.selectedControls || [],
@@ -92,51 +87,56 @@ const ColorPicker = () => {
         });
     }, [storyId])
 
-    const handleArgsChange = (newArgs: string[]) => {
-        const newState = {
-            ...addonState,
-        };
-        const selectedControls = newArgs
-        newState.storyStates[storyId].selectedControls = selectedControls
-        
-        setAddonState(newState);
-        updateGlobals({ selectedArgs: newArgs });
-    }
+    const handleArgsChange = useCallback(
+        (newArgs: string[]) => {
+            const newState = {
+                ...addonState,
+            };
+            const selectedControls = newArgs;
+            newState.storyStates[storyId].selectedControls = selectedControls;
+
+            setAddonState(newState);
+            updateGlobals({ selectedArgs: newArgs });
+        },
+        [addonState]
+    )
 
     const handlePaletteChange = useCallback(
         (newCurrent: number) => {
             const newState = {
                 ...addonState,
             }
-    
+
             newState.storyStates[storyId] = {
                 ...newState.storyStates[storyId],
                 currentPalette: newCurrent,
             }
-    
+
             setAddonState(newState);
         },
-        [addonState],
+        [addonState]
     );
 
-    const handleCopyBoxClick = () => {
-        const newState = {
-            ...addonState,
-        };
-        const coppy = !newState.storyStates[storyId].copyOnClick
-        newState.storyStates[storyId].copyOnClick = coppy
-        
-        setAddonState(newState);
-        updateGlobals({ copyOnClick: coppy });
-    }
+    const handleCopyBoxClick = useCallback(
+        () => {
+            const newState = {
+                ...addonState,
+            };
+            const copy = !newState.storyStates[storyId].copyOnClick;
+            newState.storyStates[storyId].copyOnClick = copy;
+            setAddonState(newState);
+            updateGlobals({ copyOnClick: copy });
+        },
+        [addonState]
+    )
 
     const getColors = () => {
         const currentPalette = storyPalettes?.palettes[storyState.currentPalette];
 
-        return currentPalette.colors.map((colors, i) => (
+        return currentPalette.palette.map((palette, i) => (
             <Colors
-                colors={colors}
-                key={`Colors_${colors.label}_${i}`}
+                colors={palette}
+                key={`Colors_${palette.label}_${i}`}
             />
         ))
     };
@@ -199,7 +199,7 @@ const ColorPicker = () => {
                 )}
                 <CheckBox
                     label="Copy on click"
-                    checked={globals.copyOnClick}
+                    checked={storyState.copyOnClick}
                     onClick={handleCopyBoxClick}
                 />
             </div>
