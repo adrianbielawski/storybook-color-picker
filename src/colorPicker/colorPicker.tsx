@@ -51,7 +51,7 @@ const ColorPicker = () => {
         );
 
         const defaultPalette = transformedPalettes.palettes.length
-            ? findDefaultPaletteIndex(transformedPalettes)
+            ? findDefaultPaletteIndex(transformedPalettes) >= 0
                 ? transformedPalettes.default
                 : transformedPalettes.palettes[0].name
             : null;

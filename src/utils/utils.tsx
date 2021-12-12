@@ -85,7 +85,7 @@ const transformObjectPalette = (paletteObj: PaletteObj) => {
                 value: colorValue,
             })
 
-            return
+            return colorPaletteAsArray
         }
 
         Object.entries(colorValue).forEach(([label, value]) => {
