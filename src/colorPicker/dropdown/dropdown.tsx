@@ -11,6 +11,7 @@ import List from "./list";
 type Props<I> = {
     label: string,
     items: I[],
+    itemProps?: Record<string, unknown>
     itemComponent: ElementType<I>;
     closeOnItemClick?: boolean,
     renderList?: '>1' | 'allways',
@@ -55,7 +56,7 @@ const Dropdown = (props: Props<any>) => {
             props.onLabelClick?.(!active)
         },
         [active],
-    );
+        );
 
     const handleItemClick = (item: any, index: number) => {
         if (props.closeOnItemClick) {
@@ -112,6 +113,7 @@ const Dropdown = (props: Props<any>) => {
                 <List
                     active={active}
                     items={props.items}
+                    itemProps={props.itemProps}
                     itemComponent={props.itemComponent}
                     onItemClick={handleItemClick}
                     data-automation="dropdownList"

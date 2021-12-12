@@ -21,10 +21,15 @@ const PalettesList = (props: Props) => {
         ? props.palettes[props.current].name
         : props.palettes[0].name
 
+    const itemProps = {
+        current: props.current,
+    }
+
     return (
         <Dropdown
             label={label || `Palette No${props.current + 1}`}
             items={props.palettes}
+            itemProps={itemProps}
             itemComponent={Palette}
             closeOnItemClick={true}
             renderList=">1"

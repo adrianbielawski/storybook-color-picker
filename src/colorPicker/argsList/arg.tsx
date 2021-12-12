@@ -1,5 +1,4 @@
 import React from "react";
-import { useGlobals } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 // Components
 import CheckBox from "../checkBox/checkBox";
@@ -7,13 +6,14 @@ import CheckBox from "../checkBox/checkBox";
 
 type Props = {
     item: string,
+    itemProps: {
+        selected: string[]
+    }
     index: number,
 };
 
 const Arg = (props: Props) => {
-    const [globals] = useGlobals();
-    const selectedArgs = globals.selectedArgs || [];
-    const isSelected = selectedArgs.includes(props.item);
+    const isSelected = props.itemProps.selected.includes(props.item);
 
     return (
         <div

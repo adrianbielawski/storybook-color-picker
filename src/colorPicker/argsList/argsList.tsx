@@ -34,6 +34,10 @@ const ArgsList = (props: Props) => {
         ? `Apply to ${pluralize('control', props.selected.length, true)}`
         : 'Select controls'
 
+    const itemProps = {
+        selected: props.selected
+    }
+
     return (
         <div css={css`
             min-width: 13em;
@@ -46,6 +50,7 @@ const ArgsList = (props: Props) => {
             <Dropdown
                 label={label}
                 items={props.args}
+                itemProps={itemProps}
                 itemComponent={Arg}
                 onItemClick={handleChange}
             />

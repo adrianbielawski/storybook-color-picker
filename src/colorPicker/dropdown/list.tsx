@@ -9,6 +9,7 @@ export type ListPosition = 'bottom-left' | 'bottom-right'
 type Props<I> = {
     active: boolean,
     items: I[],
+    itemProps: Record<string, unknown>
     itemComponent: ElementType<I>;
     onItemClick: (item: I, index: number) => void,
 };
@@ -35,6 +36,7 @@ const List = (props: Props<any>) => {
             >
                 <ItemComponent
                     item={item}
+                    itemProps={props.itemProps}
                     index={i}
                     key={i}
                 />
