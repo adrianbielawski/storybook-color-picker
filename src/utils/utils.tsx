@@ -29,8 +29,8 @@ export const transformPalette = (colorPalette: ColorPalette) => {
   }))
 };
 
-export const findDefaultPaletteIndex = (palettes: PaletteObj[], name: string) => {
-    const index = palettes.findIndex(palette =>  palette.name === name);
+export const findDefaultPaletteIndex = (palettes: PaletteObj[], defaultPalette: string) => {
+    const index = palettes.findIndex(palette =>  palette.name === defaultPalette);
 
     if (index < 0) {
         return 0

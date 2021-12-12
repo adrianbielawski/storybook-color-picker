@@ -1,4 +1,4 @@
-import { transformPalette } from './utils';
+import { transformPalette, findDefaultPaletteIndex } from './utils';
 
 describe('transformPalette', () => {
     const inputAsArray = [{
@@ -53,3 +53,26 @@ describe('transformPalette', () => {
         expect(output).toEqual(expected);
     })
 });
+
+describe('findDefaultPaletteIndex', () => {
+    const palettes = [
+      {
+        name: 'palette name',
+        palette: { '100': '#fff' },
+      },
+      {
+        name: 'palette',
+        palette: { '100': '#000' },
+      },
+    ]
+
+    it.each([
+     ['name is on the list', 'palette name', 0],  
+     ['name is on the list', 'palette', 1],  
+     ['name is NOT on the list', 'pal', 0],  
+    ])('return correct index when %s', (desc, defaultPalette, expected) => {
+        const output = findDefaultPaletteIndex(palettes, defaultPalette)
+        
+        expect(output).toEqual(expected);
+    })
+})

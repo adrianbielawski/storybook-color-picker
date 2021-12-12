@@ -22,23 +22,23 @@ const List = (props: Props<any>) => {
         };
 
         return (
-            <button
+            <div
                 key={i}
                 onClick={onItemClick}
                 css={css`
-                        background-color: #fff;
-                        padding: 0;
-                        border: none;
-                        width: 100%;
-                        display: block;
-                    `}
+                    background-color: #fff;
+                    padding: 0;
+                    border: none;
+                    width: 100%;
+                    display: block;
+                `}
             >
                 <ItemComponent
                     item={item}
                     index={i}
                     key={i}
                 />
-            </button>
+            </div>
         )
     });
 

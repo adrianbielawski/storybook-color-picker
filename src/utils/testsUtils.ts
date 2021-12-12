@@ -1,0 +1,1 @@
+export const automation = (name: string) => `[data-automation="${name}"]`
