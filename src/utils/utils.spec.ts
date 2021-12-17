@@ -1,6 +1,34 @@
 import { inputAsArray } from './testsUtils'
 import * as utils from './utils'
 
+describe('validateShade', () => {
+	beforeEach(() => {
+		jest.clearAllMocks()
+		global.CSS = {
+			supports: jest.fn(),
+			escape: jest.fn(),
+		}
+		jest.spyOn(utils, 'getInvalidShadeMessage')
+	})
+
+	it.each([
+		['true', 'valid', true, true],
+		['undefined', 'invalid and logs warning', false, undefined],
+	])('returns %s if color is %s', (desc1, desc2, isValid, expected) => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(isValid)
+
+		const output = utils.validateShade('foo', 'bar', 'baz')
+		
+		if (!isValid) {
+			expect(utils.getInvalidShadeMessage).toHaveBeenCalledWith('foo', 'bar', 'baz')
+		} else {
+			expect(utils.getInvalidShadeMessage).not.toHaveBeenCalled()
+		}
+
+		expect(output).toBe(expected)
+	})
+})
+
 describe('validateArrayPalette', () => {
 	beforeEach(() => {
 		jest.clearAllMocks()
