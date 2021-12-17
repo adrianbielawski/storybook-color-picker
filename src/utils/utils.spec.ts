@@ -1,93 +1,147 @@
-import { PaletteObj, StatePalettes } from 'src/colorPicker/types'
-import { transformPalette, findDefaultPaletteIndex } from './utils'
+import { inputAsArray } from './testsUtils'
+import * as utils from './utils'
 
-describe('transformPalette', () => {
-	const inputAsArray: PaletteObj = {
-		name: 'foo',
-		palette: [
-			{
-				label: 'light',
-				values: [
-					{
-						label: '100',
-						value: '#fff',
-					},
-				],
-			},
-		],
-	}
-
-	const inputAsObject: PaletteObj = {
-		name: 'foo',
-		palette: {
-			light: {
-				100: '#fff',
-			},
-		},
-	}
-
-	const inputAsSimpleObject: PaletteObj = {
-		name: 'foo',
-		palette: {
-			white: '#fff',
-		},
-	}
-
-	const inputAsMixedObject: PaletteObj = {
-		name: 'foo',
-		palette: {
-			...inputAsSimpleObject.palette,
-			...inputAsObject.palette,
-		},
-	}
-
-	const expected = [
-		{
-			label: 'light',
-			values: [
-				{
-					label: '100',
-					value: '#fff',
-				},
-			],
-		},
-	]
-
-	const expectedFromSimpleObject = [
-		{
-			label: 'white',
-			values: [
-				{
-					label: 'white',
-					value: '#fff',
-				},
-			],
-		},
-	]
-
+describe('validateArrayPalette', () => {
 	beforeEach(() => {
+		jest.clearAllMocks()
 		global.CSS = {
 			supports: jest.fn(),
-			escape: jest.fn()
+			escape: jest.fn(),
 		}
+		jest.spyOn(utils, 'validateShade')
+		jest.spyOn(utils, 'warn')
+		jest.spyOn(utils, 'getInvalidColorMessage')
+		jest.spyOn(utils, 'getInvalidPaletteMessage')
 	})
-
-	it.each([
-		['input as array', inputAsArray, expected],
-		['input as object', inputAsObject, expected],
-		['input as simple object', inputAsSimpleObject, expectedFromSimpleObject],
-		['input as mixed object', inputAsMixedObject, [...expectedFromSimpleObject, ...expected]],
-	])('returns transformed palette correctly when %s', (desc, input, expectedPalette) => {
-		(global.CSS.supports as jest.Mock).mockReturnValue(true)
+	
+	it('returns transformed palette correctly when input as array', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true)
 
 		const expected = {
 			name: 'foo',
-			palette: expectedPalette,
+			palette: [
+				{
+					label: 'light',
+					values: [
+						{
+							label: '100',
+							value: '#fff',
+						},
+						{
+							label: '200',
+							value: '#eee',
+						},
+					],
+				},
+				{
+					label: 'dark',
+					values: [
+						{
+							label: '100',
+							value: '#000',
+						},
+						{
+							label: '200',
+							value: '#111',
+						},
+					],
+				},
+			],
 		}
 
-		const output = transformPalette(input)
+		const output = utils.validateArrayPalette(inputAsArray)
 
+		expect(utils.validateShade).toHaveBeenCalledTimes(4)
+		expect(utils.getInvalidColorMessage).not.toHaveBeenCalled()
+		expect(utils.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(global.CSS.supports).toBeCalledTimes(4)
 		expect(output).toEqual(expected)
+	})
+
+	it('returns transformed palette correctly and logs warning when input as array with invalid shade', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true).mockReturnValueOnce(false)
+
+		const expected = {
+			name: 'foo',
+			palette: [
+				{
+					label: 'light',
+					values: [
+						{
+							label: '200',
+							value: '#eee',
+						},
+					],
+				},
+				{
+					label: 'dark',
+					values: [
+						{
+							label: '100',
+							value: '#000',
+						},
+						{
+							label: '200',
+							value: '#111',
+						},
+					],
+				},
+			],
+		}
+
+		const output = utils.validateArrayPalette(inputAsArray)
+
+		expect(utils.validateShade).toHaveBeenCalledTimes(4)
+		expect(utils.getInvalidColorMessage).not.toHaveBeenCalled()
+		expect(utils.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(utils.warn).toHaveBeenCalledTimes(1)
+		expect(global.CSS.supports).toBeCalledTimes(4)
+		expect(output).toEqual(expected)
+	})
+
+	it('returns transformed palette correctly and logs warnings when input as array with invalid all color shades', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true).mockReturnValueOnce(false).mockReturnValueOnce(false)
+
+		const expected = {
+			name: 'foo',
+			palette: [
+				{
+					label: 'dark',
+					values: [
+						{
+							label: '100',
+							value: '#000',
+						},
+						{
+							label: '200',
+							value: '#111',
+						},
+					],
+				},
+			],
+		}
+
+		const output = utils.validateArrayPalette(inputAsArray)
+
+		expect(utils.validateShade).toHaveBeenCalledTimes(4)
+		expect(utils.getInvalidColorMessage).toHaveBeenCalledTimes(1)
+		expect(utils.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(utils.warn).toHaveBeenCalledTimes(3)
+		expect(global.CSS.supports).toHaveBeenCalledTimes(4)
+		expect(output).toEqual(expected)
+	})
+
+	it('returns undefined and logs warnings if no valid shades', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(false)
+
+		const output = utils.validateArrayPalette(inputAsArray)
+
+		expect(utils.validateShade).toHaveBeenCalledTimes(4)
+		expect(utils.getInvalidColorMessage).toHaveBeenCalledTimes(2)
+		expect(utils.getInvalidPaletteMessage).toHaveBeenCalledTimes(1)
+		expect(utils.warn).toHaveBeenCalledTimes(7)
+		expect(global.CSS.supports).toHaveBeenCalledTimes(4)
+		expect(output).toEqual(undefined)
 	})
 })
 
@@ -127,13 +181,13 @@ describe('findDefaultPaletteIndex', () => {
 		['name is on the list', 'palette name', 0],
 		['name is on the list', 'palette', 1],
 		['name is NOT on the list', 'foo', -1],
-	])('return correct index when %s', (desc, defaultPalette, expected) => {
+	])('return correct index when %s', (_, defaultPalette, expected) => {
 		const input = {
 			default: defaultPalette,
 			palettes,
 		}
 
-		const output = findDefaultPaletteIndex(input)
+		const output = utils.findDefaultPaletteIndex(input)
 
 		expect(output).toEqual(expected)
 	})

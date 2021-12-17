@@ -1,51 +1,63 @@
 import { ColorPaletteAsArray, PaletteObj, ShadesType, ShadeType, StatePalettes } from "src/colorPicker/types";
 import { Story, Group } from "@storybook/api/dist/ts3.9/lib/stories";
 
-const getInvalidShadeMessage = (paletteName: string, colorLabel: string, shadeLabel: string) => (
+export const getInvalidShadeMessage = (paletteName: string, colorLabel: string, shadeLabel: string) => (
     `%cInvalid color value in ${paletteName}: ${colorLabel} -> ${shadeLabel}. It has been removed from palette.`
 )
 
-const getInvalidCollorMessage = (paletteName: string, colorName: string) => (
+export const getInvalidColorMessage = (paletteName: string, colorName: string) => (
     `%cNo valid colors in ${paletteName} -> ${colorName}. It has been removed from palette.`
 )
 
-const getInvalidPaletteMessage = (paletteName: string) => (
+export const getInvalidPaletteMessage = (paletteName: string) => (
     `%cNo valid colors in ${paletteName}. Palette has been removed.`
 )
 
-const warn = (message: string) => console.warn(message, 'color: red')
+export const warn = (message: string) => console.warn(message, 'color: red')
 
-const validateArrayPalette = (paletteObj: PaletteObj) => {
+export const validateShade = (paletteName: string, label: string, value: string) => {
+    const isValid = CSS.supports('color', value)
+
+    if (!isValid) {
+        const message = exports.getInvalidShadeMessage(paletteName, label, value)
+        exports.warn(message)
+        return
+    }
+
+    return true
+}
+
+export const validateArrayPalette = (paletteObj: PaletteObj) => {
     const palette = paletteObj.palette as ColorPaletteAsArray[]
     const validatedPalette: ColorPaletteAsArray[] = []
-
+    let removedColors = 0
+    
     palette.forEach((p, i) => {
+        const index = i - removedColors
         validatedPalette.push({ label: p.label, values: [] })
         const shades: ShadeType[] = []
 
         p.values.forEach(v => {
-            const isValid = CSS.supports('color', v.value)
-            if (!isValid) {
-                const message = getInvalidShadeMessage(paletteObj.name, p.label, v.label)
-                warn(message)
-                return
+            const isValid = exports.validateShade(paletteObj.name, p.label, v.label)
+            if (isValid) {
+                shades.push(v)
             }
-            shades.push(v)
         })
 
         if (!shades.length) {
-            validatedPalette.splice(i, 1)
-            const message = getInvalidCollorMessage(paletteObj.name, p.label)
-            warn(message)
+            validatedPalette.splice(index, 1)
+            removedColors++
+            const message = exports.getInvalidColorMessage(paletteObj.name, p.label)
+            exports.warn(message)
             return
         }
-
-        validatedPalette[i].values = shades
+        
+        validatedPalette[index].values = shades
     })
 
     if (!validatedPalette.length) {
-        const message = getInvalidPaletteMessage(paletteObj.name)
-        warn(message)
+        const message = exports.getInvalidPaletteMessage(paletteObj.name)
+        exports.warn(message)
         return
     }
 
@@ -55,27 +67,13 @@ const validateArrayPalette = (paletteObj: PaletteObj) => {
     }
 }
 
-const transformObjectShade = (paletteName: string, label: string, value: string) => {
-    const isValid = CSS.supports('color', value)
-
-    if (!isValid) {
-        const message = getInvalidShadeMessage(paletteName, label, value)
-        warn(message)
-        return
-    }
-
-    return {
-        label,
-        value,
-    }
-}
 const transformObjectColors = (paletteName: string, colorLabel: string, colorValue: ShadesType) => {
     const colorPaletteAsArray: ColorPaletteAsArray = { label: colorLabel, values: [] }
     const isString = (typeof colorValue) === 'string'
 
     if (isString) {
-        const objectShade = transformObjectShade(paletteName, colorLabel, colorValue)
-        if (!objectShade) {
+        const isValid = validateShade(paletteName, colorLabel, colorValue)
+        if (!isValid) {
             return
         }
         colorPaletteAsArray.values.push({
@@ -87,8 +85,8 @@ const transformObjectColors = (paletteName: string, colorLabel: string, colorVal
     }
 
     Object.entries(colorValue).forEach(([label, value]) => {
-        const objectShade = transformObjectShade(paletteName, label, value)
-        if (!objectShade) {
+        const validatedShade = validateShade(paletteName, label, value)
+        if (!validatedShade) {
             return
         }
         colorPaletteAsArray.values.push({
@@ -106,7 +104,7 @@ const transformObjectPalette = (paletteObj: PaletteObj) => {
     Object.entries(paletteObj.palette).forEach(([colorLabel, colorValues]) => {
         const objectColors = transformObjectColors(paletteObj.name, colorLabel, colorValues)
         if (!objectColors?.values?.length) {
-            const message = getInvalidCollorMessage(paletteObj.name, colorLabel)
+            const message = getInvalidColorMessage(paletteObj.name, colorLabel)
             warn(message)
             return
         }
