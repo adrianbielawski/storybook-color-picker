@@ -67,12 +67,12 @@ export const validateArrayPalette = (paletteObj: PaletteObj) => {
     }
 }
 
-const transformObjectColors = (paletteName: string, colorLabel: string, colorValue: ShadesType) => {
+export const transformObjectColors = (paletteName: string, colorLabel: string, colorValue: ShadesType) => {
     const colorPaletteAsArray: ColorPaletteAsArray = { label: colorLabel, values: [] }
     const isString = (typeof colorValue) === 'string'
 
     if (isString) {
-        const isValid = validateShade(paletteName, colorLabel, colorValue)
+        const isValid = exports.validateShade(paletteName, colorLabel, colorValue)
         if (!isValid) {
             return
         }
@@ -85,8 +85,8 @@ const transformObjectColors = (paletteName: string, colorLabel: string, colorVal
     }
 
     Object.entries(colorValue).forEach(([label, value]) => {
-        const validatedShade = validateShade(paletteName, label, value)
-        if (!validatedShade) {
+        const isValid = exports.validateShade(paletteName, label, value)
+        if (!isValid) {
             return
         }
         colorPaletteAsArray.values.push({
@@ -95,10 +95,14 @@ const transformObjectColors = (paletteName: string, colorLabel: string, colorVal
         })
     })
 
+    if (!colorPaletteAsArray.values.length) {
+        return
+    }
+
     return colorPaletteAsArray
 };
 
-const transformObjectPalette = (paletteObj: PaletteObj) => {
+export const transformObjectPalette = (paletteObj: PaletteObj) => {
     const validatedPalette: ColorPaletteAsArray[] = []
 
     Object.entries(paletteObj.palette).forEach(([colorLabel, colorValues]) => {
