@@ -176,6 +176,10 @@ describe('validateArrayPalette', () => {
 describe('transformObjectColors', () => {
 	beforeEach(() => {
 		jest.clearAllMocks()
+		global.CSS = {
+			supports: jest.fn(),
+			escape: jest.fn(),
+		}
 		jest.spyOn(utils, 'validateShade')
 	})
 
@@ -262,6 +266,10 @@ describe('transformObjectColors', () => {
 describe('transformObjectPalette', () => {
 	beforeEach(() => {
 		jest.clearAllMocks()
+		global.CSS = {
+			supports: jest.fn(),
+			escape: jest.fn(),
+		}
 		jest.spyOn(utils, 'transformObjectColors')
 		jest.spyOn(utils, 'getInvalidColorMessage')
 		jest.spyOn(utils, 'getInvalidPaletteMessage')
@@ -366,6 +374,77 @@ describe('transformObjectPalette', () => {
 		expect(utils.getInvalidColorMessage).toHaveBeenCalledTimes(3)
 		expect(utils.getInvalidPaletteMessage).toHaveBeenCalledTimes(1)
 		expect(output).toEqual(undefined)
+	})
+})
+
+describe('transformPalette', () => {
+	beforeEach(() => {
+		jest.clearAllMocks()
+		global.CSS = {
+			supports: jest.fn(),
+			escape: jest.fn(),
+		}
+		jest.spyOn(utils, 'validateArrayPalette')
+		jest.spyOn(utils, 'transformObjectPalette')
+	})
+
+	it('return transformed palette when palette as array', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true)
+		const output = utils.transformPalette(paletteAsArray)
+
+		expect(utils.validateArrayPalette).toHaveBeenCalledTimes(1)
+		expect(utils.transformObjectPalette).not.toHaveBeenCalled()
+		expect(output).toEqual(paletteAsArray)
+	})
+
+	it('return transformed palette when palette as object', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true)
+		const output = utils.transformPalette(paletteAsObject)
+		
+		const expected = {
+			name: 'foo',
+			palette: [
+				{
+					label: 'white',
+					values: [
+						{
+							label: 'white',
+							value: '#fff',
+						},
+					],
+				},
+				{
+					label: 'light',
+					values: [
+						{
+							label: '100',
+							value: '#fff',
+						},
+						{
+							label: '200',
+							value: '#eee',
+						},
+					],
+				},
+				{
+					label: 'dark',
+					values: [
+						{
+							label: '100',
+							value: '#000',
+						},
+						{
+							label: '200',
+							value: '#111',
+						},
+					],
+				},
+			],
+		}
+
+		expect(utils.validateArrayPalette).not.toHaveBeenCalled()
+		expect(utils.transformObjectPalette).toHaveBeenCalledTimes(1)
+		expect(output).toEqual(expected)
 	})
 })
 

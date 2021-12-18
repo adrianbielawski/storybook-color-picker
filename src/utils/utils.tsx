@@ -129,10 +129,10 @@ export const transformObjectPalette = (paletteObj: PaletteObj) => {
 
 export const transformPalette = (paletteObj: PaletteObj) => {
     if (Array.isArray(paletteObj.palette)) {
-        return validateArrayPalette(paletteObj);
+        return exports.validateArrayPalette(paletteObj);
     }
 
-    return transformObjectPalette(paletteObj)
+    return exports.transformObjectPalette(paletteObj)
 };
 
 export const findDefaultPaletteIndex = (palettes: StatePalettes) => {

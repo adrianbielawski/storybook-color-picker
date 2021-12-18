@@ -1,4 +1,4 @@
-import { PaletteObj } from "src/colorPicker/types"
+import { PaletteObj } from 'src/colorPicker/types'
 
 export const automation = (name: string) => `[data-automation="${name}"]`
 
@@ -37,7 +37,7 @@ export const paletteAsArray: PaletteObj = {
 export const paletteAsObject: PaletteObj = {
 	name: 'foo',
 	palette: {
-    white: '#fff',
+		white: '#fff',
 		light: {
 			100: '#fff',
 			200: '#eee',
