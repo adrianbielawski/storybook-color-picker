@@ -259,6 +259,116 @@ describe('transformObjectColors', () => {
 	})
 })
 
+describe('transformObjectPalette', () => {
+	beforeEach(() => {
+		jest.clearAllMocks()
+		jest.spyOn(utils, 'transformObjectColors')
+		jest.spyOn(utils, 'getInvalidColorMessage')
+		jest.spyOn(utils, 'getInvalidPaletteMessage')
+	})
+
+	it('returns transformed palette corectly', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true)
+		const output = utils.transformObjectPalette(paletteAsObject)
+
+		const expected = {
+			name: 'foo',
+			palette: [
+				{
+					label: 'white',
+					values: [{
+						label: 'white',
+						value: '#fff',
+					}]
+				},
+				{
+					label: 'light',
+					values: [
+						{
+							label: '100',
+							value: '#fff',
+						},
+						{
+							label: '200',
+							value: '#eee',
+						},
+					],
+				},
+				{
+					label: 'dark',
+					values: [
+						{
+							label: '100',
+							value: '#000',
+						},
+						{
+							label: '200',
+							value: '#111',
+						},
+					],
+				},
+			],
+		}
+
+		expect(utils.transformObjectColors).toHaveBeenCalledTimes(3)
+		expect(utils.getInvalidColorMessage).not.toHaveBeenCalled()
+		expect(utils.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(output).toEqual(expected)
+	})
+
+	it('returns transformed palette corectly when values of one color are invalid', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(true).mockReturnValueOnce(false)
+		const output = utils.transformObjectPalette(paletteAsObject)
+
+		const expected = {
+			name: 'foo',
+			palette: [
+				{
+					label: 'light',
+					values: [
+						{
+							label: '100',
+							value: '#fff',
+						},
+						{
+							label: '200',
+							value: '#eee',
+						},
+					],
+				},
+				{
+					label: 'dark',
+					values: [
+						{
+							label: '100',
+							value: '#000',
+						},
+						{
+							label: '200',
+							value: '#111',
+						},
+					],
+				},
+			],
+		}
+
+		expect(utils.transformObjectColors).toHaveBeenCalledTimes(3)
+		expect(utils.getInvalidColorMessage).toHaveBeenCalledTimes(1)
+		expect(utils.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(output).toEqual(expected)
+	})
+	
+	it('returns undefined when values of all colors are invalid', () => {
+		;(global.CSS.supports as jest.Mock).mockReturnValue(false)
+		const output = utils.transformObjectPalette(paletteAsObject)
+		
+		expect(utils.transformObjectColors).toHaveBeenCalledTimes(3)
+		expect(utils.getInvalidColorMessage).toHaveBeenCalledTimes(3)
+		expect(utils.getInvalidPaletteMessage).toHaveBeenCalledTimes(1)
+		expect(output).toEqual(undefined)
+	})
+})
+
 describe('findDefaultPaletteIndex', () => {
 	const palettes = [
 		{

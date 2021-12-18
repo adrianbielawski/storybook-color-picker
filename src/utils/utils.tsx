@@ -106,17 +106,17 @@ export const transformObjectPalette = (paletteObj: PaletteObj) => {
     const validatedPalette: ColorPaletteAsArray[] = []
 
     Object.entries(paletteObj.palette).forEach(([colorLabel, colorValues]) => {
-        const objectColors = transformObjectColors(paletteObj.name, colorLabel, colorValues)
-        if (!objectColors?.values?.length) {
-            const message = getInvalidColorMessage(paletteObj.name, colorLabel)
+        const colorPaletteAsArray = exports.transformObjectColors(paletteObj.name, colorLabel, colorValues)
+        if (!colorPaletteAsArray?.values?.length) {
+            const message = exports.getInvalidColorMessage(paletteObj.name, colorLabel)
             warn(message)
             return
         }
-        validatedPalette.push(objectColors)
+        validatedPalette.push(colorPaletteAsArray)
     })
 
     if (!validatedPalette.length) {
-        const message = getInvalidPaletteMessage(paletteObj.name)
+        const message = exports.getInvalidPaletteMessage(paletteObj.name)
         warn(message)
         return
     }
