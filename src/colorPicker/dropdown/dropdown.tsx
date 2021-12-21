@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 // Utils
-import useOutsideClick from "../../utils/useOutsideClick";
+import useOutsideClick from "../../hooks/useOutsideClick";
 // Components
 import List from "./list";
 /** @jsx jsx */

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import { useParameter, useGlobals, useStorybookState, useAddonState, useStorybookApi } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
 // Utils
-import { findDefaultPaletteIndex, getColorControls, transformPalette } from "../utils/utils";
+import { findDefaultPaletteIndex, getColorControls, transformPalette } from "../utils";
 import { ADDON_ID } from "../constants";
 // Types
 import { AddonState, ColorPalettes, StatePalettes, StorybookState } from "./types";
