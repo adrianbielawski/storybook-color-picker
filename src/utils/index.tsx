@@ -1,3 +1,3 @@
-export * from "./getColorControls";
-export * from "./findDefayltPaletteIndex";
-export * from "./transformPalette";
+export * from "./getColorControls"
+export * from "./findDefayltPaletteIndex"
+export { default as transformPalette } from "./transformPalette"

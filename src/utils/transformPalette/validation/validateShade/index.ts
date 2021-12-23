@@ -1,6 +1,6 @@
-import { getInvalidShadeMessage, warn } from "./messages"
+import { getInvalidShadeMessage, warn } from '../../messages'
 
-export const validateShade = (paletteName: string, label: string, value: string) => {
+const validateShade = (paletteName: string, label: string, value: string) => {
 	const isValid = CSS.supports('color', value)
 
 	if (!isValid) {
@@ -11,3 +11,5 @@ export const validateShade = (paletteName: string, label: string, value: string)
 
 	return true
 }
+
+export default validateShade 
