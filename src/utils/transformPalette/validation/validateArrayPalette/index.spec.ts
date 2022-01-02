@@ -1,21 +1,24 @@
 import { darkArray, lightArray, paletteAsArray, whiteArray } from '../../../testsUtils'
 import validateShade from '../validateShade'
 import validateArrayPalette from '../validateArrayPalette'
-import * as messages from '../..//messages'
+import * as messages from '../../messages'
 
 jest.mock('../validateShade')
 
 describe('validateArrayPalette', () => {
 	let warnSpy: jest.SpyInstance
+	let getInvalidColorMessageSpy: jest.SpyInstance
+	let getInvalidPaletteMessageSpy: jest.SpyInstance
+
 
 	beforeEach(() => {
 		jest.resetAllMocks()
 		warnSpy = jest.spyOn(messages, 'warn')
-		jest.spyOn(messages, 'getInvalidColorMessage')
-		jest.spyOn(messages, 'getInvalidPaletteMessage')
+		getInvalidColorMessageSpy = jest.spyOn(messages, 'getInvalidColorMessage')
+		getInvalidPaletteMessageSpy = jest.spyOn(messages, 'getInvalidPaletteMessage')
 	})
 
-	it.only('validates all shades', () => {
+	it('validates all shades', () => {
 		;(validateShade as jest.Mock).mockReturnValue(true)
 
 		validateArrayPalette(paletteAsArray)
@@ -28,7 +31,20 @@ describe('validateArrayPalette', () => {
 		expect(validateShade).toHaveBeenNthCalledWith(5, 'foo', 'white', '#fff')
 	})
 
-	it.only('returns transformed palette correctly', () => {
+	it.only('gets invalid messages and calls warn', () => {
+		;(validateShade as jest.Mock).mockReturnValue(false)
+
+		validateArrayPalette(paletteAsArray)
+
+		expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(3)
+		expect(getInvalidColorMessageSpy).toHaveBeenNthCalledWith(1, 'foo', 'light')
+		expect(getInvalidColorMessageSpy).toHaveBeenNthCalledWith(2, 'foo', 'dark')
+		expect(getInvalidColorMessageSpy).toHaveBeenNthCalledWith(3, 'foo', 'white')
+		expect(getInvalidPaletteMessageSpy).toHaveBeenCalledTimes(1)
+		expect(getInvalidPaletteMessageSpy).toHaveBeenCalledWith('foo')
+	})
+
+	it('returns transformed palette correctly', () => {
 		;(validateShade as jest.Mock).mockReturnValue(true)
 
 		const expected = {
@@ -38,8 +54,8 @@ describe('validateArrayPalette', () => {
 
 		const output = validateArrayPalette(paletteAsArray)
 
-		expect(messages.warn).not.toHaveBeenCalled()
-		expect(messages.getInvalidColorMessage).not.toHaveBeenCalled()
+		expect(warnSpy).not.toHaveBeenCalled()
+		expect(getInvalidColorMessageSpy).not.toHaveBeenCalled()
 		expect(messages.getInvalidPaletteMessage).not.toHaveBeenCalled()
 		expect(output).toEqual(expected)
 	})
@@ -66,10 +82,9 @@ describe('validateArrayPalette', () => {
 
 		const output = validateArrayPalette(paletteAsArray)
 
-		expect(validateShade).toHaveBeenCalledTimes(5)
-		expect(messages.warn).not.toHaveBeenCalled()
-		expect(messages.getInvalidColorMessage).not.toHaveBeenCalled()
-		expect(messages.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(warnSpy).not.toHaveBeenCalled()
+		expect(getInvalidColorMessageSpy).not.toHaveBeenCalled()
+		expect(getInvalidPaletteMessageSpy).not.toHaveBeenCalled()
 		expect(output).toEqual(expected)
 	})
 
@@ -86,10 +101,9 @@ describe('validateArrayPalette', () => {
 
 		const output = validateArrayPalette(paletteAsArray)
 
-		expect(validateShade).toHaveBeenCalledTimes(5)
-		expect(messages.warn).toHaveBeenCalledTimes(1)
-		expect(messages.getInvalidColorMessage).toHaveBeenCalledTimes(1)
-		expect(messages.getInvalidPaletteMessage).not.toHaveBeenCalled()
+		expect(warnSpy).toHaveBeenCalledTimes(1)
+		expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(1)
+		expect(getInvalidPaletteMessageSpy).not.toHaveBeenCalled()
 		expect(output).toEqual(expected)
 	})
 
@@ -98,10 +112,9 @@ describe('validateArrayPalette', () => {
 
 		const output = validateArrayPalette(paletteAsArray)
 
-		expect(validateShade).toHaveBeenCalledTimes(5)
-		expect(messages.warn).toHaveBeenCalledTimes(4)
-		expect(messages.getInvalidColorMessage).toHaveBeenCalledTimes(3)
-		expect(messages.getInvalidPaletteMessage).toHaveBeenCalledTimes(1)
+		expect(warnSpy).toHaveBeenCalledTimes(4)
+		expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(3)
+		expect(getInvalidPaletteMessageSpy).toHaveBeenCalledTimes(1)
 		expect(output).toBeUndefined()
 	})
 })
