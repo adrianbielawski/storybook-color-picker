@@ -1,25 +1,23 @@
 import React from "react";
-import { useAddonState } from '@storybook/api';
 import { css, jsx } from '@emotion/react';
-// Constants
-import { ADDON_ID } from "../../constants";
 // Types
-import { AddonState, PaletteObj } from "../types";
+import { StatePalette } from "../types";
 /** @jsx jsx */
 
 type Props = {
-    item: PaletteObj,
+    item: StatePalette,
+    itemProps: {
+        current: number
+    }
     index: number,
 };
 
 const Palette = (props: Props) => {
-    const [addonState] = useAddonState<AddonState>(ADDON_ID)
-
     if (!props.item.palette) {
         return null
     }
 
-    const backgroundColor = addonState?.currentPalette === props.index ? '#eee' : '#fff'
+    const backgroundColor = props.itemProps.current === props.index ? '#eee' : '#fff'
 
     return (
         <p

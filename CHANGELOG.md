@@ -1,5 +1,20 @@
 # Changelog
 
+### v2.2.0
+
+02.01.2022.
+
+**Changed**
+
+No breaking changes
+
+* Color validation added.
+    Automatically removes all invalid color values from palettes
+
+* Keep picker settings for each story.
+
+-----
+
 ### v2.1.5
 
 30.11.2021.

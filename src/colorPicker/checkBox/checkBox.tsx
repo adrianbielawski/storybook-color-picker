@@ -31,12 +31,13 @@ const CheckBox = (props: Props) => (
                 border-radius: .2em;
                 width: 1.3em;
                 height: 1.3em;
-                margin-right: .5em
+                margin-right: .5em;
             `}
         >
-            {props.checked && (
-                <FontAwesomeIcon icon={faCheck} color="#777" />
-            )}
+            <FontAwesomeIcon
+                icon={faCheck}
+                color={props.checked ? "#777" : 'transparent'}
+            />
         </div>
         {props.label && (
             <p

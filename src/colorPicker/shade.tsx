@@ -54,7 +54,7 @@ const Shade = (props: Props) => {
             setCopied(true);
             copy(props.shade.value)
         }
-    }, [globals.selectedArgs]);
+    }, [globals.selectedArgs, globals.copyOnClick]);
 
     return (
         <div>
