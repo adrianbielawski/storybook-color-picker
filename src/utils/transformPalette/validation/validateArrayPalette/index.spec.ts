@@ -6,10 +6,10 @@ import * as messages from '../../messages'
 jest.mock('../validateShade')
 
 describe('validateArrayPalette', () => {
+	const validateShadeMock = validateShade as jest.Mock
 	let warnSpy: jest.SpyInstance
 	let getInvalidColorMessageSpy: jest.SpyInstance
 	let getInvalidPaletteMessageSpy: jest.SpyInstance
-
 
 	beforeEach(() => {
 		jest.resetAllMocks()
@@ -19,7 +19,7 @@ describe('validateArrayPalette', () => {
 	})
 
 	it('validates all shades', () => {
-		;(validateShade as jest.Mock).mockReturnValue(true)
+		validateShadeMock.mockReturnValue(true)
 
 		validateArrayPalette(paletteAsArray)
 
@@ -31,8 +31,8 @@ describe('validateArrayPalette', () => {
 		expect(validateShade).toHaveBeenNthCalledWith(5, 'foo', 'white', '#fff')
 	})
 
-	it.only('gets invalid messages and calls warn', () => {
-		;(validateShade as jest.Mock).mockReturnValue(false)
+	it('gets invalid messages and calls warn', () => {
+		validateShadeMock.mockReturnValue(false)
 
 		validateArrayPalette(paletteAsArray)
 
@@ -45,7 +45,7 @@ describe('validateArrayPalette', () => {
 	})
 
 	it('returns transformed palette correctly', () => {
-		;(validateShade as jest.Mock).mockReturnValue(true)
+		validateShadeMock.mockReturnValue(true)
 
 		const expected = {
 			name: 'foo',
@@ -61,7 +61,9 @@ describe('validateArrayPalette', () => {
 	})
 
 	it('returns transformed palette correctly and logs warning when invalid shade', () => {
-		;(validateShade as jest.Mock).mockReturnValueOnce(false).mockReturnValue(true)
+		validateShadeMock.mockReturnValueOnce(false).mockReturnValue(true)
+
+		const output = validateArrayPalette(paletteAsArray)
 
 		const expected = {
 			name: 'foo',
@@ -80,8 +82,6 @@ describe('validateArrayPalette', () => {
 			],
 		}
 
-		const output = validateArrayPalette(paletteAsArray)
-
 		expect(warnSpy).not.toHaveBeenCalled()
 		expect(getInvalidColorMessageSpy).not.toHaveBeenCalled()
 		expect(getInvalidPaletteMessageSpy).not.toHaveBeenCalled()
@@ -89,17 +89,14 @@ describe('validateArrayPalette', () => {
 	})
 
 	it('returns transformed palette correctly and logs warnings when invalid all color shades', () => {
-		;(validateShade as jest.Mock)
-			.mockReturnValueOnce(false)
-			.mockReturnValueOnce(false)
-			.mockReturnValue(true)
+		validateShadeMock.mockReturnValueOnce(false).mockReturnValueOnce(false).mockReturnValue(true)
+
+		const output = validateArrayPalette(paletteAsArray)
 
 		const expected = {
 			name: 'foo',
 			palette: [darkArray, whiteArray],
 		}
-
-		const output = validateArrayPalette(paletteAsArray)
 
 		expect(warnSpy).toHaveBeenCalledTimes(1)
 		expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(1)
@@ -108,7 +105,7 @@ describe('validateArrayPalette', () => {
 	})
 
 	it('returns undefined and logs warnings if no valid shades', () => {
-		;(validateShade as jest.Mock).mockReturnValue(false)
+		validateShadeMock.mockReturnValue(false)
 
 		const output = validateArrayPalette(paletteAsArray)
 

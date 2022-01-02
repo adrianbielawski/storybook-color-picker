@@ -6,6 +6,7 @@ import * as messages from '../../messages'
 jest.mock('../../validation/validateObjectColors')
 
 describe('transformObjectPalette', () => {
+	const validateObjectColorsMock = validateObjectColors as jest.Mock
 	beforeEach(() => {
 		jest.resetAllMocks()
 		jest.spyOn(messages, 'getInvalidColorMessage')
@@ -13,7 +14,7 @@ describe('transformObjectPalette', () => {
 	})
 
 	it('returns transformed palette corectly', () => {
-		(validateObjectColors as jest.Mock)
+		validateObjectColorsMock
 			.mockReturnValueOnce(lightArray)
 			.mockReturnValueOnce(darkArray)
 			.mockReturnValueOnce(whiteArray)
@@ -31,7 +32,7 @@ describe('transformObjectPalette', () => {
 	})
 
 	it('returns transformed palette corectly when values of one color are invalid', () => {
-		(validateObjectColors as jest.Mock)
+		validateObjectColorsMock
 			.mockReturnValueOnce(undefined)
 			.mockReturnValueOnce(darkArray)
 			.mockReturnValueOnce(whiteArray)
@@ -50,7 +51,7 @@ describe('transformObjectPalette', () => {
 	})
 
 	it('returns undefined when values of all colors are invalid', () => {
-		(validateObjectColors as jest.Mock).mockReturnValue(undefined)
+		validateObjectColorsMock.mockReturnValue(undefined)
 
 		const output = transformObjectPalette(paletteAsObject)
 

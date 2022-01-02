@@ -5,31 +5,55 @@ import validateObjectColors from '../validateObjectColors'
 jest.mock('../validateShade')
 
 describe('validateObjectColors', () => {
+	const validateShadeMock = validateShade as jest.Mock
+
 	beforeEach(() => {
 		jest.resetAllMocks()
 	})
 
-	it('returns transformed colors correctly when value as string', () => {
-		;(validateShade as jest.Mock).mockReturnValue(true)
+	it('calls validateShade correctly when value as string', () => {
+		validateShadeMock.mockReturnValue(true)
 		const color = Object.entries(whiteObject)[0]
-		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
+
+		validateObjectColors(paletteAsObject.name, color[0], color[1])
 
 		expect(validateShade).toHaveBeenCalledTimes(1)
+		expect(validateShade).toHaveBeenCalledWith('bar', 'white', '#fff')
+	})
+
+	it('calls validateShade correctly when value as object', () => {
+		validateShadeMock.mockReturnValue(true)
+		const color = Object.entries(lightObject)[0]
+
+		validateObjectColors(paletteAsObject.name, color[0], color[1])
+
+		expect(validateShade).toHaveBeenCalledTimes(2)
+		expect(validateShade).toHaveBeenNthCalledWith(1, 'bar', '100', '#fff')
+		expect(validateShade).toHaveBeenNthCalledWith(2, 'bar', '200', '#eee')
+	})
+
+	it('returns transformed colors correctly when value as string', () => {
+		validateShadeMock.mockReturnValue(true)
+		const color = Object.entries(whiteObject)[0]
+
+		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
+
 		expect(output).toEqual(whiteArray)
 	})
 
 	it('returns undefined and logs wornings when incorect value as string', () => {
-		;(validateShade as jest.Mock).mockReturnValue(false)
+		validateShadeMock.mockReturnValue(false)
 		const color = Object.entries(whiteObject)[0]
+
 		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
 
-		expect(validateShade).toHaveBeenCalledTimes(1)
 		expect(output).toEqual(undefined)
 	})
 
 	it('returns transformed colors correctly when value as object', () => {
-		;(validateShade as jest.Mock).mockReturnValue(true)
+		validateShadeMock.mockReturnValue(true)
 		const color = Object.entries(lightObject)[0]
+
 		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
 
 		expect(validateShade).toHaveBeenCalledTimes(2)
@@ -37,10 +61,8 @@ describe('validateObjectColors', () => {
 	})
 
 	it('returns transformed colors correctly and logs wornings when one incorect object value', () => {
-		;(validateShade as jest.Mock).mockReturnValueOnce(false).mockReturnValue(true)
+		validateShadeMock.mockReturnValueOnce(false).mockReturnValue(true)
 		const color = Object.entries(lightObject)[0]
-		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
-
 		const expected = {
 			label: 'light',
 			values: [
@@ -51,13 +73,16 @@ describe('validateObjectColors', () => {
 			],
 		}
 
+		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
+
 		expect(validateShade).toHaveBeenCalledTimes(2)
 		expect(output).toEqual(expected)
 	})
 
 	it('returns undefined and logs wornings when no corect object values', () => {
-		;(validateShade as jest.Mock).mockReturnValue(false)
+		validateShadeMock.mockReturnValue(false)
 		const color = Object.entries(lightObject)[0]
+		
 		const output = validateObjectColors(paletteAsObject.name, color[0], color[1])
 
 		expect(validateShade).toHaveBeenCalledTimes(2)

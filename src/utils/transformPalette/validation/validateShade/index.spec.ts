@@ -21,6 +21,7 @@ describe('validateShade', () => {
 		const output = validateShade('foo', 'bar', 'baz')
 
 		if (!isValid) {
+			expect(messages.getInvalidShadeMessage).toHaveBeenCalledTimes(1)
 			expect(messages.getInvalidShadeMessage).toHaveBeenCalledWith('foo', 'bar', 'baz')
 		} else {
 			expect(messages.getInvalidShadeMessage).not.toHaveBeenCalled()

@@ -2,16 +2,6 @@ import { PaletteAsArray, PaletteAsObject } from 'src/colorPicker/types'
 
 export const automation = (name: string) => `[data-automation="${name}"]`
 
-export const whiteArray = {
-	label: 'white',
-	values: [
-		{
-			label: 'white',
-			value: '#fff',
-		},
-	],
-}
-
 export const lightArray = {
 	label: 'light',
 	values: [
@@ -36,6 +26,16 @@ export const darkArray = {
 		{
 			label: '200',
 			value: '#111',
+		},
+	],
+}
+
+export const whiteArray = {
+	label: 'white',
+	values: [
+		{
+			label: 'white',
+			value: '#fff',
 		},
 	],
 }
