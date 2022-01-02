@@ -10,13 +10,13 @@ const validateObjectColors = (
 	const isString = (typeof colorValue) === 'string'
 
 	if (isString) {
-		const isValid = validateShade(paletteName, colorLabel, colorValue)
+		const isValid = validateShade(paletteName, colorLabel, colorValue as string)
 		if (!isValid) {
 			return
 		}
 		colorPaletteAsArray.values.push({
 			label: colorLabel,
-			value: colorValue,
+			value: colorValue as string,
 		})
 
 		return colorPaletteAsArray
