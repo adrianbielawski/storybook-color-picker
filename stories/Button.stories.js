@@ -32,6 +32,7 @@ Secondary.args = {
 Secondary.parameters = {
   defaultColorPalette: 'Colorfull palette',
   applyColorTo: ['label'],
+  disableDefaultPalettes: true,
 }
 
 export const Large = Template.bind({});
