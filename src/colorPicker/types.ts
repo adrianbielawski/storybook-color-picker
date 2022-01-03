@@ -27,7 +27,7 @@ export type PaletteAsArray = {
 export type PaletteObj = PaletteAsObject | PaletteAsArray
 
 export type ColorPalettes = {
-	default: string
+	primaryPalette: string
 	palettes: PaletteObj[]
 }
 
@@ -37,7 +37,7 @@ export interface StatePalette {
 }
 
 export interface StatePalettes {
-	default: string
+	primaryPalette: string
 	palettes: StatePalette[]
 }
 

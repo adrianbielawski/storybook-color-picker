@@ -10,7 +10,7 @@ export default {
     textColor: { control: 'color' },
   },
   parameters: {
-    defaultColorPalette: 'Greyscale palette',
+    primaryPalette: 'Greyscale palette',
   }
 };
 
@@ -30,7 +30,7 @@ Secondary.args = {
 };
 
 Secondary.parameters = {
-  defaultColorPalette: 'Colorfull palette',
+  primaryPalette: 'Colorfull palette',
   applyColorTo: ['label'],
   disableDefaultPalettes: true,
 }

@@ -30,33 +30,30 @@ describe('getColorPalettes', () => {
 	it.each([
 		[
 			'default and custom palettes',
-			'foo',
 			undefined,
 			[paletteAsArray],
 			[paletteAsArray, ...defaultPalettes],
 		],
 		[
 			'only default palettes when no custom palettes',
-			'foo',
 			undefined,
 			undefined,
 			[...defaultPalettes],
 		],
 		[
 			'only custom palettes when disableDefaultPalettes === true',
-			'foo',
 			true,
 			[paletteAsArray],
 			[paletteAsArray],
 		],
-	])('returns %s', (_, defaultPalette, disableDefaultPalettes, customPalette, expectedPalettes) => {
+	])('returns %s', (_, disableDefaultPalettes, customPalette, expectedPalettes) => {
 		transformPaletteMock.mockReturnValue(paletteAsArray)
 		const expected: StatePalettes = {
-			default: defaultPalette,
+			primaryPalette: 'foo',
 			palettes: expectedPalettes,
 		}
 
-		const output = getColorPalettes(defaultPalette, disableDefaultPalettes, customPalette)
+		const output = getColorPalettes('foo', disableDefaultPalettes, customPalette)
 
 		if (customPalette) {
 			expect(transformPaletteMock).toBeCalledTimes(1)

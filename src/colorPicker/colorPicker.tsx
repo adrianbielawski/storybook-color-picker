@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react"
 import { useParameter, useGlobals, useStorybookState, useAddonState, useStorybookApi } from '@storybook/api'
 import { css, jsx } from '@emotion/react'
 // Utils
-import { findDefaultPaletteIndex, getColorControls, getColorPalettes, getDefaultPaletteName } from "../utils"
+import { findPrimaryPaletteIndex, getColorControls, getColorPalettes, getPrimaryPaletteName } from "../utils"
 import { ADDON_ID } from "../constants"
 // Types
 import { AddonState, ColorPalettes, StorybookState } from "./types"
@@ -17,7 +17,7 @@ const initialAddonState = { storyStates: {} }
 
 const ColorPicker = () => {
 	const colorPalettes = useParameter<ColorPalettes>('colorPalettes')
-	const defaultColorPalette = useParameter<string>('defaultColorPalette', undefined)
+	const primaryPalette = useParameter<string>('primaryPalette', undefined)
 	const additionalControls = useParameter<string[]>('applyColorTo')
 	const disableDefaultPalettes = useParameter<boolean>('disableDefaultPalettes')
 	const storybookApi = useStorybookApi()
@@ -34,7 +34,7 @@ const ColorPicker = () => {
 		}
 
 		const initialStoryPalettes = getColorPalettes(
-			defaultColorPalette,
+			primaryPalette || colorPalettes.primaryPalette,
 			disableDefaultPalettes,
 			colorPalettes?.palettes
 		)
@@ -44,22 +44,22 @@ const ColorPicker = () => {
 			additionalControls
 		)
 
-		const defaultPaletteIndex = findDefaultPaletteIndex(initialStoryPalettes)
+		const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
 
-		const defaultPalette = getDefaultPaletteName(initialStoryPalettes, defaultPaletteIndex)
+		const primaryPaletteName = getPrimaryPaletteName(initialStoryPalettes, primaryPaletteIndex)
 
 		const newState = {
 			...addonState,
 			storyStates: {
 				...addonState.storyStates,
 				[storyId]: {
-					currentPalette: defaultPaletteIndex || 0,
+					currentPalette: primaryPaletteIndex || 0,
 					controls,
 					selectedControls: [] as string[],
 					copyOnClick: true,
 					storyPalettes: {
 						...initialStoryPalettes,
-						default: defaultPalette,
+						primaryPalette: primaryPaletteName,
 					}
 				}
 			}

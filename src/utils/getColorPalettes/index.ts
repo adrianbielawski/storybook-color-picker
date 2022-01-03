@@ -3,12 +3,12 @@ import transformPalette from '../transformPalette'
 import { defaultPalettes } from "../../constants"
 
 const getColorPalettes = (
-	defaultPalette: string,
+	primaryPalette: string,
 	disableDefaultPalettes?: boolean,
 	customPalettes?: PaletteObj[]
 ) => {
 	const transformedPalettes: StatePalettes = {
-		default: defaultPalette,
+		primaryPalette,
 		palettes: [],
 	}
 
