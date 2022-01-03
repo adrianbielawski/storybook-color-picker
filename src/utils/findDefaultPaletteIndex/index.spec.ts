@@ -1,5 +1,5 @@
 import { StatePalette } from "src/colorPicker/types"
-import * as module from "./"
+import * as module from "."
 
 
 describe('findDefaultPaletteIndex', () => {
