@@ -18,10 +18,7 @@ const ColorPickerIcon = () => {
 		[isColorPickerActive]
 	);
 
-	if (
-		(!colorPalettes && disableDefaultPalettes)
-		|| (!colorPalettes?.palettes.length && disableDefaultPalettes)
-	) {
+	if (!colorPalettes?.palettes.length && disableDefaultPalettes) {
 		return null
 	}
 
