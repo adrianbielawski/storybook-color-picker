@@ -34,7 +34,7 @@ const ColorPicker = () => {
 		}
 
 		const initialStoryPalettes = getColorPalettes(
-			primaryPalette || colorPalettes.primaryPalette,
+			primaryPalette || colorPalettes?.primaryPalette,
 			disableDefaultPalettes,
 			colorPalettes?.palettes
 		)
