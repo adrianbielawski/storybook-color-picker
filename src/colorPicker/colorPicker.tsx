@@ -2,10 +2,10 @@ import React, { useCallback, useEffect } from "react"
 import { useParameter, useGlobals, useStorybookState, useAddonState, useStorybookApi } from '@storybook/api'
 import { css, jsx } from '@emotion/react'
 // Utils
-import { findDefaultPaletteIndex, getColorControls, transformPalette } from "../utils"
-import { ADDON_ID, defaultPalettes } from "../constants"
+import { findDefaultPaletteIndex, getColorControls, getColorPalettes, getDefaultPaletteName } from "../utils"
+import { ADDON_ID } from "../constants"
 // Types
-import { AddonState, ColorPalettes, StatePalettes, StorybookState } from "./types"
+import { AddonState, ColorPalettes, StorybookState } from "./types"
 // Components
 import Colors from './colors'
 import ArgsList from "./argsList/argsList"
@@ -33,35 +33,20 @@ const ColorPicker = () => {
 			return
 		}
 
-		const transformedPalettes: StatePalettes = {
-			default: defaultColorPalette,
-			palettes: [],
-		}
-
-		colorPalettes?.palettes.forEach(p => {
-			const transformed = transformPalette(p)
-			
-			if (transformed) {
-				transformedPalettes.palettes.push(transformed)
-			}
-		})
-
-		if (!disableDefaultPalettes) {
-			transformedPalettes.palettes.push(...defaultPalettes)
-		}
+		const initialStoryPalettes = getColorPalettes(
+			defaultColorPalette,
+			disableDefaultPalettes,
+			colorPalettes?.palettes
+		)
 
 		const controls = getColorControls(
 			storybookApi.getCurrentStoryData(),
 			additionalControls
 		)
 
-		const defaultPaletteIndex = findDefaultPaletteIndex(transformedPalettes)
+		const defaultPaletteIndex = findDefaultPaletteIndex(initialStoryPalettes)
 
-		const defaultPalette = transformedPalettes.palettes.length
-			? defaultPaletteIndex >= 0
-				? transformedPalettes.default
-				: transformedPalettes.palettes[0].name
-			: null
+		const defaultPalette = getDefaultPaletteName(initialStoryPalettes, defaultPaletteIndex)
 
 		const newState = {
 			...addonState,
@@ -73,7 +58,7 @@ const ColorPicker = () => {
 					selectedControls: [] as string[],
 					copyOnClick: true,
 					storyPalettes: {
-						...transformedPalettes,
+						...initialStoryPalettes,
 						default: defaultPalette,
 					}
 				}
