@@ -4,7 +4,7 @@ import { defaultPalettes } from "../../constants"
 
 const getColorPalettes = (
 	defaultPalette: string,
-	disableDefaultPalettes: boolean,
+	disableDefaultPalettes?: boolean,
 	customPalettes?: PaletteObj[]
 ) => {
 	const transformedPalettes: StatePalettes = {
