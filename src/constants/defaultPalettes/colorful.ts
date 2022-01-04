@@ -1,5 +1,5 @@
 export default {
-	name: 'Colorfull (default)',
+	name: 'Colorful (default)',
 	palette: [
 		{
 			label: 'Pastel',

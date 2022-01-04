@@ -30,7 +30,7 @@ Secondary.args = {
 };
 
 Secondary.parameters = {
-  primaryPalette: 'Colorfull palette',
+  primaryPalette: 'Colorful palette',
   applyColorTo: ['label'],
   disableDefaultPalettes: true,
 }
