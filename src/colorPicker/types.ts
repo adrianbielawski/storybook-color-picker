@@ -28,6 +28,7 @@ export type PaletteObj = PaletteAsObject | PaletteAsArray
 
 export type ColorPalettes = {
 	primaryPalette: string
+	default: string // Deprecated
 	palettes: PaletteObj[]
 }
 

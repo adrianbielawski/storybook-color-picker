@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react"
 import { useParameter, useGlobals, useStorybookState, useAddonState, useStorybookApi } from '@storybook/api'
 import { css, jsx } from '@emotion/react'
 // Utils
-import { findPrimaryPaletteIndex, getColorControls, getColorPalettes, getPrimaryPaletteName } from "../utils"
+import { findPrimaryPaletteIndex, getColorControls, getColorPalettes, getPrimaryPaletteName, warnDeprecated } from "../utils"
 import { ADDON_ID } from "../constants"
 // Types
 import { AddonState, ColorPalettes, StorybookState } from "./types"
@@ -18,6 +18,7 @@ const initialAddonState = { storyStates: {} }
 const ColorPicker = () => {
 	const colorPalettes = useParameter<ColorPalettes>('colorPalettes')
 	const primaryPalette = useParameter<string>('primaryPalette', undefined)
+	const defaultColorPalette = useParameter<string>('defaultColorPalette', undefined)
 	const additionalControls = useParameter<string[]>('applyColorTo')
 	const disableDefaultPalettes = useParameter<boolean>('disableDefaultPalettes')
 	const storybookApi = useStorybookApi()
@@ -33,8 +34,21 @@ const ColorPicker = () => {
 			return
 		}
 
+		const getDeprecatedPrimaryPalette = () => {
+			if (defaultColorPalette) {
+				warnDeprecated('Property "defaultColorPalette"', 'the next main version', 'primaryPalette')
+			}
+
+			if (colorPalettes.default) {
+				warnDeprecated('Property "default"', 'the next main version', 'primaryPalette')
+			}
+
+			return defaultColorPalette || colorPalettes.default
+		}
+
+
 		const initialStoryPalettes = getColorPalettes(
-			primaryPalette || colorPalettes?.primaryPalette,
+			primaryPalette || colorPalettes?.primaryPalette || getDeprecatedPrimaryPalette(),
 			disableDefaultPalettes,
 			colorPalettes?.palettes
 		)
