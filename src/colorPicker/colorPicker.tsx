@@ -38,16 +38,16 @@ const ColorPicker = () => {
 		}
 
 		if (colorPalettes) {
-			warnDeprecated('Property "colorPalettes"', 'the next main version', 'colorPicker')
+			warnDeprecated('Property "colorPalettes"', 'next major release', 'colorPicker')
 		}
 		
 		const getDeprecatedPrimaryPalette = () => {
 			if (colorPicker?.defaultColorPalette) {
-				warnDeprecated('Property "defaultColorPalette"', 'the next main version', 'primaryPalette')
+				warnDeprecated('Property "defaultColorPalette"', 'next major release', 'primaryPalette')
 			}
 
 			if (colorPicker?.default) {
-				warnDeprecated('Property "default"', 'the next main version', 'primaryPalette')
+				warnDeprecated('Property "default"', 'next major release', 'primaryPalette')
 			}
 
 			return colorPicker?.defaultColorPalette || colorPicker?.default
