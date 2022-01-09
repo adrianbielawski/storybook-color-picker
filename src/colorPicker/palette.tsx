@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { css, jsx } from '@emotion/react';
 // Types
 import { ColorPaletteAsArray } from "./types";
@@ -12,7 +12,7 @@ interface Props {
 
 const Palette = (props: Props) => {
   const colors = props.palette.map((colors, i) => (
-    <>
+    <Fragment key={`Colors_${colors.label}_${i}`}>
       <div css={css`
         display: flex;
         flex-wrap: wrap;
@@ -24,11 +24,8 @@ const Palette = (props: Props) => {
       `}>
         {colors.label || 'Unnamed'}
       </div>
-      <Colors
-        colors={colors}
-        key={`Colors_${colors.label}_${i}`}
-      />
-    </>
+      <Colors colors={colors} />
+    </Fragment>
   ))
 
   return (
