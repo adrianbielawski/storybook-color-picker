@@ -7,10 +7,10 @@ import { ADDON_ID } from "../constants"
 // Types
 import { AddonState, ColorPalettes, StorybookState } from "./types"
 // Components
-import Colors from './colors'
 import ArgsList from "./argsList/argsList"
 import PalettesList from "./palettesList/palettesList"
 import CheckBox from "./checkBox/checkBox"
+import Palette from "./palette"
 /** @jsx jsx */
 
 const initialAddonState = { storyStates: {} }
@@ -45,7 +45,6 @@ const ColorPicker = () => {
 
 			return defaultColorPalette || colorPalettes.default
 		}
-
 
 		const initialStoryPalettes = getColorPalettes(
 			primaryPalette || colorPalettes?.primaryPalette || getDeprecatedPrimaryPalette(),
@@ -136,16 +135,7 @@ const ColorPicker = () => {
 		[addonState]
 	)
 
-	const getColors = () => {
-		const currentPalette = storyPalettes?.palettes[storyState.currentPalette];
-
-		return currentPalette.palette.map((palette, i) => (
-			<Colors
-				colors={palette}
-				key={`Colors_${palette.label}_${i}`}
-			/>
-		))
-	};
+	const currentPalette = storyPalettes?.palettes[storyState.currentPalette].palette
 
 	if (!storyPalettes?.palettes?.length || storyState?.currentPalette === undefined) {
 		return null
@@ -209,9 +199,7 @@ const ColorPicker = () => {
 					onClick={handleCopyBoxClick}
 				/>
 			</div>
-			<div>
-				{getColors()}
-			</div>
+			<Palette palette={currentPalette} />
 		</div>
 	)
 }
