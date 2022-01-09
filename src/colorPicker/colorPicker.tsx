@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/react'
 import { findPrimaryPaletteIndex, getColorControls, getColorPalettes, getPrimaryPaletteName, warnDeprecated } from "../utils"
 import { ADDON_ID } from "../constants"
 // Types
-import { AddonState, ColorPalettes, StorybookState } from "./types"
+import { AddonState, ColorPickerParameters, StorybookState } from "./types"
 // Components
 import ArgsList from "./argsList/argsList"
 import PalettesList from "./palettesList/palettesList"
@@ -16,11 +16,14 @@ import Palette from "./palette"
 const initialAddonState = { storyStates: {} }
 
 const ColorPicker = () => {
-	const colorPalettes = useParameter<ColorPalettes>('colorPalettes')
-	const primaryPalette = useParameter<string>('primaryPalette', undefined)
-	const defaultColorPalette = useParameter<string>('defaultColorPalette', undefined)
-	const additionalControls = useParameter<string[]>('applyColorTo')
-	const disableDefaultPalettes = useParameter<boolean>('disableDefaultPalettes')
+	const colorPalettes = useParameter<ColorPickerParameters>('colorPalettes')
+	const colorPicker = useParameter<ColorPickerParameters>('colorPicker')
+
+	const primaryPalette = colorPicker?.primaryPalette || colorPalettes?.primaryPalette
+	const palettes = colorPicker?.palettes || colorPalettes?.palettes
+	const additionalControls = colorPicker?.applyColorTo || colorPalettes?.applyColorTo
+	const disableDefaultPalettes = colorPicker?.disableDefaultPalettes || colorPalettes?.disableDefaultPalettes
+
 	const storybookApi = useStorybookApi()
 	const [_, updateGlobals] = useGlobals()
 	const state = useStorybookState() as StorybookState
@@ -34,22 +37,26 @@ const ColorPicker = () => {
 			return
 		}
 
+		if (colorPalettes) {
+			warnDeprecated('Property "colorPalettes"', 'the next main version', 'colorPicker')
+		}
+		
 		const getDeprecatedPrimaryPalette = () => {
-			if (defaultColorPalette) {
+			if (colorPicker?.defaultColorPalette) {
 				warnDeprecated('Property "defaultColorPalette"', 'the next main version', 'primaryPalette')
 			}
 
-			if (colorPalettes.default) {
+			if (colorPicker?.default) {
 				warnDeprecated('Property "default"', 'the next main version', 'primaryPalette')
 			}
 
-			return defaultColorPalette || colorPalettes.default
+			return colorPicker?.defaultColorPalette || colorPicker?.default
 		}
 
 		const initialStoryPalettes = getColorPalettes(
-			primaryPalette || colorPalettes?.primaryPalette || getDeprecatedPrimaryPalette(),
+			primaryPalette || getDeprecatedPrimaryPalette(),
 			disableDefaultPalettes,
-			colorPalettes?.palettes
+			palettes
 		)
 
 		const controls = getColorControls(
@@ -135,11 +142,11 @@ const ColorPicker = () => {
 		[addonState]
 	)
 
-	const currentPalette = storyPalettes?.palettes[storyState.currentPalette].palette
-
 	if (!storyPalettes?.palettes?.length || storyState?.currentPalette === undefined) {
 		return null
 	}
+
+	const currentPalette = storyPalettes?.palettes[storyState.currentPalette].palette
 
 	return (
 		<div

@@ -9,7 +9,7 @@ export const parameters = {
       date: /Date$/,
     },
   },
-  colorPalettes: {
+  colorPicker: {
     primaryPalette: 'Colorful palette',
     palettes: [
       {

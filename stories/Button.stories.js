@@ -10,7 +10,9 @@ export default {
     textColor: { control: 'color' },
   },
   parameters: {
-    primaryPalette: 'Greyscale palette',
+    colorPicker: {
+      primaryPalette: 'Greyscale palette',
+    }
   }
 };
 
@@ -30,9 +32,11 @@ Secondary.args = {
 };
 
 Secondary.parameters = {
-  primaryPalette: 'Colorful palette',
-  applyColorTo: ['label'],
-  disableDefaultPalettes: true,
+  colorPicker: {
+    primaryPalette: 'Colorful palette',
+    applyColorTo: ['label'],
+    disableDefaultPalettes: true,
+  }
 }
 
 export const Large = Template.bind({});

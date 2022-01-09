@@ -26,10 +26,13 @@ export type PaletteAsArray = {
 
 export type PaletteObj = PaletteAsObject | PaletteAsArray
 
-export type ColorPalettes = {
-	primaryPalette: string
-	default: string // Deprecated
-	palettes: PaletteObj[]
+export type ColorPickerParameters = {
+	primaryPalette?: string
+	default?: string // Deprecated
+	defaultColorPalette?: string // Deprecated
+	palettes?: PaletteObj[]
+	applyColorTo?: string[]
+	disableDefaultPalettes?: boolean
 }
 
 export interface StatePalette {
