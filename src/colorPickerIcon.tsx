@@ -7,7 +7,8 @@ import { ColorPalettes } from "./colorPicker/types";
 
 const ColorPickerIcon = () => {
 	const [{ isColorPickerActive }, updateGlobals] = useGlobals();
-    const colorPalettes: ColorPalettes = useParameter('colorPalettes');
+	const disableDefaultPalettes = useParameter<boolean>('disableDefaultPalettes')
+  const colorPalettes: ColorPalettes = useParameter('colorPalettes');
 
 	const toggleColorPicker = useCallback(
 		() =>
@@ -17,7 +18,7 @@ const ColorPickerIcon = () => {
 		[isColorPickerActive]
 	);
 
-	if (!colorPalettes || !colorPalettes?.palettes.length) {
+	if (!colorPalettes?.palettes.length && disableDefaultPalettes) {
 		return null
 	}
 

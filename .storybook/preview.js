@@ -10,10 +10,10 @@ export const parameters = {
     },
   },
   colorPalettes: {
-    default: 'Colorfull palette',
+    primaryPalette: 'Colorful palette',
     palettes: [
       {
-        name: 'Colorfull palette',
+        name: 'Colorful palette',
         palette: colorPalette,
       },
       {
