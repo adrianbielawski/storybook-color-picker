@@ -4,7 +4,7 @@
 
 A Storybook addon. It allows you to quickly find any color from your custom color palette and set it on component's controls and/or copy to clipboard.
 
-Add one or multiple color palettes and set the default palette globaly, for component or single story.
+Add one or multiple color palettes and set the primary palette globaly, for component or single story.
 
 
 ![storybook-color-picker](./assets/showcase.gif)
@@ -51,8 +51,8 @@ import yourSecondColorPalette from './yourSecondColorPalette.json';
 
 export const parameters = {
   ...
-  colorPalettes: {
-    default: 'Your first palette name', // Name of default palette for all components and its stories. Optional (fallback to first palette from the palettes array).
+  colorPicker: {
+    primaryPalette: 'Your first palette name', // Name of primary palette for all components and its stories. Optional (fallback to first palette from the palettes array).
     palettes: [
       {
         name: 'Your first palette name', // string
@@ -78,8 +78,8 @@ export default {
   ...
   parameters: {
     ...
-    colorPalettes: {
-      default: 'Your first palette name',
+    colorPicker: {
+      primaryPalette: 'Your first palette name',
       palettes: [
         {
           name: 'Your first palette name',
@@ -106,7 +106,7 @@ export const Primary = Template.bind({});
 
 Primary.parameters = {
   ...
-    colorPalettes: {
+    colorPicker: {
       palettes: [
         {
           name: 'Your first palette name',
@@ -116,6 +116,12 @@ Primary.parameters = {
     }
 }
 ```
+
+#### Deprecation Info
+
+Before v2.3.0 `colorPicker` parameter was called `colorPalettes`.\
+Before v2.3.0 `primaryPalette` parameter was called `default`.\
+Both are still supported but will be removed in next major release.
 
 ## Palette
 
@@ -196,7 +202,7 @@ Example:
   ]
 ```
 
-### Set default palette on component or its stories
+### Set primary palette on component or its stories
 
 #### On component
 
@@ -208,7 +214,9 @@ In `MyComponent.stories.js` add:
 export default {
   ...
   parameters: {
-    defaultColorPalette: 'Your second palette name',
+    colorPicker: {
+      primaryPalette: 'Your second palette name',
+    }
   }
 };
 ```
@@ -223,17 +231,26 @@ In `MyComponent.stories.js` add:
 export const Primary = Template.bind({});
 
 Primary.parameters = {
-  defaultColorPalette: 'Your first palette name',
+  ...
+  colorPicker: {
+    primaryPalette: 'Your first palette name',
+  }
 }
 ```
 
-#### Default palette specificity:
+#### primaryPalette specificity:
 
 The following list increases by specificity.
 
-1. `default` set on parameters in `preview.js`
-2. `defaultColorPalette` set on component `parameters`
-3. `defaultColorPalette` set on story `MyComponent.parameters`
+1. `primaryPalette` set on parameters in `preview.js`
+2. `primaryPalette` set on component `parameters`
+3. `primaryPalette` set on story `MyComponent.parameters`
+
+#### Deprecation Info
+
+Before v2.3.0 `colorPicker` parameter was called `colorPalettes`.\
+Before v2.3.0 `primaryPalette` parameter was called `defaultColorPalette`.\
+It is still supported but will be removed in next major release.
 
 
 ## Apply selected color to component's control
@@ -257,7 +274,9 @@ export default {
   },
   parameters: {
     ...
-    applyColorTo: ['label'] // Must match argType key
+    colorPicker: {
+      applyColorTo: ['label'] // Must match argType key
+    }
   }
 };
 ```
@@ -273,6 +292,20 @@ export const Primary = Template.bind({});
 
 Primary.parameters = {
   ...
-  applyColorTo: ['text'], // Pass empty array to clear extra controls
+  colorPicker: {
+    applyColorTo: ['text'], // Pass empty array to clear extra controls
+  }
 };
 ```
+
+Before v2.3.0 `colorPicker` parameter was called `colorPalettes`.\
+It is still supported but will be removed in next major release.
+
+
+## Default palettes
+
+Added in v2.3.0
+
+### Disable default palettes
+
+To disable default palettes just add `disableDefaultPalettes: true` to global, component or story parameters.

@@ -1,5 +1,35 @@
 # Changelog
 
+### v2.3.0
+
+09.01.2022.
+
+**Changed**
+
+* Added default palettes.
+
+* `colorPalettes` parameter replaced with `colorPicker`.
+
+* `default` and `defaultColorPalette` parameters replaced with `primaryPalette`.
+
+* Changed width of color group name for better display of long names.
+
+**Deprecation**
+
+* `colorPalettes` parameter name is deprecated.
+    - Use `colorPicker` instead.
+    - It will be removed in next major release.
+
+* `default` parameter name in `preview.js` parameters is deprecated.
+    - Use `primaryPalette` instead.
+    - It will be removed in next major release.
+
+* `defaultColorPalette` parameter name in component and story parameters is deprecated. Use `primaryPalette` instead.
+    - Use `primaryPalette` instead.
+    - It will be removed in next major release.
+
+-----
+
 ### v2.2.1
 
 02.01.2022.
