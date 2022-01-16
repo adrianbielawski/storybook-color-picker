@@ -1,4 +1,4 @@
-import { PaletteAsArray, PaletteAsObject } from 'src/colorPicker/types'
+import { PaletteAsArray, PaletteAsObject, StatePalette } from 'src/colorPicker/types'
 
 export const automation = (name: string) => `[data-automation="${name}"]`
 
@@ -12,6 +12,22 @@ export const lightArray = {
 		{
 			label: '200',
 			value: '#eee',
+		},
+	],
+}
+
+export const transformedLightArray = {
+	label: 'light',
+	values: [
+		{
+			label: '100',
+			value: '#fff',
+			textColor: '#000000',
+		},
+		{
+			label: '200',
+			value: '#eee',
+			textColor: '#000000',
 		},
 	],
 }
@@ -30,6 +46,22 @@ export const darkArray = {
 	],
 }
 
+export const transformedDarkArray = {
+	label: 'dark',
+	values: [
+		{
+			label: '100',
+			value: '#000',
+			textColor: '#FFFFFF',
+		},
+		{
+			label: '200',
+			value: '#111',
+			textColor: '#FFFFFF',
+		},
+	],
+}
+
 export const whiteArray = {
 	label: 'white',
 	values: [
@@ -40,9 +72,25 @@ export const whiteArray = {
 	],
 }
 
+export const transformedWhiteArray = {
+	label: 'white',
+	values: [
+		{
+			label: 'white',
+			value: '#fff',
+			textColor: '#000000',
+		},
+	],
+}
+
 export const paletteAsArray: PaletteAsArray = {
 	name: 'foo',
 	palette: [lightArray, darkArray, whiteArray],
+}
+
+export const statePalette: StatePalette = {
+	name: 'foo',
+	palette: [transformedLightArray, transformedDarkArray, transformedWhiteArray],
 }
 
 export const lightObject = {

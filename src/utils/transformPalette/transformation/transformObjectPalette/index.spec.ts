@@ -1,4 +1,4 @@
-import { darkArray, lightArray, paletteAsObject, whiteArray } from '../../../testsUtils'
+import { darkArray, lightArray, paletteAsObject, transformedDarkArray, transformedLightArray, transformedWhiteArray, whiteArray } from '../../../testsUtils'
 import transformObjectPalette from './'
 import validateObjectColors from '../../validation/validateObjectColors'
 import * as messages from '../../messages'
@@ -22,7 +22,7 @@ describe('transformObjectPalette', () => {
 
 		const expected = {
 			name: 'bar',
-			palette: [lightArray, darkArray, whiteArray],
+			palette: [transformedLightArray, transformedDarkArray, transformedWhiteArray],
 		}
 
 		expect(validateObjectColors).toHaveBeenCalledTimes(3)
@@ -41,7 +41,7 @@ describe('transformObjectPalette', () => {
 
 		const expected = {
 			name: 'bar',
-			palette: [darkArray, whiteArray],
+			palette: [transformedDarkArray, transformedWhiteArray],
 		}
 
 		expect(validateObjectColors).toHaveBeenCalledTimes(3)

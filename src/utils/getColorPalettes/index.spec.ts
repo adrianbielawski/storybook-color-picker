@@ -2,6 +2,7 @@ import { PaletteAsArray, StatePalettes } from 'src/colorPicker/types'
 import getColorPalettes from './'
 import { defaultPalettes } from '../../constants'
 import transformPalette from '../transformPalette'
+import { statePalette } from '../testsUtils'
 
 jest.mock('../transformPalette')
 
@@ -32,7 +33,7 @@ describe('getColorPalettes', () => {
 			'default and custom palettes',
 			undefined,
 			[paletteAsArray],
-			[paletteAsArray, ...defaultPalettes],
+			[statePalette, ...defaultPalettes],
 		],
 		[
 			'only default palettes when no custom palettes',
@@ -44,10 +45,10 @@ describe('getColorPalettes', () => {
 			'only custom palettes when disableDefaultPalettes === true',
 			true,
 			[paletteAsArray],
-			[paletteAsArray],
+			[statePalette],
 		],
 	])('returns %s', (_, disableDefaultPalettes, customPalette, expectedPalettes) => {
-		transformPaletteMock.mockReturnValue(paletteAsArray)
+		transformPaletteMock.mockReturnValue(statePalette)
 		const expected: StatePalettes = {
 			primaryPalette: 'foo',
 			palettes: expectedPalettes,

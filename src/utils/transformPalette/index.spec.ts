@@ -1,4 +1,4 @@
-import { paletteAsArray, paletteAsObject } from '../testsUtils'
+import { paletteAsArray, paletteAsObject, statePalette } from '../testsUtils'
 import transformPalette from './'
 import validateArrayPalette from './validation/validateArrayPalette'
 import transformObjectPalette from './transformation/transformObjectPalette'
@@ -15,23 +15,23 @@ describe('transformPalette', () => {
 	})
 
 	it('return transformed palette when palette as array', () => {
-		validateArrayPaletteMock.mockReturnValue(paletteAsArray)
+		validateArrayPaletteMock.mockReturnValue(statePalette)
 		const output = transformPalette(paletteAsArray)
 
 		expect(transformObjectPalette).not.toHaveBeenCalled()
 		expect(validateArrayPalette).toHaveBeenCalledTimes(1)
 		expect(validateArrayPalette).toHaveBeenCalledWith(paletteAsArray)
-		expect(output).toEqual(paletteAsArray)
+		expect(output).toEqual(statePalette)
 	})
 	
 	it('return transformed palette when palette as object', () => {
-		transformObjectPaletteMock.mockReturnValue(paletteAsArray)
+		transformObjectPaletteMock.mockReturnValue(statePalette)
 		
 		const output = transformPalette(paletteAsObject)
 		
 		expect(validateArrayPalette).not.toHaveBeenCalled()
 		expect(transformObjectPalette).toHaveBeenCalledTimes(1)
 		expect(transformObjectPalette).toHaveBeenCalledWith(paletteAsObject)
-		expect(output).toEqual(paletteAsArray)
+		expect(output).toEqual(statePalette)
 	})
 })
