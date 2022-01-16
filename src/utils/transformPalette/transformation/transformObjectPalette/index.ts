@@ -1,6 +1,7 @@
 import { PaletteAsObject } from 'src/colorPicker/types'
 import { getInvalidColorMessage, getInvalidPaletteMessage, warn } from '../../messages'
 import validateObjectColors from '../../validation/validateObjectColors'
+import transformShades from '../transformShades'
 
 const transformObjectPalette = (paletteObj: PaletteAsObject) => {
 	const validatedPalette = Object.entries(paletteObj.palette).flatMap(
@@ -23,9 +24,14 @@ const transformObjectPalette = (paletteObj: PaletteAsObject) => {
 		return
 	}
 
+	const transformedPalette = validatedPalette.map(color => ({
+		...color,
+    values: transformShades(color.values)
+	}))
+
 	return {
 		name: paletteObj.name,
-		palette: validatedPalette,
+		palette: transformedPalette,
 	}
 }
 
