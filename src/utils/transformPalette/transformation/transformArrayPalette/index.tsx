@@ -5,6 +5,10 @@ import transformShades from '../transformShades'
 const transformArrayPalette = (paletteObj: PaletteAsArray) => {
 	const validatedPalette = validateArrayPalette(paletteObj)
 
+	if (!validatedPalette) {
+		return
+	}
+
 	const transformedPalette = validatedPalette.palette.map(color => ({
 		...color,
     values: transformShades(color.values)
