@@ -5,9 +5,20 @@ export type ShadeType = {
 	value: string
 }
 
+export interface TransformedShadeType extends ShadeType {
+	label: string
+	value: string
+	textColor: string
+}
+
 export type ShadesType = Record<string, string> | string
 
 export type ColorPaletteAsObject = Record<string, ShadesType>
+
+export type TransformedColorPalette = {
+	label: string
+	values: TransformedShadeType[]
+}
 
 export type ColorPaletteAsArray = {
 	label: string
@@ -37,7 +48,7 @@ export type ColorPickerParameters = {
 
 export interface StatePalette {
 	name: string
-	palette: ColorPaletteAsArray[]
+	palette: TransformedColorPalette[]
 }
 
 export interface StatePalettes {

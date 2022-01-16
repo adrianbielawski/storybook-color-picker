@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { css, jsx } from '@emotion/react';
 // Types
-import { ColorPaletteAsArray } from "./types";
+import { TransformedColorPalette } from "./types";
 // Components
 import Colors from './colors';
 /** @jsx jsx */
 
 interface Props {
-  palette: ColorPaletteAsArray[]
+  palette: TransformedColorPalette[]
 }
 
 const Palette = (props: Props) => {

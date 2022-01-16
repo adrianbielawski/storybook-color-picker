@@ -4,7 +4,7 @@ import { useArgs, useGlobals } from '@storybook/api';
 // Utils
 import copy from 'copy-to-clipboard';
 // Types
-import { ShadeType } from "./types";
+import { TransformedShadeType } from "./types";
 // Components
 import ShadeTooltip from "./shadeTooltip";
 import { usePopperTooltip } from 'react-popper-tooltip';
@@ -12,7 +12,7 @@ import 'react-popper-tooltip/dist/styles.css';
 /** @jsx jsx */
 
 type Props = {
-    shade: ShadeType,
+    shade: TransformedShadeType,
 };
 
 const Shade = (props: Props) => {

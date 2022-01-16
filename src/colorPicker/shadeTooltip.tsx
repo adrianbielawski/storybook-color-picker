@@ -1,12 +1,12 @@
-import React from "react";
-import { css, jsx } from '@emotion/react';
-import { ShadeType } from "./types";
+import React from "react"
+import { css, jsx } from '@emotion/react'
+import { TransformedShadeType } from "./types"
 /** @jsx jsx */
 
 type Props = {
-    shade: ShadeType,
-    copied: boolean,
-};
+	shade: TransformedShadeType
+	copied: boolean
+}
 
 const ShadeTooltip = (props: Props) => {
     const text = props.shade.label ?

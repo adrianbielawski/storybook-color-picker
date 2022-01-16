@@ -1,11 +1,11 @@
 import React from "react"
 import { css, jsx } from '@emotion/react'
-import { ColorPaletteAsArray } from "./types"
+import { TransformedColorPalette } from "./types"
 import Shade from "./shade"
 /** @jsx jsx */
 
 type Props = {
-	colors: ColorPaletteAsArray
+	colors: TransformedColorPalette
 }
 
 const Colors = (props: Props) => {
