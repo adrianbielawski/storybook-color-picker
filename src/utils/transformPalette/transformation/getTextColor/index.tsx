@@ -1,19 +1,15 @@
 import chroma from 'chroma-js'
-import { ShadeType } from 'src/colorPicker/types'
-import getContrastColor from '../getContrastColor'
 
-const getTextColor = (shade: ShadeType) => {
-  const color = chroma(shade.value)
-	const alpha = color.alpha()
+const getTextColor = (color: string) => {
+	const chromaColor = chroma(color)
+	const alpha = chromaColor.alpha()
+	const noAlphaColor = chromaColor.alpha(1)
+	const mixRatio = Math.pow(1 - alpha, 2)
+	const whitened = chroma.mix(noAlphaColor, '#fff', mixRatio)
 	
-	if (alpha < 1) {
-		const noAlphaColor = color.alpha(1)
-		const mixRatio = Math.pow(1 - alpha, 2)
-		const whitted = chroma.mix(noAlphaColor, '#fff', mixRatio)
-		return getContrastColor(whitted.hex())
-	}
-	
-	return getContrastColor(color.hex())
+	const luminanceTreshold = 0.450
+
+	return whitened.luminance() > luminanceTreshold ? '#000' : '#fff'
 }
 
 export default getTextColor

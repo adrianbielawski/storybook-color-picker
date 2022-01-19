@@ -6,8 +6,6 @@ export type ShadeType = {
 }
 
 export interface TransformedShadeType extends ShadeType {
-	label: string
-	value: string
 	textColor: string
 }
 
