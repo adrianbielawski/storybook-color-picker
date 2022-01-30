@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
-import { css, jsx } from '@emotion/react';
+import React, { Fragment } from 'react'
+import { css, jsx } from '@emotion/react'
 // Types
-import { TransformedColorPalette } from "./types";
+import { TransformedColorPalette } from './types'
 // Components
-import Colors from './colors';
+import Colors from './colors'
 /** @jsx jsx */
 
 interface Props {
@@ -13,15 +13,17 @@ interface Props {
 const Palette = (props: Props) => {
   const colors = props.palette.map((colors, i) => (
     <Fragment key={`Colors_${colors.label}_${i}`}>
-      <div css={css`
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        font-size: 1.1em;
-        padding-right: .5em;
-        text-transform: capitalize;
-        border-bottom: 1px solid #eee;
-      `}>
+      <div
+        css={css`
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          font-size: 1.1em;
+          padding-right: 0.5em;
+          text-transform: capitalize;
+          border-bottom: 1px solid #eee;
+        `}
+      >
         {colors.label || 'Unnamed'}
       </div>
       <Colors colors={colors} />
@@ -29,11 +31,13 @@ const Palette = (props: Props) => {
   ))
 
   return (
-    <div css={css`
-      display: grid;
-      grid-template-columns: minmax(70px, min-content) auto;
-      grid-row-gap: 5px;
-    `}>
+    <div
+      css={css`
+        display: grid;
+        grid-template-columns: minmax(70px, min-content) auto;
+        grid-row-gap: 5px;
+      `}
+    >
       {colors}
     </div>
   )

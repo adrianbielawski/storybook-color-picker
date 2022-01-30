@@ -7,31 +7,31 @@ jest.mock('./validation/validateArrayPalette')
 jest.mock('./transformation/transformObjectPalette')
 
 describe('transformPalette', () => {
-	const validateArrayPaletteMock = validateArrayPalette as jest.Mock
-	const transformObjectPaletteMock = transformObjectPalette as jest.Mock
-	
-	beforeEach(() => {
-		jest.resetAllMocks()
-	})
+  const validateArrayPaletteMock = validateArrayPalette as jest.Mock
+  const transformObjectPaletteMock = transformObjectPalette as jest.Mock
 
-	it('return transformed palette when palette as array', () => {
-		validateArrayPaletteMock.mockReturnValue(statePalette)
-		const output = transformPalette(paletteAsArray)
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
 
-		expect(transformObjectPalette).not.toHaveBeenCalled()
-		expect(validateArrayPalette).toHaveBeenCalledTimes(1)
-		expect(validateArrayPalette).toHaveBeenCalledWith(paletteAsArray)
-		expect(output).toEqual(statePalette)
-	})
-	
-	it('return transformed palette when palette as object', () => {
-		transformObjectPaletteMock.mockReturnValue(statePalette)
-		
-		const output = transformPalette(paletteAsObject)
-		
-		expect(validateArrayPalette).not.toHaveBeenCalled()
-		expect(transformObjectPalette).toHaveBeenCalledTimes(1)
-		expect(transformObjectPalette).toHaveBeenCalledWith(paletteAsObject)
-		expect(output).toEqual(statePalette)
-	})
+  it('return transformed palette when palette as array', () => {
+    validateArrayPaletteMock.mockReturnValue(statePalette)
+    const output = transformPalette(paletteAsArray)
+
+    expect(transformObjectPalette).not.toHaveBeenCalled()
+    expect(validateArrayPalette).toHaveBeenCalledTimes(1)
+    expect(validateArrayPalette).toHaveBeenCalledWith(paletteAsArray)
+    expect(output).toEqual(statePalette)
+  })
+
+  it('return transformed palette when palette as object', () => {
+    transformObjectPaletteMock.mockReturnValue(statePalette)
+
+    const output = transformPalette(paletteAsObject)
+
+    expect(validateArrayPalette).not.toHaveBeenCalled()
+    expect(transformObjectPalette).toHaveBeenCalledTimes(1)
+    expect(transformObjectPalette).toHaveBeenCalledWith(paletteAsObject)
+    expect(output).toEqual(statePalette)
+  })
 })
