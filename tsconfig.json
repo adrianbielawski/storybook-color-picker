@@ -8,12 +8,12 @@
     "incremental": false,
     "isolatedModules": true,
     "jsx": "react",
-    "lib": ["es2017", "dom"],
+    "lib": ["esnext", "dom"],
     "module": "commonjs",
     "noImplicitAny": true,
     "rootDir": "./src",
     "skipLibCheck": true,
-    "target": "es5"
+    "target": "es2017"
   },
   "include": [
     "src/**/*"
