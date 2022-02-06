@@ -121,3 +121,33 @@ export const paletteAsObject: PaletteAsObject = {
     ...whiteObject,
   },
 }
+
+export const argTypes = {
+  backgroundColor: {
+    name: 'backgroundColor',
+    control: {
+      type: 'color',
+    },
+    type: {
+      name: 'string'
+    }
+  },
+  label: {
+    name: 'label',
+    control: {
+      type: 'text',
+    },
+    type: {
+      name: 'string'
+    }
+  },
+  disabled: {
+    name: 'disabled',
+    control: {
+      type: 'boolean',
+    },
+    type: {
+      name: 'boolean'
+    }
+  }
+}

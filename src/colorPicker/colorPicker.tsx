@@ -59,8 +59,10 @@ const ColorPicker = () => {
 			palettes
 		)
 
+		const argTypes = storybookApi.getCurrentStoryData()
+
 		const controls = getColorControls(
-			storybookApi.getCurrentStoryData(),
+			(argTypes.parameters as Record<string, any>)?.argTypes,
 			additionalControls
 		)
 
