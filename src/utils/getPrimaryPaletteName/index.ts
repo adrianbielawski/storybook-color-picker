@@ -1,6 +1,9 @@
-import { StatePalettes } from "src/colorPicker/types"
+import { StatePalettes } from 'src/colorPicker/types'
 
-const getPrimaryPaletteName = (statePalettes?: StatePalettes, primaryPaletteIndex?: number) => {
+const getPrimaryPaletteName = (
+  statePalettes?: StatePalettes,
+  primaryPaletteIndex?: number
+) => {
   if (!statePalettes?.palettes.length) {
     return null
   }
@@ -8,7 +11,7 @@ const getPrimaryPaletteName = (statePalettes?: StatePalettes, primaryPaletteInde
   if (!primaryPaletteIndex) {
     return statePalettes.palettes[0].name
   }
-  
+
   return statePalettes.primaryPalette
 }
 

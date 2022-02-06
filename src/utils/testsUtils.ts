@@ -129,8 +129,8 @@ export const argTypes = {
       type: 'color',
     },
     type: {
-      name: 'string'
-    }
+      name: 'string',
+    },
   },
   label: {
     name: 'label',
@@ -138,8 +138,8 @@ export const argTypes = {
       type: 'text',
     },
     type: {
-      name: 'string'
-    }
+      name: 'string',
+    },
   },
   disabled: {
     name: 'disabled',
@@ -147,7 +147,7 @@ export const argTypes = {
       type: 'boolean',
     },
     type: {
-      name: 'boolean'
-    }
-  }
+      name: 'boolean',
+    },
+  },
 }

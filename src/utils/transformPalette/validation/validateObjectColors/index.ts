@@ -1,43 +1,46 @@
-import { ColorPaletteAsArray, ShadesType } from "src/colorPicker/types"
-import validateShade from "../validateShade";
+import { ColorPaletteAsArray, ShadesType } from 'src/colorPicker/types'
+import validateShade from '../validateShade'
 
 const validateObjectColors = (
-	paletteName: string,
-	colorLabel: string,
-	colorValue: ShadesType,
+  paletteName: string,
+  colorLabel: string,
+  colorValue: ShadesType
 ) => {
-	const colorPaletteAsArray: ColorPaletteAsArray = { label: colorLabel, values: [] }
-	const isString = (typeof colorValue) === 'string'
+  const colorPaletteAsArray: ColorPaletteAsArray = {
+    label: colorLabel,
+    values: [],
+  }
+  const isString = typeof colorValue === 'string'
 
-	if (isString) {
-		const isValid = validateShade(paletteName, colorLabel, colorValue as string)
-		if (!isValid) {
-			return
-		}
-		colorPaletteAsArray.values.push({
-			label: colorLabel,
-			value: colorValue as string,
-		})
+  if (isString) {
+    const isValid = validateShade(paletteName, colorLabel, colorValue as string)
+    if (!isValid) {
+      return
+    }
+    colorPaletteAsArray.values.push({
+      label: colorLabel,
+      value: colorValue as string,
+    })
 
-		return colorPaletteAsArray
-	}
+    return colorPaletteAsArray
+  }
 
-	Object.entries(colorValue).forEach(([label, value]) => {
-		const isValid = validateShade(paletteName, label, value)
-		if (!isValid) {
-			return
-		}
-		colorPaletteAsArray.values.push({
-			label,
-			value,
-		})
-	})
+  Object.entries(colorValue).forEach(([label, value]) => {
+    const isValid = validateShade(paletteName, label, value)
+    if (!isValid) {
+      return
+    }
+    colorPaletteAsArray.values.push({
+      label,
+      value,
+    })
+  })
 
-	if (!colorPaletteAsArray.values.length) {
-		return
-	}
+  if (!colorPaletteAsArray.values.length) {
+    return
+  }
 
-	return colorPaletteAsArray
-};
+  return colorPaletteAsArray
+}
 
 export default validateObjectColors

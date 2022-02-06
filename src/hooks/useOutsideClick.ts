@@ -1,27 +1,27 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState } from 'react'
 
 const useOutsideClick = (callback: Function) => {
-    const [element, setElement] = useState<HTMLElement | null>(null);
-    const elementRef = useCallback(setElement, []);
+  const [element, setElement] = useState<HTMLElement | null>(null)
+  const elementRef = useCallback(setElement, [])
 
-    useEffect(() => {
-        if (!element) {
-            return
-        }
+  useEffect(() => {
+    if (!element) {
+      return
+    }
 
-        const handleClickOutside = (e: MouseEvent) => {
-            if (element && !element.contains(e.target as Node)) {
-                callback(e);
-            }
-        };
+    const handleClickOutside = (e: MouseEvent) => {
+      if (element && !element.contains(e.target as Node)) {
+        callback(e)
+      }
+    }
 
-        document.addEventListener("click", handleClickOutside);
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [element, callback]);
+    document.addEventListener('click', handleClickOutside)
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [element, callback])
 
-    return elementRef;
-};
+  return elementRef
+}
 
-export default useOutsideClick;
+export default useOutsideClick
