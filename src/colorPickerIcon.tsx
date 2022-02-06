@@ -1,23 +1,24 @@
-import React, { useCallback } from "react"
-import { useGlobals, useParameter } from "@storybook/api"
+import React, { useCallback, useState } from "react"
+import { useParameter } from "@storybook/api"
 import { Icons, IconButton, WithTooltip } from "@storybook/components"
 import { TOOL_ID } from "./constants"
 import ColorPicker from './colorPicker/colorPicker'
 import { ColorPickerParameters } from "./colorPicker/types"
 
 const ColorPickerIcon = () => {
-	const [{ isColorPickerActive }, updateGlobals] = useGlobals()
+	const [isActive, setIsActive] = useState(false)
 	const colorPicker = useParameter<ColorPickerParameters>('colorPicker')
 	const colorPalettes = useParameter<ColorPickerParameters>('colorPalettes')
 	const disableDefaultPalettes = colorPicker?.disableDefaultPalettes || colorPalettes?.disableDefaultPalettes
 	const palettes = colorPicker?.palettes || colorPalettes?.palettes
 
 	const toggleColorPicker = useCallback(
-		() =>
-			updateGlobals({
-				isColorPickerActive: !isColorPickerActive,
-			}),
-		[isColorPickerActive]
+		(visible: boolean) => {
+			if (visible !== isActive) {
+				setIsActive(!isActive)
+			}
+		},
+		[isActive]
 	)
 
 	if (!palettes?.length && disableDefaultPalettes) {
@@ -31,12 +32,12 @@ const ColorPickerIcon = () => {
 			tooltipShown={true}
 			tooltip={<ColorPicker />}
 			closeOnClick
+			onVisibilityChange={toggleColorPicker}
 		>
 			<IconButton
 				key={TOOL_ID}
-				active={isColorPickerActive}
+				active={isActive}
 				title="Color palettes"
-				onClick={toggleColorPicker}
 			>
 				<Icons icon="paintbrush" />
 			</IconButton>
