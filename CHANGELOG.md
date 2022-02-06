@@ -1,5 +1,19 @@
 # Changelog
 
+### v2.3.1
+
+06.02.2022.
+
+No breaking changes
+
+**Bug Fix**
+
+* Visibility of color value on color popup for colors with alpha.
+
+* Active state highlight of color picker icon.
+
+-----
+
 ### v2.3.0
 
 09.01.2022.
