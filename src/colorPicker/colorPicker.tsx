@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import {
   useParameter,
-  useGlobals,
   useStorybookState,
   useAddonState,
   useStorybookApi,
@@ -40,7 +39,6 @@ const ColorPicker = () => {
     colorPicker?.disableDefaultPalettes || colorPalettes?.disableDefaultPalettes
 
   const storybookApi = useStorybookApi()
-  const [_, updateGlobals] = useGlobals()
   const state = useStorybookState() as StorybookState
   const [addonState, setAddonState] = useAddonState<AddonState>(
     ADDON_ID,
@@ -123,16 +121,6 @@ const ColorPicker = () => {
     setAddonState(newState)
   }, [colorPalettes])
 
-  useEffect(() => {
-    const copyOnClick =
-      storyState?.copyOnClick !== undefined ? storyState?.copyOnClick : true
-
-    updateGlobals({
-      selectedArgs: storyState?.selectedControls || [],
-      copyOnClick,
-    })
-  }, [storyId])
-
   const handleArgsChange = useCallback(
     (newArgs: string[]) => {
       const newState = {
@@ -142,7 +130,6 @@ const ColorPicker = () => {
       newState.storyStates[storyId].selectedControls = selectedControls
 
       setAddonState(newState)
-      updateGlobals({ selectedArgs: newArgs })
     },
     [addonState]
   )
@@ -170,7 +157,6 @@ const ColorPicker = () => {
     const copy = !newState.storyStates[storyId].copyOnClick
     newState.storyStates[storyId].copyOnClick = copy
     setAddonState(newState)
-    updateGlobals({ copyOnClick: copy })
   }, [addonState])
 
   if (
