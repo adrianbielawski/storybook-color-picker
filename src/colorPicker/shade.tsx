@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { css, jsx } from '@emotion/react'
-import { useArgs, useGlobals } from '@storybook/api'
+import { useArgs, useAddonState, useStorybookState, Args } from '@storybook/api'
 // Utils
 import copy from 'copy-to-clipboard'
+import { ADDON_ID } from '../constants'
 // Types
-import { TransformedShadeType } from './types'
+import { AddonState, TransformedShadeType } from './types'
 // Components
 import ShadeTooltip from './shadeTooltip'
 import { usePopperTooltip } from 'react-popper-tooltip'
@@ -17,7 +18,8 @@ type Props = {
 
 const Shade = (props: Props) => {
   const [_, updateArgs] = useArgs()
-  const [globals] = useGlobals()
+  const state = useStorybookState()
+  const [addonState] = useAddonState<AddonState>(ADDON_ID)
   const [copied, setCopied] = useState(false)
   const {
     getArrowProps,
@@ -26,6 +28,9 @@ const Shade = (props: Props) => {
     setTriggerRef,
     visible,
   } = usePopperTooltip({ placement: 'top' })
+
+  const storyId = state.storyId
+  const storyState = addonState?.storyStates?.[storyId]
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>
@@ -42,19 +47,19 @@ const Shade = (props: Props) => {
   }, [copied])
 
   const handleClick = useCallback(() => {
-    const newArgs: Record<string, string> = {}
+    const newArgs: Args = {}
 
-    ;(globals.selectedArgs as string[]).map((arg) => {
-      newArgs[arg] = props.shade.value
+    storyState.selectedControls.forEach(control => {
+      newArgs[control] = props.shade.value
     })
 
     updateArgs(newArgs)
 
-    if (globals.copyOnClick) {
+    if (storyState.copyOnClick) {
       setCopied(true)
       copy(props.shade.value)
     }
-  }, [globals.selectedArgs, globals.copyOnClick])
+  }, [storyState.selectedControls, storyState.copyOnClick])
 
   return (
     <div>
