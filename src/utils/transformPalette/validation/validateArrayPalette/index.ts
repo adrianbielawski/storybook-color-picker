@@ -1,37 +1,28 @@
 import { ColorPaletteAsArray, PaletteAsArray } from 'src/colorPicker/types'
-import {
-  getInvalidColorMessage,
-  getInvalidPaletteMessage,
-  warn,
-} from '../../messages'
-import validateShade from '../validateShade'
+import validateShades from '../validateShades'
 
 const validateArrayPalette = (paletteObj: PaletteAsArray) => {
   const palette = paletteObj.palette as ColorPaletteAsArray[]
+  const invalidColors = [] as ColorPaletteAsArray[]
 
-  const validatedPalette = palette.flatMap((p) => {
-    const shades = p.values.filter((v) =>
-      validateShade(paletteObj.name, p.label, v.value)
-    )
+  const validatedPalette: ColorPaletteAsArray[] = palette.flatMap((p) => {
+    const shades = validateShades(p.values)
 
-    if (!shades.length) {
-      const message = getInvalidColorMessage(paletteObj.name, p.label)
-      warn(message)
+    if (shades.invalidShades.length) {
+      invalidColors.push({ label: p.label, values: shades.invalidShades })
+    }
+
+    if (!shades.validShades.length) {
       return []
     }
 
-    return [{ label: p.label, values: shades }]
+    return { label: p.label, values: shades.validShades }
   })
-
-  if (!validatedPalette.length) {
-    const message = getInvalidPaletteMessage(paletteObj.name)
-    warn(message)
-    return
-  }
 
   return {
     name: paletteObj.name,
     palette: validatedPalette,
+    invalidColors,
   }
 }
 

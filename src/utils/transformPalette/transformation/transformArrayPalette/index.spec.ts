@@ -42,8 +42,12 @@ describe('transformArrayPalette', () => {
     expect(output).toEqual(statePalette)
   })
 
-  it('returns undefined when no valid colors', () => {
-    validateArrayPaletteMock.mockReturnValue(undefined)
+  it('returns empty palette array when no valid colors', () => {
+    validateArrayPaletteMock.mockReturnValue({
+      name: 'foo',
+      palette: [],
+      invalidColors: [],
+    })
 
     const output = transformArrayPalette(paletteAsArray)
 
@@ -52,6 +56,10 @@ describe('transformArrayPalette', () => {
 
     expect(transformShadesMock).not.toBeCalled()
 
-    expect(output).toEqual(undefined)
+    expect(output).toEqual({
+      name: 'foo',
+      palette: [],
+      invalidColors: [],
+    })
   })
 })

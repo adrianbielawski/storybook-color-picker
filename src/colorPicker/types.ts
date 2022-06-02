@@ -49,9 +49,24 @@ export interface StatePalette {
   palette: TransformedColorPalette[]
 }
 
+export interface InvalidColors {
+  ['colorName']: ShadeType[]
+}
+
+export interface InvalidPalette {
+  name: string
+  invalidColors: ColorPaletteAsArray[]
+}
+
+export interface TransformedPalettes {
+  palettes: StatePalette[]
+  invalidPalettes: InvalidPalette[]
+}
+
 export interface StatePalettes {
   primaryPalette: string
   palettes: StatePalette[]
+  invalidPalettes: InvalidPalette[]
 }
 
 export type StoryState = {

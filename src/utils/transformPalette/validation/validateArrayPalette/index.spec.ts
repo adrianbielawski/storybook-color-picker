@@ -6,24 +6,15 @@ import {
 } from '../../../testsUtils'
 import validateShade from '../validateShade'
 import validateArrayPalette from '../validateArrayPalette'
-import * as messages from '../../messages'
+import { InvalidColors, StatePalette } from 'src/colorPicker/types'
 
 jest.mock('../validateShade')
 
 describe('validateArrayPalette', () => {
   const validateShadeMock = validateShade as jest.Mock
-  let warnSpy: jest.SpyInstance
-  let getInvalidColorMessageSpy: jest.SpyInstance
-  let getInvalidPaletteMessageSpy: jest.SpyInstance
 
   beforeEach(() => {
     jest.resetAllMocks()
-    warnSpy = jest.spyOn(messages, 'warn')
-    getInvalidColorMessageSpy = jest.spyOn(messages, 'getInvalidColorMessage')
-    getInvalidPaletteMessageSpy = jest.spyOn(
-      messages,
-      'getInvalidPaletteMessage'
-    )
   })
 
   it('validates all shades', () => {
@@ -32,24 +23,17 @@ describe('validateArrayPalette', () => {
     validateArrayPalette(paletteAsArray)
 
     expect(validateShade).toHaveBeenCalledTimes(5)
-    expect(validateShade).toHaveBeenNthCalledWith(1, 'foo', 'light', '#fff')
-    expect(validateShade).toHaveBeenNthCalledWith(2, 'foo', 'light', '#eee')
-    expect(validateShade).toHaveBeenNthCalledWith(3, 'foo', 'dark', '#000')
-    expect(validateShade).toHaveBeenNthCalledWith(4, 'foo', 'dark', '#111')
-    expect(validateShade).toHaveBeenNthCalledWith(5, 'foo', 'white', '#fff')
+    expect(validateShade).toHaveBeenNthCalledWith(1, '#fff')
+    expect(validateShade).toHaveBeenNthCalledWith(2, '#eee')
+    expect(validateShade).toHaveBeenNthCalledWith(3, '#000')
+    expect(validateShade).toHaveBeenNthCalledWith(4, '#111')
+    expect(validateShade).toHaveBeenNthCalledWith(5, '#fff')
   })
 
   it('gets invalid messages and calls warn', () => {
     validateShadeMock.mockReturnValue(false)
 
     validateArrayPalette(paletteAsArray)
-
-    expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(3)
-    expect(getInvalidColorMessageSpy).toHaveBeenNthCalledWith(1, 'foo', 'light')
-    expect(getInvalidColorMessageSpy).toHaveBeenNthCalledWith(2, 'foo', 'dark')
-    expect(getInvalidColorMessageSpy).toHaveBeenNthCalledWith(3, 'foo', 'white')
-    expect(getInvalidPaletteMessageSpy).toHaveBeenCalledTimes(1)
-    expect(getInvalidPaletteMessageSpy).toHaveBeenCalledWith('foo')
   })
 
   it('returns transformed palette correctly', () => {
@@ -58,17 +42,15 @@ describe('validateArrayPalette', () => {
     const expected = {
       name: 'foo',
       palette: [lightArray, darkArray, whiteArray],
+      invalidColors: [] as InvalidColors[],
     }
 
     const output = validateArrayPalette(paletteAsArray)
 
-    expect(warnSpy).not.toHaveBeenCalled()
-    expect(getInvalidColorMessageSpy).not.toHaveBeenCalled()
-    expect(messages.getInvalidPaletteMessage).not.toHaveBeenCalled()
     expect(output).toEqual(expected)
   })
 
-  it('returns transformed palette correctly and logs warning when invalid shade', () => {
+  it('returns transformed palette correctly when invalid shade', () => {
     validateShadeMock.mockReturnValueOnce(false).mockReturnValue(true)
 
     const output = validateArrayPalette(paletteAsArray)
@@ -88,15 +70,18 @@ describe('validateArrayPalette', () => {
         darkArray,
         whiteArray,
       ],
+      invalidColors: [
+        {
+          label: paletteAsArray.palette[0].label,
+          values: [paletteAsArray.palette[0].values[0]],
+        },
+      ],
     }
 
-    expect(warnSpy).not.toHaveBeenCalled()
-    expect(getInvalidColorMessageSpy).not.toHaveBeenCalled()
-    expect(getInvalidPaletteMessageSpy).not.toHaveBeenCalled()
     expect(output).toEqual(expected)
   })
 
-  it('returns transformed palette correctly and logs warnings when invalid all color shades', () => {
+  it('returns transformed palette correctly when invalid all color shades', () => {
     validateShadeMock
       .mockReturnValueOnce(false)
       .mockReturnValueOnce(false)
@@ -107,22 +92,23 @@ describe('validateArrayPalette', () => {
     const expected = {
       name: 'foo',
       palette: [darkArray, whiteArray],
+      invalidColors: [lightArray],
     }
 
-    expect(warnSpy).toHaveBeenCalledTimes(1)
-    expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(1)
-    expect(getInvalidPaletteMessageSpy).not.toHaveBeenCalled()
     expect(output).toEqual(expected)
   })
 
-  it('returns undefined and logs warnings if no valid shades', () => {
+  it('returns no palettes whe no valid shades', () => {
     validateShadeMock.mockReturnValue(false)
 
     const output = validateArrayPalette(paletteAsArray)
 
-    expect(warnSpy).toHaveBeenCalledTimes(4)
-    expect(getInvalidColorMessageSpy).toHaveBeenCalledTimes(3)
-    expect(getInvalidPaletteMessageSpy).toHaveBeenCalledTimes(1)
-    expect(output).toBeUndefined()
+    const expected = {
+      name: 'foo',
+      palette: [] as StatePalette[],
+      invalidColors: [lightArray, darkArray, whiteArray],
+    }
+
+    expect(output).toEqual(expected)
   })
 })
