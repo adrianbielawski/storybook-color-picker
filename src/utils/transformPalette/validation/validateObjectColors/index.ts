@@ -1,46 +1,53 @@
 import { ColorPaletteAsArray, ShadesType } from 'src/colorPicker/types'
 import validateShade from '../validateShade'
 
-const validateObjectColors = (
-  paletteName: string,
-  colorLabel: string,
-  colorValue: ShadesType
-) => {
-  const colorPaletteAsArray: ColorPaletteAsArray = {
+const validateObjectColors = (colorLabel: string, colorValue: ShadesType) => {
+  const palette: ColorPaletteAsArray = {
     label: colorLabel,
     values: [],
   }
-  const isString = typeof colorValue === 'string'
 
-  if (isString) {
-    const isValid = validateShade(paletteName, colorLabel, colorValue as string)
-    if (!isValid) {
-      return
-    }
-    colorPaletteAsArray.values.push({
+  const invalidColors: ColorPaletteAsArray = {
+    label: colorLabel,
+    values: [],
+  }
+
+  if (typeof colorValue === 'string') {
+    const isValid = validateShade(colorValue as string)
+
+    const shade = {
       label: colorLabel,
       value: colorValue as string,
-    })
+    }
 
-    return colorPaletteAsArray
+    if (isValid) {
+      palette.values.push(shade)
+    } else {
+      invalidColors.values.push(shade)
+    }
+
+    return {
+      palette: palette.values.length ? palette : undefined,
+      invalidColors: invalidColors.values.length ? invalidColors : undefined,
+    }
   }
 
   Object.entries(colorValue).forEach(([label, value]) => {
-    const isValid = validateShade(paletteName, label, value)
+    const isValid = validateShade(value)
     if (!isValid) {
+      invalidColors.values.push({ label, value })
       return
     }
-    colorPaletteAsArray.values.push({
+    palette.values.push({
       label,
       value,
     })
   })
 
-  if (!colorPaletteAsArray.values.length) {
-    return
+  return {
+    palette: palette.values.length ? palette : undefined,
+    invalidColors: invalidColors.values.length ? invalidColors : undefined,
   }
-
-  return colorPaletteAsArray
 }
 
 export default validateObjectColors
