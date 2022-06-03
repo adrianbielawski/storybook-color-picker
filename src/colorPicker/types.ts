@@ -66,7 +66,6 @@ export interface TransformedPalettes {
 export interface StatePalettes {
   primaryPalette: string
   palettes: StatePalette[]
-  invalidPalettes: InvalidPalette[]
 }
 
 export type StoryState = {

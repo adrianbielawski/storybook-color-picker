@@ -14,7 +14,6 @@ describe('getPrimaryPaletteName', () => {
         palette: [],
       },
     ],
-    invalidPalettes: [],
   }
 
   it.each([

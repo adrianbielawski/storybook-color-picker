@@ -88,12 +88,12 @@ const ColorPicker = () => {
     )
 
     const initialStoryPalettes = {
-      ...validatedStoryPalettes,
+      palettes: validatedStoryPalettes.palettes,
       primaryPalette: primaryPalette || getDeprecatedPrimaryPalette(),
     }
 
-    if (initialStoryPalettes.invalidPalettes.length) {
-      reportInvalidPalettes(initialStoryPalettes.invalidPalettes)
+    if (validatedStoryPalettes.invalidPalettes.length) {
+      reportInvalidPalettes(validatedStoryPalettes.invalidPalettes)
     }
 
     const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
