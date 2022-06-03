@@ -1,4 +1,5 @@
 import {
+  InvalidPalette,
   PaletteAsArray,
   PaletteAsObject,
   StatePalette,
@@ -91,6 +92,13 @@ export const paletteAsArray: PaletteAsArray = {
   name: 'foo',
   palette: [lightArray, darkArray, whiteArray],
 }
+
+export const invalidPaletteAsArray: InvalidPalette[] = [
+  {
+    name: 'foo',
+    invalidColors: [lightArray],
+  },
+]
 
 export const statePalette: StatePalette = {
   name: 'foo',

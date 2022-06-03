@@ -13,6 +13,7 @@ import {
   getColorPalettes,
   getPrimaryPaletteName,
   warnDeprecated,
+  reportInvalidPalettes,
 } from '../utils'
 import { ADDON_ID } from '../constants'
 // Types
@@ -89,6 +90,10 @@ const ColorPicker = () => {
     const initialStoryPalettes = {
       ...validatedStoryPalettes,
       primaryPalette: primaryPalette || getDeprecatedPrimaryPalette(),
+    }
+
+    if (initialStoryPalettes.invalidPalettes.length) {
+      reportInvalidPalettes(initialStoryPalettes.invalidPalettes)
     }
 
     const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
@@ -172,8 +177,6 @@ const ColorPicker = () => {
 
   const currentPalette =
     storyPalettes?.palettes[storyState.currentPalette].palette
-
-    console.log(storyState)
 
   return (
     <div
