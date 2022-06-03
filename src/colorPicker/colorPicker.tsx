@@ -81,10 +81,21 @@ const ColorPicker = () => {
       return colorPicker?.defaultColorPalette || colorPicker?.default
     }
 
-    const initialStoryPalettes = getColorPalettes(
-      primaryPalette || getDeprecatedPrimaryPalette(),
+    const validatedStoryPalettes = getColorPalettes(
       disableDefaultPalettes,
       palettes
+    )
+
+    const initialStoryPalettes = {
+      ...validatedStoryPalettes,
+      primaryPalette: primaryPalette || getDeprecatedPrimaryPalette(),
+    }
+
+    const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
+
+    const primaryPaletteName = getPrimaryPaletteName(
+      initialStoryPalettes,
+      primaryPaletteIndex
     )
 
     const argTypes = storybookApi.getCurrentStoryData()
@@ -92,13 +103,6 @@ const ColorPicker = () => {
     const controls = getColorControls(
       (argTypes.parameters as Record<string, any>)?.argTypes,
       additionalControls
-    )
-
-    const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
-
-    const primaryPaletteName = getPrimaryPaletteName(
-      initialStoryPalettes,
-      primaryPaletteIndex
     )
 
     const newState = {
@@ -168,6 +172,8 @@ const ColorPicker = () => {
 
   const currentPalette =
     storyPalettes?.palettes[storyState.currentPalette].palette
+
+    console.log(storyState)
 
   return (
     <div
