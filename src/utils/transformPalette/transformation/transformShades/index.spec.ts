@@ -6,7 +6,7 @@ jest.mock('../getTextColor')
 
 describe('transformShades', () => {
   const getTextColorMock = jest.mocked(getTextColor)
-  it('transformes shades correctly', () => {
+  it('transforms shades correctly', () => {
     getTextColorMock.mockReturnValue('#000000')
 
     const output = transformShades(lightArray.values)

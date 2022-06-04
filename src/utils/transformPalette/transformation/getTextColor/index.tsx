@@ -5,9 +5,9 @@ const getTextColor = (color: string) => {
   const alpha = chromaColor.alpha()
   const mixRatio = Math.pow(1 - alpha, 2)
   const whitened = chroma.mix(chromaColor, '#FFFFFF', mixRatio)
-  const luminanceTreshold = 0.45
+  const luminanceThreshold = 0.45
 
-  return whitened.luminance() > luminanceTreshold ? '#000000' : '#FFFFFF'
+  return whitened.luminance() > luminanceThreshold ? '#000000' : '#FFFFFF'
 }
 
 export default getTextColor

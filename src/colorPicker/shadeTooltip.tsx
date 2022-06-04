@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
+import { FC } from 'react'
 import { TransformedShadeType } from './types'
 
 type Props = {
@@ -7,19 +8,17 @@ type Props = {
   copied: boolean
 }
 
-const ShadeTooltip = (props: Props) => {
-  const color = props.shade.value
-  const label = props.shade.label
-  const textColor = props.shade.textColor
+const ShadeTooltip: FC<Props> = ({ shade, copied }) => {
+  const { value, label, textColor } = shade
 
-  const text = label ? `${label}: ${color}` : color
+  const text = label ? `${label}: ${value}` : value
 
   return (
     <div
       css={css`
         padding: 0.2em 0.5em;
         border-radius: 0.3em;
-        background-color: ${color};
+        background-color: ${value};
       `}
     >
       <p
@@ -30,7 +29,7 @@ const ShadeTooltip = (props: Props) => {
           color: ${textColor};
         `}
       >
-        {props.copied ? 'Copied' : text}
+        {copied ? 'Copied' : text}
       </p>
     </div>
   )

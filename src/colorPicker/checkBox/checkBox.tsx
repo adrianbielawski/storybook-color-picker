@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FC } from 'react'
 
 type Props = {
   label?: string
@@ -9,9 +10,9 @@ type Props = {
   onClick?: () => void
 }
 
-const CheckBox = (props: Props) => (
+const CheckBox: FC<Props> = ({ label, checked, onClick }) => (
   <div
-    onClick={props.onClick}
+    onClick={onClick}
     css={css`
       display: flex;
       align-items: center;
@@ -35,10 +36,10 @@ const CheckBox = (props: Props) => (
     >
       <FontAwesomeIcon
         icon={faCheck}
-        color={props.checked ? '#777' : 'transparent'}
+        color={checked ? '#777' : 'transparent'}
       />
     </div>
-    {props.label && (
+    {label && (
       <p
         css={css`
           font-size: 1.1em;
@@ -48,7 +49,7 @@ const CheckBox = (props: Props) => (
           white-space: nowrap;
         `}
       >
-        {props.label}
+        {label}
       </p>
     )}
   </div>

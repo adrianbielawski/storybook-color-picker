@@ -3,9 +3,9 @@ import {
   lightArray,
   paletteAsArray,
   whiteArray,
-} from '../../../testsUtils'
+} from 'src/utils/testsUtils'
 import validateShade from '../validateShade'
-import validateArrayPalette from '../validateArrayPalette'
+import validateArrayPalette from '.'
 import { InvalidColors, StatePalette } from 'src/colorPicker/types'
 
 jest.mock('../validateShade')

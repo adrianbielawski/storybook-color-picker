@@ -3,25 +3,24 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import { fireEvent } from '@testing-library/react'
 
 const countAddEventListenerCalls = () => {
-  const spiedAddEventListener = document.addEventListener as any as jest.SpiedFunction<
-    typeof document.addEventListener
-  >;
+  const spiedAddEventListener =
+    document.addEventListener as any as jest.SpiedFunction<
+      typeof document.addEventListener
+    >
 
   spiedAddEventListener.mock.calls = spiedAddEventListener.mock.calls.filter(
     ([fn]) => fn !== 'selectionchange'
-  );
+  )
 
-  return spiedAddEventListener;
-};
+  return spiedAddEventListener
+}
 
 describe('useOutsideClick', () => {
   let element: HTMLElement
-  let outsideElement: HTMLElement
   let callback: () => void
 
   beforeEach(() => {
     element = document.createElement('div')
-    outsideElement = document.createElement('span')
     callback = jest.fn()
   })
 

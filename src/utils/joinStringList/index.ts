@@ -37,7 +37,7 @@ const joinStringList = (strings: string[], limit?: number) => {
       }
 
       if (otherCount > 0) {
-        return ', ' + returnString
+        return `, ${returnString}`
       }
 
       return ` and ${string}`

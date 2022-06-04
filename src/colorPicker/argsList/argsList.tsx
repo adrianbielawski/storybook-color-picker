@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { css, jsx } from '@emotion/react'
 // Utils
 import pluralize from 'pluralize'
@@ -13,10 +13,9 @@ type Props = {
   onChange: (newAgr: string[]) => void
 }
 
-const ArgsList = (props: Props) => {
+const ArgsList: FC<Props> = ({ args, selected, onChange }) => {
   const handleChange = useCallback(
-    (item: string, i: number) => {
-      const selected = props.selected
+    (item: string) => {
       const index = selected.findIndex((a) => a === item)
       const newArgs = [...selected]
 
@@ -25,18 +24,18 @@ const ArgsList = (props: Props) => {
       } else {
         newArgs.push(item)
       }
-      props.onChange(newArgs)
+      onChange(newArgs)
     },
-    [props.onChange]
+    [selected, onChange]
   )
 
   const label =
-    props.selected.length > 0
-      ? `Apply to ${pluralize('control', props.selected.length, true)}`
+    selected.length > 0
+      ? `Apply to ${pluralize('control', selected.length, true)}`
       : 'Select controls'
 
   const itemProps = {
-    selected: props.selected,
+    selected,
   }
 
   return (
@@ -52,7 +51,7 @@ const ArgsList = (props: Props) => {
     >
       <Dropdown
         label={label}
-        items={props.args}
+        items={args}
         itemProps={itemProps}
         itemComponent={Arg}
         onItemClick={handleChange}

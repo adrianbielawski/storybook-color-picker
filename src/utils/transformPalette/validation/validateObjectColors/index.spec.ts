@@ -5,7 +5,7 @@ import {
   whiteObject,
 } from '../../../testsUtils'
 import validateShade from '../validateShade'
-import validateObjectColors from '../validateObjectColors'
+import validateObjectColors from '.'
 
 jest.mock('../validateShade')
 

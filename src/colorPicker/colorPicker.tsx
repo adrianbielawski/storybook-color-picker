@@ -97,6 +97,7 @@ const ColorPicker = () => {
     }
 
     setAddonState(newState)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colorPicker])
 
   const handleArgsChange = useCallback(
@@ -109,7 +110,7 @@ const ColorPicker = () => {
 
       setAddonState(newState)
     },
-    [addonState]
+    [addonState, setAddonState, storyId]
   )
 
   const handlePaletteChange = useCallback(
@@ -125,7 +126,7 @@ const ColorPicker = () => {
 
       setAddonState(newState)
     },
-    [addonState]
+    [addonState, setAddonState, storyId]
   )
 
   const handleCopyBoxClick = useCallback(() => {
@@ -135,7 +136,7 @@ const ColorPicker = () => {
     const copy = !newState.storyStates[storyId].copyOnClick
     newState.storyStates[storyId].copyOnClick = copy
     setAddonState(newState)
-  }, [addonState])
+  }, [addonState, setAddonState, storyId])
 
   if (
     !storyPalettes?.palettes?.length ||

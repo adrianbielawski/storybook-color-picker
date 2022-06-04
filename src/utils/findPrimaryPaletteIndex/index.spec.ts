@@ -1,5 +1,5 @@
 import { StatePalette } from 'src/colorPicker/types'
-import findPrimaryPaletteIndex from './'
+import findPrimaryPaletteIndex from '.'
 
 describe('findPrimaryPaletteIndex', () => {
   const palettes: StatePalette[] = [
@@ -18,10 +18,7 @@ describe('findPrimaryPaletteIndex', () => {
     ['name is on the list', 'palette', 1],
     ['name is NOT on the list', 'foo', undefined],
   ])('return correct index when %s', (_, primaryPalette, expected) => {
-    const input = {
-      primaryPalette,
-      palettes,
-    }
+    const input = { primaryPalette, palettes }
 
     const output = findPrimaryPaletteIndex(input)
 

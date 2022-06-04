@@ -1,6 +1,6 @@
-import { ArgTypes } from '@storybook/api/dist/ts3.9'
+import { ArgTypes } from '@storybook/api'
 
-export const getColorControls = (
+const getColorControls = (
   argTypes: ArgTypes,
   additionalControls?: string[]
 ) => {
@@ -27,3 +27,5 @@ export const getColorControls = (
 
   return colorControls
 }
+
+export default getColorControls

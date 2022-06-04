@@ -7,8 +7,8 @@ import {
   transformedLightArray,
   transformedWhiteArray,
   whiteArray,
-} from '../../../testsUtils'
-import transformObjectPalette from './'
+} from 'src/utils/testsUtils'
+import transformObjectPalette from '.'
 import validateObjectColors from '../../validation/validateObjectColors'
 import { ColorPaletteAsArray } from 'src/colorPicker/types'
 
