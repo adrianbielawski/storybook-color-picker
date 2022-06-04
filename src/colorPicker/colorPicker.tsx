@@ -13,7 +13,6 @@ import {
   getColorControls,
   getColorPalettes,
   getPrimaryPaletteName,
-  warnDeprecated,
   reportInvalidPalettes,
 } from '../utils'
 import { ADDON_ID } from '../constants'
@@ -28,16 +27,14 @@ import Palette from './palette'
 const initialAddonState = { storyStates: {} }
 
 const ColorPicker = () => {
-  const colorPalettes = useParameter<ColorPickerParameters>('colorPalettes')
   const colorPicker = useParameter<ColorPickerParameters>('colorPicker')
 
-  const primaryPalette =
-    colorPicker?.primaryPalette || colorPalettes?.primaryPalette
-  const palettes = colorPicker?.palettes || colorPalettes?.palettes
-  const additionalControls =
-    colorPicker?.applyColorTo || colorPalettes?.applyColorTo
-  const disableDefaultPalettes =
-    colorPicker?.disableDefaultPalettes || colorPalettes?.disableDefaultPalettes
+  const {
+    primaryPalette,
+    palettes,
+    applyColorTo: additionalControls,
+    disableDefaultPalettes,
+  } = colorPicker
 
   const storybookApi = useStorybookApi()
   const state = useStorybookState() as StorybookState
@@ -54,34 +51,6 @@ const ColorPicker = () => {
       return
     }
 
-    if (colorPalettes) {
-      warnDeprecated(
-        'Property "colorPalettes"',
-        'next major release',
-        'colorPicker'
-      )
-    }
-
-    const getDeprecatedPrimaryPalette = () => {
-      if (colorPicker?.defaultColorPalette) {
-        warnDeprecated(
-          'Property "defaultColorPalette"',
-          'next major release',
-          'primaryPalette'
-        )
-      }
-
-      if (colorPicker?.default) {
-        warnDeprecated(
-          'Property "default"',
-          'next major release',
-          'primaryPalette'
-        )
-      }
-
-      return colorPicker?.defaultColorPalette || colorPicker?.default
-    }
-
     const validatedStoryPalettes = getColorPalettes(
       disableDefaultPalettes,
       palettes
@@ -89,7 +58,7 @@ const ColorPicker = () => {
 
     const initialStoryPalettes = {
       palettes: validatedStoryPalettes.palettes,
-      primaryPalette: primaryPalette || getDeprecatedPrimaryPalette(),
+      primaryPalette,
     }
 
     if (validatedStoryPalettes.invalidPalettes.length) {
@@ -128,7 +97,7 @@ const ColorPicker = () => {
     }
 
     setAddonState(newState)
-  }, [colorPalettes])
+  }, [colorPicker])
 
   const handleArgsChange = useCallback(
     (newArgs: string[]) => {
