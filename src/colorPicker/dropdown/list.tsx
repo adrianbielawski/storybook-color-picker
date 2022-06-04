@@ -1,8 +1,8 @@
-import React, { ElementType } from 'react'
+/** @jsx jsx */
+import { ElementType } from 'react'
 import { css, jsx } from '@emotion/react'
 // Components
 import AnimateHeight from 'react-animate-height'
-/** @jsx jsx */
 
 export type ListPosition = 'bottom-left' | 'bottom-right'
 
@@ -12,6 +12,7 @@ type Props<I> = {
   itemProps: Record<string, unknown>
   itemComponent: ElementType<I>
   onItemClick: (item: I, index: number) => void
+  testId: string
 }
 
 const List = (props: Props<any>) => {
@@ -50,6 +51,7 @@ const List = (props: Props<any>) => {
       css={css`
         position: fixed;
       `}
+      data-testid={props.testId}
     >
       <AnimateHeight height={props.active ? 'auto' : 0}>
         <div

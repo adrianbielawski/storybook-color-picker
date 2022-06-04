@@ -1,8 +1,7 @@
-import React from 'react'
+/** @jsx jsx */
 import { css, jsx } from '@emotion/react'
 // Components
 import CheckBox from '../checkBox/checkBox'
-/** @jsx jsx */
 
 type Props = {
   item: string

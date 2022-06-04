@@ -1,8 +1,7 @@
-import React from 'react'
+/** @jsx jsx */
 import { css, jsx } from '@emotion/react'
 // Types
 import { StatePalette } from '../types'
-/** @jsx jsx */
 
 type Props = {
   item: StatePalette

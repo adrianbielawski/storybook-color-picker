@@ -1,4 +1,11 @@
-import React, { ElementType, useCallback, useEffect, useState } from 'react'
+/** @jsx jsx */
+import {
+  ElementType,
+  useCallback,
+  useEffect,
+  useState,
+  MouseEvent,
+} from 'react'
 import { css, jsx } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
@@ -6,7 +13,6 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import useOutsideClick from '../../hooks/useOutsideClick'
 // Components
 import List from './list'
-/** @jsx jsx */
 
 type Props<I> = {
   label: string
@@ -14,7 +20,7 @@ type Props<I> = {
   itemProps?: Record<string, unknown>
   itemComponent: ElementType<I>
   closeOnItemClick?: boolean
-  renderList?: '>1' | 'allways'
+  renderList?: '>1' | 'always'
   onLabelClick?: (active: boolean) => void
   onItemClick: (item: I, index: number) => void
 }
@@ -47,7 +53,7 @@ const Dropdown = (props: Props<any>) => {
   const wrapperRef = useOutsideClick(closeList)
 
   const toggleActive = useCallback(
-    (e: React.MouseEvent) => {
+    (e: MouseEvent) => {
       e.preventDefault()
       setActive(!active)
       props.onLabelClick?.(!active)
@@ -63,7 +69,7 @@ const Dropdown = (props: Props<any>) => {
   }
 
   const renderList =
-    props.renderList === 'allways' ||
+    props.renderList === 'always' ||
     (props.renderList === '>1' && props.items.length > 1)
 
   return (
@@ -72,10 +78,10 @@ const Dropdown = (props: Props<any>) => {
       css={css`
         display: inline-block;
       `}
-      data-automation="dropdown"
+      data-testid="dropdown"
     >
       <button
-        data-automation="dropdownButton"
+        data-testid="dropdownButton"
         onClick={toggleActive}
         css={css`
           background-color: #fff;
@@ -85,12 +91,12 @@ const Dropdown = (props: Props<any>) => {
 
           ${renderList &&
           `&:hover {
-                            cursor: pointer;
-                        }`}
+            cursor: pointer;
+          }`}
         `}
       >
         <p
-          data-automation="dropdownLabel"
+          data-testid="dropdownLabel"
           css={css`
             display: inline;
             margin-right: 0.5em;
@@ -102,7 +108,7 @@ const Dropdown = (props: Props<any>) => {
           <FontAwesomeIcon
             icon={faChevronDown}
             color="#777"
-            data-automation="dropdownChevron"
+            data-testid="dropdownChevron"
           />
         )}
       </button>
@@ -113,7 +119,7 @@ const Dropdown = (props: Props<any>) => {
           itemProps={props.itemProps}
           itemComponent={props.itemComponent}
           onItemClick={handleItemClick}
-          data-automation="dropdownList"
+          testId="dropdownList"
         />
       )}
     </div>
@@ -125,7 +131,7 @@ Dropdown.defaultProps = {
   items: null,
   itemComponent: null,
   closeOnItemClick: false,
-  renderList: 'allways',
+  renderList: 'always',
   onLabelClick: () => {},
   onItemClick: () => {},
 }

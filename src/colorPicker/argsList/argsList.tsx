@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react'
+/** @jsx jsx */
+import { useCallback } from 'react'
 import { css, jsx } from '@emotion/react'
 // Utils
 import pluralize from 'pluralize'
 // Components
 import Dropdown from '../dropdown/dropdown'
 import Arg from './arg'
-/** @jsx jsx */
 
 type Props = {
   args: string[]

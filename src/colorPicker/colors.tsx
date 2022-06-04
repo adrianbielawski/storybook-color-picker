@@ -1,8 +1,7 @@
-import React from 'react'
+/** @jsx jsx */
 import { css, jsx } from '@emotion/react'
 import { TransformedColorPalette } from './types'
 import Shade from './shade'
-/** @jsx jsx */
 
 type Props = {
   colors: TransformedColorPalette

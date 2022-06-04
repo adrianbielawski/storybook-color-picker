@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react'
+/** @jsx jsx */
+import { useEffect, useState, useCallback } from 'react'
 import { css, jsx } from '@emotion/react'
 import { useArgs, useAddonState, useStorybookState, Args } from '@storybook/api'
 // Utils
@@ -10,7 +11,6 @@ import { AddonState, TransformedShadeType } from './types'
 import ShadeTooltip from './shadeTooltip'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import 'react-popper-tooltip/dist/styles.css'
-/** @jsx jsx */
 
 type Props = {
   shade: TransformedShadeType
