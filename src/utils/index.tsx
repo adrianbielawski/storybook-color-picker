@@ -1,4 +1,4 @@
-export * from './getColorControls'
+export { default as getColorControls } from './getColorControls'
 export { default as findPrimaryPaletteIndex } from './findPrimaryPaletteIndex'
 export { default as getPrimaryPaletteName } from './getPrimaryPaletteName'
 export { default as transformPalette } from './transformPalette'

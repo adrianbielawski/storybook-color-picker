@@ -30,7 +30,7 @@ const ColorPickerIcon = () => {
     <WithTooltip
       placement="bottom"
       trigger="click"
-      tooltipShown={true}
+      tooltipShown
       tooltip={<ColorPicker />}
       closeOnClick
       onVisibilityChange={toggleColorPicker}

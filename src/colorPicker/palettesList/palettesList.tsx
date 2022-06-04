@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { FC, useCallback } from 'react'
 import { StatePalette } from '../types'
 import Dropdown from '../dropdown/dropdown'
 import Palette from './palette'
@@ -9,30 +9,27 @@ type Props = {
   onChange: (newCurrent: number) => void
 }
 
-const PalettesList = (props: Props) => {
+const PalettesList: FC<Props> = ({ palettes, current, onChange }) => {
   const handleChange = useCallback(
     (item: StatePalette, index: number) => {
-      props.onChange(index)
+      onChange(index)
     },
-    [props.onChange]
+    [onChange]
   )
 
-  const label =
-    props.palettes.length > 1
-      ? props.palettes[props.current].name
-      : props.palettes[0].name
+  const label = palettes.length > 1 ? palettes[current].name : palettes[0].name
 
   const itemProps = {
-    current: props.current,
+    current,
   }
 
   return (
     <Dropdown
-      label={label || `Palette No${props.current + 1}`}
-      items={props.palettes}
+      label={label || `Palette No${current + 1}`}
+      items={palettes}
       itemProps={itemProps}
       itemComponent={Palette}
-      closeOnItemClick={true}
+      closeOnItemClick
       renderList=">1"
       onItemClick={handleChange}
     />

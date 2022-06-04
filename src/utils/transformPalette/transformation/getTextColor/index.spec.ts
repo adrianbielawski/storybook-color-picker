@@ -2,9 +2,7 @@ import chroma, { ChromaStatic } from 'chroma-js'
 import getTextColor from '.'
 
 jest.mock('chroma-js', () => {
-  const chromaMock = () => {
-    return chromaMock.Color()
-  }
+  const chromaMock = () => chromaMock.Color()
 
   chromaMock.mockedColor = {
     luminance: jest.fn(),

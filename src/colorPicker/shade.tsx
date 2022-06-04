@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, FC } from 'react'
 import { css, jsx } from '@emotion/react'
 import { useArgs, useAddonState, useStorybookState, Args } from '@storybook/api'
 // Utils
@@ -16,8 +16,9 @@ type Props = {
   shade: TransformedShadeType
 }
 
-const Shade = (props: Props) => {
-  const [_, updateArgs] = useArgs()
+const Shade: FC<Props> = ({ shade }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [args, updateArgs] = useArgs()
   const state = useStorybookState()
   const [addonState] = useAddonState<AddonState>(ADDON_ID)
   const [copied, setCopied] = useState(false)
@@ -49,17 +50,22 @@ const Shade = (props: Props) => {
   const handleClick = useCallback(() => {
     const newArgs: Args = {}
 
-    storyState.selectedControls.forEach(control => {
-      newArgs[control] = props.shade.value
+    storyState.selectedControls.forEach((control) => {
+      newArgs[control] = shade.value
     })
 
     updateArgs(newArgs)
 
     if (storyState.copyOnClick) {
       setCopied(true)
-      copy(props.shade.value)
+      copy(shade.value)
     }
-  }, [storyState.selectedControls, storyState.copyOnClick])
+  }, [
+    storyState.selectedControls,
+    storyState.copyOnClick,
+    shade.value,
+    updateArgs,
+  ])
 
   return (
     <div>
@@ -71,7 +77,7 @@ const Shade = (props: Props) => {
           height: 1.5em;
           margin: 0.3em;
           border: 1px solid #ddd;
-          background-color: ${props.shade.value};
+          background-color: ${shade.value};
           &:hover {
             cursor: copy;
             > * {
@@ -79,7 +85,7 @@ const Shade = (props: Props) => {
             }
           }
         `}
-      ></div>
+      />
       {visible && (
         <div
           ref={setTooltipRef}
@@ -92,7 +98,7 @@ const Shade = (props: Props) => {
           `}
         >
           <div {...getArrowProps({ className: 'tooltip-arrow' })} />
-          <ShadeTooltip shade={props.shade} copied={copied} />
+          <ShadeTooltip shade={shade} copied={copied} />
         </div>
       )}
     </div>

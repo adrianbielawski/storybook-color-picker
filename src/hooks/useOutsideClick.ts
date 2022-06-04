@@ -2,6 +2,7 @@ import { useEffect, useCallback, useState } from 'react'
 
 const useOutsideClick = (callback: Function) => {
   const [element, setElement] = useState<HTMLElement | null>(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const elementRef = useCallback(setElement, [])
 
   useEffect(() => {

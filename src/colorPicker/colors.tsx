@@ -2,13 +2,14 @@
 import { css, jsx } from '@emotion/react'
 import { TransformedColorPalette } from './types'
 import Shade from './shade'
+import { FC } from 'react'
 
 type Props = {
   colors: TransformedColorPalette
 }
 
-const Colors = (props: Props) => {
-  const shades = props.colors.values.map((shade, i) => (
+const Colors: FC<Props> = ({ colors }) => {
+  const shades = colors.values.map((shade, i) => (
     <Shade shade={shade} key={`Shade_${shade.value}_${i}`} />
   ))
 

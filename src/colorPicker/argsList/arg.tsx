@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
+import { FC } from 'react'
 // Components
 import CheckBox from '../checkBox/checkBox'
 
@@ -8,11 +9,10 @@ type Props = {
   itemProps: {
     selected: string[]
   }
-  index: number
 }
 
-const Arg = (props: Props) => {
-  const isSelected = props.itemProps.selected.includes(props.item)
+const Arg: FC<Props> = ({ item, itemProps }) => {
+  const isSelected = itemProps.selected.includes(item)
 
   return (
     <div
@@ -27,7 +27,7 @@ const Arg = (props: Props) => {
         }
       `}
     >
-      <CheckBox label={props.item} checked={isSelected} />
+      <CheckBox label={item} checked={isSelected} />
     </div>
   )
 }

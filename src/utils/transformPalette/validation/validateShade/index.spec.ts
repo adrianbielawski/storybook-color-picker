@@ -1,4 +1,4 @@
-import validateShade from './'
+import validateShade from '.'
 
 describe('validateShade', () => {
   beforeEach(() => {

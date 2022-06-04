@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
   MouseEvent,
+  FC,
 } from 'react'
 import { css, jsx } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -25,7 +26,16 @@ type Props<I> = {
   onItemClick: (item: I, index: number) => void
 }
 
-const Dropdown = (props: Props<any>) => {
+const Dropdown: FC<Props<any>> = ({
+  label,
+  items,
+  itemProps,
+  itemComponent,
+  closeOnItemClick,
+  renderList,
+  onLabelClick,
+  onItemClick,
+}) => {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -56,21 +66,20 @@ const Dropdown = (props: Props<any>) => {
     (e: MouseEvent) => {
       e.preventDefault()
       setActive(!active)
-      props.onLabelClick?.(!active)
+      onLabelClick?.(!active)
     },
-    [active]
+    [active, onLabelClick]
   )
 
   const handleItemClick = (item: any, index: number) => {
-    if (props.closeOnItemClick) {
+    if (closeOnItemClick) {
       closeList()
     }
-    props.onItemClick(item, index)
+    onItemClick(item, index)
   }
 
-  const renderList =
-    props.renderList === 'always' ||
-    (props.renderList === '>1' && props.items.length > 1)
+  const showList =
+    renderList === 'always' || (renderList === '>1' && items.length > 1)
 
   return (
     <div
@@ -102,9 +111,9 @@ const Dropdown = (props: Props<any>) => {
             margin-right: 0.5em;
           `}
         >
-          {props.label}
+          {label}
         </p>
-        {renderList && (
+        {showList && (
           <FontAwesomeIcon
             icon={faChevronDown}
             color="#777"
@@ -112,12 +121,12 @@ const Dropdown = (props: Props<any>) => {
           />
         )}
       </button>
-      {renderList && (
+      {showList && (
         <List
           active={active}
-          items={props.items}
-          itemProps={props.itemProps}
-          itemComponent={props.itemComponent}
+          items={items}
+          itemProps={itemProps}
+          itemComponent={itemComponent}
           onItemClick={handleItemClick}
           testId="dropdownList"
         />

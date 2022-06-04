@@ -1,4 +1,4 @@
-import { getColorControls } from '.'
+import getColorControls from '.'
 import { argTypes as ARG_TYPES } from '../testsUtils'
 
 describe('getColorControls', () => {

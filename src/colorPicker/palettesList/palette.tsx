@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
+import { FC } from 'react'
 // Types
 import { StatePalette } from '../types'
 
@@ -11,13 +12,12 @@ type Props = {
   index: number
 }
 
-const Palette = (props: Props) => {
-  if (!props.item.palette) {
+const Palette: FC<Props> = ({ item, itemProps, index }) => {
+  if (!item.palette) {
     return null
   }
 
-  const backgroundColor =
-    props.itemProps.current === props.index ? '#eee' : '#fff'
+  const backgroundColor = itemProps.current === index ? '#eee' : '#fff'
 
   return (
     <p
@@ -37,7 +37,7 @@ const Palette = (props: Props) => {
         }
       `}
     >
-      {props.item.name || `Palette No${props.index + 1}`}
+      {item.name || `Palette No${index + 1}`}
     </p>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import joinStringList from '../joinStringList'
 
 export const getInvalidPaletteMessage = (

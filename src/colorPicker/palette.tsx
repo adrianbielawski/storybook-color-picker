@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Fragment } from 'react'
+import { FC, Fragment } from 'react'
 import { css, jsx } from '@emotion/react'
 // Types
 import { TransformedColorPalette } from './types'
@@ -10,9 +10,9 @@ interface Props {
   palette: TransformedColorPalette[]
 }
 
-const Palette = (props: Props) => {
-  const colors = props.palette.map((colors, i) => (
-    <Fragment key={`Colors_${colors.label}_${i}`}>
+const Palette: FC<Props> = ({ palette }) => {
+  const colors = palette.map((c, i) => (
+    <Fragment key={`Colors_${c.label}_${i}`}>
       <div
         css={css`
           display: flex;
@@ -24,9 +24,9 @@ const Palette = (props: Props) => {
           border-bottom: 1px solid #eee;
         `}
       >
-        {colors.label || 'Unnamed'}
+        {c.label || 'Unnamed'}
       </div>
-      <Colors colors={colors} />
+      <Colors colors={c} />
     </Fragment>
   ))
 

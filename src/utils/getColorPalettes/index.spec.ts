@@ -1,8 +1,5 @@
-import {
-  PaletteAsArray,
-  TransformedPalettes,
-} from 'src/colorPicker/types'
-import getColorPalettes from './'
+import { PaletteAsArray, TransformedPalettes } from 'src/colorPicker/types'
+import getColorPalettes from '.'
 import { defaultPalettes } from '../../constants'
 import transformPalette from '../transformPalette'
 import { statePalette } from '../testsUtils'

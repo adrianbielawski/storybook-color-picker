@@ -1,5 +1,5 @@
 import { paletteAsArray, paletteAsObject, statePalette } from '../testsUtils'
-import transformPalette from './'
+import transformPalette from '.'
 import validateArrayPalette from './validation/validateArrayPalette'
 import transformObjectPalette from './transformation/transformObjectPalette'
 
