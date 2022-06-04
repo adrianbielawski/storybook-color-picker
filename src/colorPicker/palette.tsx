@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
+/** @jsx jsx */
+import { Fragment } from 'react'
 import { css, jsx } from '@emotion/react'
 // Types
 import { TransformedColorPalette } from './types'
 // Components
 import Colors from './colors'
-/** @jsx jsx */
 
 interface Props {
   palette: TransformedColorPalette[]

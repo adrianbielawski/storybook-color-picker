@@ -1,7 +1,6 @@
 import React from 'react'
 import Dropdown from './dropdown'
-import { automation } from '../../utils/testsUtils'
-import { shallow } from 'enzyme'
+import { fireEvent, render } from '@testing-library/react'
 
 const Item = (props: { item: string; index: number }) => <div>{props.item}</div>
 
@@ -33,8 +32,8 @@ describe('Dropdown', () => {
       false,
     ],
     [
-      "has only one item and renderList === 'allways'",
-      'allways',
+      "has only one item and renderList === 'always'",
+      'always',
       ['first'],
       true,
       true,
@@ -54,8 +53,8 @@ describe('Dropdown', () => {
       true,
     ],
     [
-      "has more than one item and renderList === 'allways'",
-      'allways',
+      "has more than one item and renderList === 'always'",
+      'always',
       ['first', 'second'],
       true,
       true,
@@ -67,21 +66,20 @@ describe('Dropdown', () => {
         <Dropdown
           label={label}
           items={items}
-          renderList={renderList as '>1' | 'allways'}
+          renderList={renderList as '>1' | 'always'}
           itemComponent={Item}
           onItemClick={onItemClick}
         />
       )
-      const wrapper = shallow(dropdownComponent)
+      const { queryByTestId } = render(dropdownComponent)
 
-      const dropdown = wrapper.find(automation('dropdown'))
-      const dropdownLabel = dropdown.find(automation('dropdownLabel'))
-      const dropdownChevron = dropdown.find(automation('dropdownChevron'))
-      const dropdownList = dropdown.find(automation('dropdownList'))
+      const dropdownLabel = queryByTestId('dropdownLabel')
+      const dropdownChevron = queryByTestId('dropdownChevron')
+      const dropdownList = queryByTestId('dropdownList')
 
-      expect(dropdownLabel.children().contains(label)).toBe(true)
-      expect(dropdownChevron.exists()).toBe(expectedChevron)
-      expect(dropdownList.exists()).toBe(expectedList)
+      expect(dropdownLabel.textContent).toBe(label)
+      expect(!!dropdownChevron).toBe(expectedChevron)
+      expect(!!dropdownList).toBe(expectedList)
     }
   )
 
@@ -100,14 +98,14 @@ describe('Dropdown', () => {
           onItemClick={onItemClick}
         />
       )
-      const wrapper = shallow(dropdownComponent)
 
-      const dropdown = wrapper.find(automation('dropdown'))
-      const dropdownButton = dropdown.find(automation('dropdownButton'))
-      const dropdownChevron = dropdown.find(automation('dropdownChevron'))
-      const dropdownList = dropdown.find(automation('dropdownList'))
+      const { queryByTestId } = render(dropdownComponent)
 
-      dropdownButton.simulate('click', e)
+      const dropdownButton = queryByTestId('dropdownButton')
+      const dropdownChevron = queryByTestId('dropdownChevron')
+      const dropdownList = queryByTestId('dropdownList')
+
+      fireEvent.click(dropdownButton, e)
 
       expect(onLabelClick).toHaveBeenCalledTimes(expectedCallsQty)
       if (isCallbackDefined) {
@@ -115,8 +113,8 @@ describe('Dropdown', () => {
       } else {
         expect(onLabelClick).not.toHaveBeenCalled()
       }
-      expect(dropdownChevron.exists()).toBe(true)
-      expect(dropdownList.exists()).toBe(true)
+      expect(!!dropdownChevron).toBeTruthy()
+      expect(!!dropdownList).toBeTruthy()
     }
   )
 })

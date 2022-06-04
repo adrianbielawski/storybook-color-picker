@@ -11,7 +11,7 @@ type Props = {
 
 const PalettesList = (props: Props) => {
   const handleChange = useCallback(
-    (_, index: number) => {
+    (item: StatePalette, index: number) => {
       props.onChange(index)
     },
     [props.onChange]

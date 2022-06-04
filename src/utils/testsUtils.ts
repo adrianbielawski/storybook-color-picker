@@ -5,8 +5,6 @@ import {
   StatePalette,
 } from 'src/colorPicker/types'
 
-export const automation = (name: string) => `[data-automation="${name}"]`
-
 export const lightArray = {
   label: 'light',
   values: [

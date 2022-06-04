@@ -2,6 +2,18 @@ import useOutsideClick from './useOutsideClick'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { fireEvent } from '@testing-library/react'
 
+const countAddEventListenerCalls = () => {
+  const spiedAddEventListener = document.addEventListener as any as jest.SpiedFunction<
+    typeof document.addEventListener
+  >;
+
+  spiedAddEventListener.mock.calls = spiedAddEventListener.mock.calls.filter(
+    ([fn]) => fn !== 'selectionchange'
+  );
+
+  return spiedAddEventListener;
+};
+
 describe('useOutsideClick', () => {
   let element: HTMLElement
   let outsideElement: HTMLElement
@@ -14,13 +26,13 @@ describe('useOutsideClick', () => {
   })
 
   it('adds event listener to the document', () => {
-    const mockAddEventListener = jest.spyOn(document, 'addEventListener')
+    jest.spyOn(document, 'addEventListener')
     const { result } = renderHook(() => useOutsideClick(callback))
 
     act(() => result.current(element))
 
-    expect(mockAddEventListener).toHaveBeenCalledTimes(1)
-    expect(mockAddEventListener).toHaveBeenCalledWith(
+    expect(countAddEventListenerCalls()).toBeCalledTimes(1)
+    expect(countAddEventListenerCalls()).toHaveBeenCalledWith(
       'click',
       expect.anything()
     )

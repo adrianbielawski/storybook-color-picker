@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from 'react'
+/** @jsx jsx */
+import { useCallback, useEffect } from 'react'
 import {
   useParameter,
   useStorybookState,
@@ -23,7 +24,6 @@ import ArgsList from './argsList/argsList'
 import PalettesList from './palettesList/palettesList'
 import CheckBox from './checkBox/checkBox'
 import Palette from './palette'
-/** @jsx jsx */
 
 const initialAddonState = { storyStates: {} }
 

@@ -1,8 +1,7 @@
-import React from 'react'
+/** @jsx jsx */
 import { css, jsx } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-/** @jsx jsx */
 
 type Props = {
   label?: string
