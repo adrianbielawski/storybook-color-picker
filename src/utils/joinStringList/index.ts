@@ -1,4 +1,10 @@
-const joinStringList = (strings: string[], limit?: number) => {
+import pluralize from 'pluralize'
+
+const joinStringList = (
+  strings: string[],
+  limit?: number,
+  suffixText?: string
+) => {
   const count = strings.length
 
   if (limit === 0) {
@@ -29,7 +35,7 @@ const joinStringList = (strings: string[], limit?: number) => {
 
     if (i === lastString) {
       const otherCount = limit ? count - limit : 0
-      const otherText = otherCount === 1 ? 'other' : 'others'
+      const otherText = pluralize(suffixText || '', otherCount)
       const returnString = `${string} and ${otherCount} ${otherText}`
 
       if (lastString === 0) {

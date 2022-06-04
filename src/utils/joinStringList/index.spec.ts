@@ -9,7 +9,7 @@ describe('joinStringList', () => {
     [3, 'foo, bar and baz'],
     [4, 'foo, bar and baz'],
   ])('renders correctly when limit is %p', (limit, expected) => {
-    const output = joinStringList(['foo', 'bar', 'baz'], limit)
+    const output = joinStringList(['foo', 'bar', 'baz'], limit, 'other')
 
     expect(output).toBe(expected)
   })
