@@ -1,4 +1,7 @@
-import { PaletteAsArray, StatePalettes } from 'src/colorPicker/types'
+import {
+  PaletteAsArray,
+  TransformedPalettes,
+} from 'src/colorPicker/types'
 import getColorPalettes from './'
 import { defaultPalettes } from '../../constants'
 import transformPalette from '../transformPalette'
@@ -49,20 +52,20 @@ describe('getColorPalettes', () => {
     ],
   ])(
     'returns %s',
-    (_, disableDefaultPalettes, customPalette, expectedPalettes) => {
-      transformPaletteMock.mockReturnValue(statePalette)
-      const expected: StatePalettes = {
-        primaryPalette: 'foo',
+    (_, disableDefaultPalettes, customPalettes, expectedPalettes) => {
+      transformPaletteMock.mockReturnValue({
+        ...statePalette,
+        invalidColors: [],
+      })
+
+      const expected: TransformedPalettes = {
         palettes: expectedPalettes,
+        invalidPalettes: [],
       }
 
-      const output = getColorPalettes(
-        'foo',
-        disableDefaultPalettes,
-        customPalette
-      )
+      const output = getColorPalettes(disableDefaultPalettes, customPalettes)
 
-      if (customPalette) {
+      if (customPalettes) {
         expect(transformPaletteMock).toBeCalledTimes(1)
         expect(transformPaletteMock).toBeCalledWith(paletteAsArray)
       } else {

@@ -13,6 +13,7 @@ import {
   getColorPalettes,
   getPrimaryPaletteName,
   warnDeprecated,
+  reportInvalidPalettes,
 } from '../utils'
 import { ADDON_ID } from '../constants'
 // Types
@@ -81,10 +82,25 @@ const ColorPicker = () => {
       return colorPicker?.defaultColorPalette || colorPicker?.default
     }
 
-    const initialStoryPalettes = getColorPalettes(
-      primaryPalette || getDeprecatedPrimaryPalette(),
+    const validatedStoryPalettes = getColorPalettes(
       disableDefaultPalettes,
       palettes
+    )
+
+    const initialStoryPalettes = {
+      palettes: validatedStoryPalettes.palettes,
+      primaryPalette: primaryPalette || getDeprecatedPrimaryPalette(),
+    }
+
+    if (validatedStoryPalettes.invalidPalettes.length) {
+      reportInvalidPalettes(validatedStoryPalettes.invalidPalettes)
+    }
+
+    const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
+
+    const primaryPaletteName = getPrimaryPaletteName(
+      initialStoryPalettes,
+      primaryPaletteIndex
     )
 
     const argTypes = storybookApi.getCurrentStoryData()
@@ -92,13 +108,6 @@ const ColorPicker = () => {
     const controls = getColorControls(
       (argTypes.parameters as Record<string, any>)?.argTypes,
       additionalControls
-    )
-
-    const primaryPaletteIndex = findPrimaryPaletteIndex(initialStoryPalettes)
-
-    const primaryPaletteName = getPrimaryPaletteName(
-      initialStoryPalettes,
-      primaryPaletteIndex
     )
 
     const newState = {

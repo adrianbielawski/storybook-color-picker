@@ -1,17 +1,14 @@
-export const getInvalidShadeMessage = (
-  paletteName: string,
-  colorLabel: string,
-  shadeLabel: string
-) =>
-  `%cInvalid color value in ${paletteName}: ${colorLabel} -> ${shadeLabel}. It has been removed from palette.`
+import joinStringList from '../joinStringList'
 
-export const getInvalidColorMessage = (
-  paletteName: string,
-  colorName: string
-) =>
-  `%cNo valid colors in ${paletteName} -> ${colorName}. It has been removed from palette.`
+export const getInvalidPaletteMessage = (
+  invalidColors: string[],
+  paletteName: string
+) => {
+  const count = invalidColors.length
+  const x = count === 1 ? 'color' : 'colors'
+  const list = joinStringList(invalidColors, 2)
+  return `${list} invalid ${x} detected in "${paletteName}" palette.`
+}
 
-export const getInvalidPaletteMessage = (paletteName: string) =>
-  `%cNo valid colors in ${paletteName}. Palette has been removed.`
-
-export const warn = (message: string) => console.warn(message, 'color: red')
+export const warn = (message: string) =>
+  console.warn(`%cColor picker warning%c: ${message}`, 'color: red')

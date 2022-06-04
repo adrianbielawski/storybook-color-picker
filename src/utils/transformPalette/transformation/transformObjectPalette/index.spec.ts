@@ -1,6 +1,7 @@
 import {
   darkArray,
   lightArray,
+  paletteAsArray,
   paletteAsObject,
   transformedDarkArray,
   transformedLightArray,
@@ -9,7 +10,7 @@ import {
 } from '../../../testsUtils'
 import transformObjectPalette from './'
 import validateObjectColors from '../../validation/validateObjectColors'
-import * as messages from '../../messages'
+import { ColorPaletteAsArray } from 'src/colorPicker/types'
 
 jest.mock('../../validation/validateObjectColors')
 
@@ -17,15 +18,13 @@ describe('transformObjectPalette', () => {
   const validateObjectColorsMock = validateObjectColors as jest.Mock
   beforeEach(() => {
     jest.resetAllMocks()
-    jest.spyOn(messages, 'getInvalidColorMessage')
-    jest.spyOn(messages, 'getInvalidPaletteMessage')
   })
 
-  it('returns transformed palette corectly', () => {
+  it('returns transformed palette correctly', () => {
     validateObjectColorsMock
-      .mockReturnValueOnce(lightArray)
-      .mockReturnValueOnce(darkArray)
-      .mockReturnValueOnce(whiteArray)
+      .mockReturnValueOnce({ palette: lightArray })
+      .mockReturnValueOnce({ palette: darkArray })
+      .mockReturnValueOnce({ palette: whiteArray })
     const output = transformObjectPalette(paletteAsObject)
 
     const expected = {
@@ -35,41 +34,46 @@ describe('transformObjectPalette', () => {
         transformedDarkArray,
         transformedWhiteArray,
       ],
+      invalidColors: [] as ColorPaletteAsArray[],
     }
 
     expect(validateObjectColors).toHaveBeenCalledTimes(3)
-    expect(messages.getInvalidColorMessage).not.toHaveBeenCalled()
-    expect(messages.getInvalidPaletteMessage).not.toHaveBeenCalled()
     expect(output).toEqual(expected)
   })
 
-  it('returns transformed palette corectly when values of one color are invalid', () => {
+  it('returns transformed palette correctly when values of one color are invalid', () => {
     validateObjectColorsMock
-      .mockReturnValueOnce(undefined)
-      .mockReturnValueOnce(darkArray)
-      .mockReturnValueOnce(whiteArray)
+      .mockReturnValueOnce({
+        invalidColors: lightArray,
+      })
+      .mockReturnValueOnce({ palette: darkArray })
+      .mockReturnValueOnce({ palette: whiteArray })
 
     const output = transformObjectPalette(paletteAsObject)
 
     const expected = {
       name: 'bar',
       palette: [transformedDarkArray, transformedWhiteArray],
+      invalidColors: [lightArray],
     }
 
     expect(validateObjectColors).toHaveBeenCalledTimes(3)
-    expect(messages.getInvalidColorMessage).toHaveBeenCalledTimes(1)
-    expect(messages.getInvalidPaletteMessage).not.toHaveBeenCalled()
     expect(output).toEqual(expected)
   })
 
-  it('returns undefined when values of all colors are invalid', () => {
-    validateObjectColorsMock.mockReturnValue(undefined)
+  it('returns correctly when values of all colors are invalid', () => {
+    validateObjectColorsMock
+      .mockReturnValueOnce({ invalidColors: lightArray })
+      .mockReturnValueOnce({ invalidColors: darkArray })
+      .mockReturnValueOnce({ invalidColors: whiteArray })
 
     const output = transformObjectPalette(paletteAsObject)
 
     expect(validateObjectColors).toHaveBeenCalledTimes(3)
-    expect(messages.getInvalidColorMessage).toHaveBeenCalledTimes(3)
-    expect(messages.getInvalidPaletteMessage).toHaveBeenCalledTimes(1)
-    expect(output).toEqual(undefined)
+    expect(output).toEqual({
+      name: 'bar',
+      palette: [],
+      invalidColors: paletteAsArray.palette,
+    })
   })
 })

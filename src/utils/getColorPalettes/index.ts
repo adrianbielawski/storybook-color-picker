@@ -1,22 +1,31 @@
-import { PaletteObj, StatePalettes } from 'src/colorPicker/types'
+import { PaletteObj, TransformedPalettes } from 'src/colorPicker/types'
 import transformPalette from '../transformPalette'
 import { defaultPalettes } from '../../constants'
 
 const getColorPalettes = (
-  primaryPalette: string,
   disableDefaultPalettes?: boolean,
   customPalettes?: PaletteObj[]
 ) => {
-  const transformedPalettes: StatePalettes = {
-    primaryPalette,
+  const transformedPalettes: TransformedPalettes = {
     palettes: [],
+    invalidPalettes: [],
   }
 
   customPalettes?.forEach((p) => {
     const transformed = transformPalette(p)
 
-    if (transformed) {
-      transformedPalettes.palettes.push(transformed)
+    if (transformed.palette.length) {
+      transformedPalettes.palettes.push({
+        name: transformed.name,
+        palette: transformed.palette,
+      })
+    }
+
+    if (transformed.invalidColors.length) {
+      transformedPalettes.invalidPalettes.push({
+        name: p.name,
+        invalidColors: transformed.invalidColors,
+      })
     }
   })
 
