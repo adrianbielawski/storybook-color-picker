@@ -1,3 +1,5 @@
-const validateShade = (shade: string) => CSS.supports('color', shade)
+import chroma from 'chroma-js'
+
+const validateShade = (shade: string) => chroma.valid(shade)
 
 export default validateShade
