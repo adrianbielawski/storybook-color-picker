@@ -47,7 +47,7 @@
     "copy-to-clipboard": "^3.3.1",
     "pluralize": "^8.0.0",
     "react": "^17.0.2",
-    "react-animate-height": "^2.0.23",
+    "react-animate-height": "^3.0.3",
     "react-popper-tooltip": "^4.3.0",
     "typescript": "^4.3.4"
   },
