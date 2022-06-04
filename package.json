@@ -26,7 +26,8 @@
     "format:check": "pretty-quick --staged --check --pattern \"**/*.*(ts|tsx)\"",
     "format:staged": "pretty-quick --staged --pattern \"**/*.*(ts|tsx)\"",
     "lint": "eslint src --ext .ts,.tsx --cache",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "prepublishOnly": "npm run build",
     "storybook": "start-storybook -p 6006",
     "start": "concurrently \"npm run build:watch\" \"npm run storybook -- --no-manager-cache --quiet\""
