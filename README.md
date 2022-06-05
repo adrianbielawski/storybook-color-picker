@@ -4,18 +4,10 @@
 
 A Storybook addon. It allows you to quickly find any color from your custom color palette and set it on component's controls and/or copy to clipboard.
 
-Add one or multiple color palettes and set the primary palette globaly, for component or single story.
+Add one or multiple color palettes and set the primary palette globally, for component or single story.
 
 
 ![storybook-color-picker](./assets/showcase.gif)
-
-## Technology
-
-Created with TypeScript, React and Storybook.
-
-## Migrate from v1 to v2
-
-To migrate from v1 to v2 adjust `parameters` in `preview.js` to match the pattern shown in [Add palettes](#add-palettes) in usage section below.
 
 ## Usage
 
@@ -38,7 +30,7 @@ In your `.storybook` folder find `main.js` file and add this addon like below.
 
 ### Add palettes
 
-#### Globaly
+#### Globally
 
 This will add color picker and palettes everywhere in your storybook.
 
@@ -117,12 +109,6 @@ Primary.parameters = {
 }
 ```
 
-#### Deprecation Info
-
-Before v2.3.0 `colorPicker` parameter was called `colorPalettes`.\
-Before v2.3.0 `primaryPalette` parameter was called `default`.\
-Both are still supported but will be removed in next major release.
-
 ## Palette
 
 ### as Object
@@ -153,8 +139,7 @@ Example:
   }
 ```
 
-`Usefull tip: add white spaces or zeros before numerical keys to prevent auto sorting`
-
+`Useful tip: add white spaces or zeros before numerical keys to prevent auto sorting`
 
 ### as Array
 
@@ -246,17 +231,10 @@ The following list increases by specificity.
 2. `primaryPalette` set on component `parameters`
 3. `primaryPalette` set on story `MyComponent.parameters`
 
-#### Deprecation Info
-
-Before v2.3.0 `colorPicker` parameter was called `colorPalettes`.\
-Before v2.3.0 `primaryPalette` parameter was called `defaultColorPalette`.\
-It is still supported but will be removed in next major release.
-
-
 ## Apply selected color to component's control
 
 All controls with type of "color" will be detected automatically.
-You can add extra controls to whitch color may be applied. Only controls of type "text" may be added as extra.
+You can add extra controls to which color may be applied. Only controls of type "text" may be added as extra.
 
 ### On component
 
@@ -283,7 +261,7 @@ export default {
 
 ### On story
 
-Add list of extra controls to selected story to overwrite list added to component globaly as in example above.
+Add list of extra controls to selected story to overwrite list added to component globally as in example above.
 
 In `MyComponent.stories.js` add:
 
@@ -298,13 +276,7 @@ Primary.parameters = {
 };
 ```
 
-Before v2.3.0 `colorPicker` parameter was called `colorPalettes`.\
-It is still supported but will be removed in next major release.
-
-
 ## Default palettes
-
-Added in v2.3.0
 
 ### Disable default palettes
 
