@@ -27,7 +27,7 @@ import Palette from './palette'
 const initialAddonState = { storyStates: {} }
 
 const ColorPicker = () => {
-  const colorPicker = useParameter<ColorPickerParameters>('colorPicker')
+  const colorPicker = useParameter<ColorPickerParameters>('colorPicker') || {}
 
   const {
     primaryPalette,
