@@ -1,5 +1,23 @@
 # Changelog
 
+### v3.0.0
+
+05.06.2022.
+
+**Breaking changes**
+
+* Dropped support of deprecated in v.2.3.9 parameter names
+
+- `colorPalettes` -> `colorPicker`.
+
+- `defaultColorPalette` -> `primaryPalette`.
+
+**Changed**
+
+* Invalid colors warnings
+
+-----
+
 ### v2.3.1
 
 06.02.2022.
