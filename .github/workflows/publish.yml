@@ -1,0 +1,24 @@
+name: Publish
+
+on:
+  push:
+    branches: [ "version-bump" ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run build-storybook
+      - run: npm run test
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN_SCP }}
+          check-version: true
+          tag: latest
