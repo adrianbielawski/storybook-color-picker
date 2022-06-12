@@ -27,6 +27,26 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - run: npm install
     - run: npm run lint
     - run: npm run build
-    - run: npm test
+    - run: npm run build-storybook
+    - run: npm run test
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run build-storybook
+      - run: npm run test
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN_SCP }}
+          greater-version-only: true
+          tag: latest
