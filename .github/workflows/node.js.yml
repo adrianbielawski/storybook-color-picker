@@ -48,5 +48,6 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN_SCP }}
+          check-version: true
           greater-version-only: true
           tag: latest
