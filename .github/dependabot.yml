@@ -11,3 +11,4 @@ updates:
       interval: 'weekly'
       day: "friday"
     open-pull-requests-limit: 20
+    versioning-strategy: increase
