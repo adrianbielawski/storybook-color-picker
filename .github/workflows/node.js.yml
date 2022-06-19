@@ -8,31 +8,28 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm install
-    - run: npm run lint
-    - run: npm run build
-    - run: npm run build-storybook
-    - run: npm run test
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm install
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run build-storybook
+      - run: npm run test
   tag:
     runs-on: ubuntu-latest
     needs: build
-    if: guthub.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Tag on NPM Package Version Change
         uses: neverendingqs/gh-action-tag-on-npm-version@v1.0.1
