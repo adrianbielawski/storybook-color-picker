@@ -3,7 +3,6 @@ name: Publish
 on:
   push:
     branches:
-      - master
       - version-bump
 
 jobs:
