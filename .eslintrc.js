@@ -12,7 +12,7 @@ module.exports = {
     'airbnb-typescript',
     'prettier',
   ],
-  parserOptions: { project: './tsconfig.json' },
+  parserOptions: { project: './tsconfig.eslint.json' },
   ignorePatterns: ['*.js'],
   env: {
     node: true,
