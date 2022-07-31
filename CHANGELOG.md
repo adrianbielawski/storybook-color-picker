@@ -6,6 +6,16 @@
 
 Dependencies updated
 
+**Changed**
+
+* Build size decreased
+
+### v3.0.1
+
+19.06.2022.
+
+Dependencies updated
+
 ### v3.0.0
 
 05.06.2022.
