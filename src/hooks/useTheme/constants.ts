@@ -1,5 +1,3 @@
-import { Theme, ThemeVars, useTheme as useSBTheme } from '@storybook/theming'
-
 export const lightTheme = {
   text: {
     primary: '#333333',
@@ -45,20 +43,3 @@ export const commonTheme = {
     primary: '#99999966',
   },
 }
-
-interface SBTheme extends Theme {
-  base: ThemeVars['base']
-}
-
-const useTheme = () => {
-  const sbTheme = useSBTheme<SBTheme>()
-  const themeType = sbTheme.base
-
-  return {
-    theme: themes[themeType],
-    commonTheme,
-    themeType,
-  }
-}
-
-export default useTheme

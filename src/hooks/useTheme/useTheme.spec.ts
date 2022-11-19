@@ -1,4 +1,5 @@
-import useTheme, { lightTheme, commonTheme, darkTheme } from './useTheme'
+import useTheme from './useTheme'
+import { lightTheme, commonTheme, darkTheme } from './constants'
 import { useTheme as useSBTheme } from '@storybook/theming'
 import { renderHook } from '@testing-library/react-hooks'
 
