@@ -10,9 +10,7 @@ import {
 import { css, jsx } from '@emotion/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
-// Utils
-import useOutsideClick from '../../hooks/useOutsideClick'
-// Components
+import { useTheme, useOutsideClick } from '../../hooks'
 import List from './list'
 
 type Props<I> = {
@@ -36,6 +34,7 @@ const Dropdown: FC<Props<any>> = ({
   onLabelClick,
   onItemClick,
 }) => {
+  const { theme } = useTheme()
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -71,12 +70,15 @@ const Dropdown: FC<Props<any>> = ({
     [active, onLabelClick]
   )
 
-  const handleItemClick = (item: any, index: number) => {
-    if (closeOnItemClick) {
-      closeList()
-    }
-    onItemClick(item, index)
-  }
+  const handleItemClick = useCallback(
+    (item: any, index: number) => {
+      if (closeOnItemClick) {
+        closeList()
+      }
+      onItemClick(item, index)
+    },
+    [closeOnItemClick, closeList, onItemClick]
+  )
 
   const showList =
     renderList === 'always' || (renderList === '>1' && items.length > 1)
@@ -93,7 +95,7 @@ const Dropdown: FC<Props<any>> = ({
         data-testid="dropdownButton"
         onClick={toggleActive}
         css={css`
-          background-color: #fff;
+          background-color: transparent;
           border: none;
           font-size: 1.1em;
           padding: 0;
@@ -116,7 +118,7 @@ const Dropdown: FC<Props<any>> = ({
         {showList && (
           <FontAwesomeIcon
             icon={faChevronDown}
-            color="#777"
+            color={theme.text.primary}
             data-testid="dropdownChevron"
           />
         )}

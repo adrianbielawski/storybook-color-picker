@@ -1,34 +1,40 @@
 /** @jsx jsx */
-import { FC, Fragment } from 'react'
+import { FC, Fragment, useMemo } from 'react'
 import { css, jsx } from '@emotion/react'
-// Types
 import { TransformedColorPalette } from './types'
-// Components
 import Colors from './colors'
+import { useTheme } from '../hooks'
 
 interface Props {
   palette: TransformedColorPalette[]
 }
 
 const Palette: FC<Props> = ({ palette }) => {
-  const colors = palette.map((c, i) => (
-    <Fragment key={`Colors_${c.label}_${i}`}>
-      <div
-        css={css`
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          font-size: 1.1em;
-          padding-right: 0.5em;
-          text-transform: capitalize;
-          border-bottom: 1px solid #eee;
-        `}
-      >
-        {c.label || 'Unnamed'}
-      </div>
-      <Colors colors={c} />
-    </Fragment>
-  ))
+  const { theme } = useTheme()
+
+  const colors = useMemo(
+    () =>
+      palette.map((c, i) => (
+        <Fragment key={`Colors_${c.label}_${i}`}>
+          <p
+            css={css`
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              font-size: 1.1em;
+              padding-right: 0.5em;
+              margin: 0;
+              text-transform: capitalize;
+              border-bottom: ${`1px solid  ${theme.background.tertiary}`};
+            `}
+          >
+            {c.label || 'Unnamed'}
+          </p>
+          <Colors colors={c} />
+        </Fragment>
+      )),
+    [palette, theme]
+  )
 
   return (
     <div

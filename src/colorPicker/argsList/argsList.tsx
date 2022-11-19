@@ -1,9 +1,7 @@
 /** @jsx jsx */
 import { FC, useCallback } from 'react'
 import { css, jsx } from '@emotion/react'
-// Utils
 import pluralize from 'pluralize'
-// Components
 import Dropdown from '../dropdown/dropdown'
 import Arg from './arg'
 

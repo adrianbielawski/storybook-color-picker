@@ -1,6 +1,44 @@
 import React from 'react'
 import Dropdown from './dropdown'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
+
+jest.mock('../../hooks/useTheme/useTheme', () => () => ({
+  theme: {
+    text: {
+      primary: '#333333',
+      hover: '#ffffff',
+      selected: '#ffffff',
+    },
+    background: {
+      primary: '#ffffff',
+      secondary: '#ffffff',
+      tertiary: '#eeeeee',
+      hover: '#1ea7fd12',
+      selected: '#1ea7fd',
+    },
+    border: {
+      primary: '#99999966',
+      secondary: '#777777',
+      tertiary: '#eeeeee',
+    },
+    shadow: {
+      primary: '#eeeeee',
+    },
+  },
+  commonTheme: {
+    border: {
+      primary: '#99999966',
+    },
+    scrollBar: {
+      track: 'transparent',
+      thumb: '#cccccc',
+      thumbHover: '#666666',
+    },
+  },
+  themeType: 'light',
+}))
+
+const { getByTestId, queryByTestId } = screen
 
 const Item = (props: { item: string; index: number }) => <div>{props.item}</div>
 
@@ -66,14 +104,15 @@ describe('Dropdown', () => {
         <Dropdown
           label={label}
           items={items}
+          itemProps={{ current: 1 }}
           renderList={renderList as '>1' | 'always'}
           itemComponent={Item}
           onItemClick={onItemClick}
         />
       )
-      const { queryByTestId } = render(dropdownComponent)
+      render(dropdownComponent)
 
-      const dropdownLabel = queryByTestId('dropdownLabel')
+      const dropdownLabel = getByTestId('dropdownLabel')
       const dropdownChevron = queryByTestId('dropdownChevron')
       const dropdownList = queryByTestId('dropdownList')
 
@@ -93,28 +132,27 @@ describe('Dropdown', () => {
         <Dropdown
           label={label}
           items={['item']}
+          itemProps={{ current: 1 }}
           itemComponent={Item}
           onLabelClick={isCallbackDefined ? onLabelClick : undefined}
           onItemClick={onItemClick}
         />
       )
 
-      const { queryByTestId } = render(dropdownComponent)
+      render(dropdownComponent)
 
-      const dropdownButton = queryByTestId('dropdownButton')
-      const dropdownChevron = queryByTestId('dropdownChevron')
-      const dropdownList = queryByTestId('dropdownList')
+      const dropdownButton = getByTestId('dropdownButton')
 
       fireEvent.click(dropdownButton, e)
 
+      getByTestId('dropdownChevron')
+      getByTestId('dropdownList')
       expect(onLabelClick).toHaveBeenCalledTimes(expectedCallsQty)
       if (isCallbackDefined) {
         expect(onLabelClick).toHaveBeenCalledWith(true)
       } else {
         expect(onLabelClick).not.toHaveBeenCalled()
       }
-      expect(!!dropdownChevron).toBeTruthy()
-      expect(!!dropdownList).toBeTruthy()
     }
   )
 })

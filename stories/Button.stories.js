@@ -11,7 +11,8 @@ export default {
   },
   parameters: {
     colorPicker: {
-      primaryPalette: 'Greyscale palette',
+      primaryPalette: 'Grayscale palette',
+      theme: 'light'
     }
   }
 };
@@ -36,6 +37,7 @@ Secondary.parameters = {
     primaryPalette: 'Colorful palette',
     applyColorTo: ['label'],
     disableDefaultPalettes: true,
+    theme: 'dark'
   }
 }
 

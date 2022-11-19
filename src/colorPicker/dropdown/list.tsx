@@ -1,8 +1,8 @@
 /** @jsx jsx */
-import { ElementType } from 'react'
+import { ElementType, useCallback } from 'react'
 import { css, jsx } from '@emotion/react'
-// Components
 import AnimateHeight from 'react-animate-height'
+import { useTheme } from '../../hooks'
 
 export type ListPosition = 'bottom-left' | 'bottom-right'
 
@@ -15,49 +15,79 @@ type Props<I> = {
   testId: string
 }
 
-const List = (props: Props<any>) => {
-  const ItemComponent = props.itemComponent
+const List = ({
+  active,
+  items,
+  itemProps,
+  itemComponent,
+  onItemClick,
+  testId,
+}: Props<any>) => {
+  const { theme, commonTheme } = useTheme()
+  const ItemComponent = itemComponent
 
-  const getListItems = () =>
-    props.items.map((item, i) => {
-      const onItemClick = () => {
-        props.onItemClick(item, i)
-      }
+  const getListItems = useCallback(
+    () =>
+      items.map((item, i) => {
+        const handleClick = () => {
+          onItemClick(item, i)
+        }
 
-      return (
-        <div
-          key={i}
-          onClick={onItemClick}
-          css={css`
-            background-color: #fff;
-            padding: 0;
-            border: none;
-            width: 100%;
-            display: block;
-          `}
-        >
-          <ItemComponent
-            item={item}
-            itemProps={props.itemProps}
-            index={i}
+        const backgroundColor =
+          itemProps.current === i ? theme.background.selected : 'transparent'
+
+        const backgroundColorHover =
+          itemProps.current === i
+            ? theme.background.selected
+            : theme.background.hover
+
+        return (
+          <div
             key={i}
-          />
-        </div>
-      )
-    })
+            onClick={handleClick}
+            css={css`
+              background-color: ${`${backgroundColor}`};
+              padding: 0;
+              border: none;
+              width: 100%;
+              display: block;
+              padding: 0.5em;
+              border-bottom: ${`1px solid ${theme.border.tertiary}`};
+
+              &:hover {
+                cursor: pointer;
+                background-color: ${backgroundColorHover};
+              }
+
+              &:last-of-type {
+                border: none;
+              }
+            `}
+          >
+            <ItemComponent
+              item={item}
+              itemProps={itemProps}
+              index={i}
+              key={i}
+            />
+          </div>
+        )
+      }),
+    [items, itemProps, theme, ItemComponent, onItemClick]
+  )
 
   return (
     <div
       css={css`
         position: fixed;
       `}
-      data-testid={props.testId}
+      data-testid={testId}
     >
-      <AnimateHeight height={props.active ? 'auto' : 0}>
+      <AnimateHeight height={active ? 'auto' : 0}>
         <div
           css={css`
-            box-shadow: 0px 0px 4px 1px #eee;
-            background: #fff;
+            box-shadow: ${`0px 0px 4px 1px ${theme.shadow.primary}`};
+            background-color: ${`${theme.background.secondary}`};
             border-radius: 0.5em;
             margin: 0.25em;
             max-height: 200px;
@@ -68,13 +98,13 @@ const List = (props: Props<any>) => {
               height: 0.5em;
             }
             &::-webkit-scrollbar-track {
-              background: transparent;
+              background: ${`${commonTheme.scrollBar.track}`};
             }
             &::-webkit-scrollbar-thumb {
-              background: #ccc;
+              background: ${`${commonTheme.scrollBar.thumb}`};
               border-radius: 0.25em;
               &:hover {
-                background-color: #666;
+                background-color: ${`${commonTheme.scrollBar.thumbHover}`};
               }
             }
           `}
