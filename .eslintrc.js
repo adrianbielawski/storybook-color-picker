@@ -18,7 +18,6 @@ module.exports = {
     node: true,
     browser: true,
     es6: true,
-    'jest/globals': true,
   },
   plugins: [
     'react',
@@ -33,6 +32,7 @@ module.exports = {
     },
   },
   rules: {
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     'linebreak-style': ['error', 'unix'],
     'prettier/prettier': [
       'error',
