@@ -25,6 +25,7 @@ module.exports = {
     'react-hooks',
     'prettier',
     'jest',
+    '@emotion'
   ],
   settings: {
     react: {
