@@ -42,7 +42,7 @@
     "chroma-js": "^2.1.2",
     "copy-to-clipboard": "^3.3.3",
     "pluralize": "^8.0.0",
-    "react-animate-height": "^3.0.4",
+    "react-animate-height": "^3.0.5",
     "react-popper-tooltip": "^4.4.2",
     "@storybook/addons": "^6.5.13",
     "@storybook/api": "^6.5.13",
