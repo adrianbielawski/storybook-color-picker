@@ -2,7 +2,7 @@ import getTextColor from '.'
 
 describe('getTextColor functional', () => {
   it.each([
-    // Greyscale
+    // Grayscale
     ['#000000', '#FFFFFF'],
     ['#AAAAAA', '#FFFFFF'],
     ['#DDDDDD', '#000000'],

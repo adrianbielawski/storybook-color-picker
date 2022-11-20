@@ -21,7 +21,7 @@ const ShadeTooltip: FC<Props> = ({ shade, copied }) => {
         background-color: ${value};
       `}
     >
-      <p
+      <span
         css={css`
           white-space: nowrap;
           font-size: 1.2em;
@@ -30,7 +30,7 @@ const ShadeTooltip: FC<Props> = ({ shade, copied }) => {
         `}
       >
         {copied ? 'Copied' : text}
-      </p>
+      </span>
     </div>
   )
 }

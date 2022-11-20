@@ -2,12 +2,9 @@
 import { useEffect, useState, useCallback, FC } from 'react'
 import { css, jsx } from '@emotion/react'
 import { useArgs, useAddonState, useStorybookState, Args } from '@storybook/api'
-// Utils
 import copy from 'copy-to-clipboard'
 import { ADDON_ID } from '../constants'
-// Types
 import { AddonState, TransformedShadeType } from './types'
-// Components
 import ShadeTooltip from './shadeTooltip'
 import { usePopperTooltip } from 'react-popper-tooltip'
 import 'react-popper-tooltip/dist/styles.css'

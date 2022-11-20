@@ -15,12 +15,6 @@
     "skipLibCheck": true,
     "target": "es2017"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/testsUtils.ts",
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.ts", "**/*.spec.tsx", "**/testsUtils.ts"]
 }

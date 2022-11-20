@@ -35,11 +35,14 @@ export type PaletteAsArray = {
 
 export type PaletteObj = PaletteAsObject | PaletteAsArray
 
+export type Theme = 'light' | 'dark' | 'auto'
+
 export type ColorPickerParameters = {
   primaryPalette?: string
   palettes?: PaletteObj[]
   applyColorTo?: string[]
   disableDefaultPalettes?: boolean
+  theme?: Theme
 }
 
 export interface StatePalette {

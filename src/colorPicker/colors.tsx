@@ -2,16 +2,23 @@
 import { css, jsx } from '@emotion/react'
 import { TransformedColorPalette } from './types'
 import Shade from './shade'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
+import { useTheme } from '../hooks'
 
 type Props = {
   colors: TransformedColorPalette
 }
 
 const Colors: FC<Props> = ({ colors }) => {
-  const shades = colors.values.map((shade, i) => (
-    <Shade shade={shade} key={`Shade_${shade.value}_${i}`} />
-  ))
+  const { theme } = useTheme()
+
+  const shades = useMemo(
+    () =>
+      colors.values.map((shade, i) => (
+        <Shade shade={shade} key={`Shade_${shade.value}_${i}`} />
+      )),
+    [colors]
+  )
 
   return (
     <div
@@ -20,7 +27,7 @@ const Colors: FC<Props> = ({ colors }) => {
         flex-wrap: wrap;
         align-items: center;
         height: 100%;
-        border-bottom: 1px solid #eee;
+        border-bottom: ${`1px solid  ${theme.border.tertiary}`};
       `}
     >
       {shades}

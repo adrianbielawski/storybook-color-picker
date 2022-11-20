@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
 import { FC } from 'react'
-// Types
+import { useTheme } from '../../hooks'
 import { StatePalette } from '../types'
 
 type Props = {
@@ -13,28 +13,22 @@ type Props = {
 }
 
 const Palette: FC<Props> = ({ item, itemProps, index }) => {
+  const { theme } = useTheme()
+
   if (!item.palette) {
     return null
   }
 
-  const backgroundColor = itemProps.current === index ? '#eee' : '#fff'
+  const color =
+    itemProps.current === index ? theme.text.selected : theme.text.primary
 
   return (
     <p
       css={css`
         margin: 0;
-        transition: transform 0.25s;
-        border-bottom: 1px solid #eee;
-        padding: 0.25em 1em;
         font-size: 1.1em;
-        background-color: ${backgroundColor};
         white-space: nowrap;
-
-        &:hover {
-          cursor: pointer;
-          background-color: #f5f5f5;
-          border-bottom: 1px solid #f5f5f5;
-        }
+        color: ${color};
       `}
     >
       {item.name || `Palette No${index + 1}`}

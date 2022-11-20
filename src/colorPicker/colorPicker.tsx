@@ -7,7 +7,6 @@ import {
   useStorybookApi,
 } from '@storybook/api'
 import { css, jsx } from '@emotion/react'
-// Utils
 import {
   findPrimaryPaletteIndex,
   getColorControls,
@@ -16,17 +15,17 @@ import {
   reportInvalidPalettes,
 } from '../utils'
 import { ADDON_ID } from '../constants'
-// Types
 import { AddonState, ColorPickerParameters, StorybookState } from './types'
-// Components
 import ArgsList from './argsList/argsList'
 import PalettesList from './palettesList/palettesList'
 import CheckBox from './checkBox/checkBox'
 import Palette from './palette'
+import { useTheme } from '../hooks'
 
 const initialAddonState = { storyStates: {} }
 
 const ColorPicker = () => {
+  const { commonTheme, theme } = useTheme()
   const colorPicker = useParameter<ColorPickerParameters>('colorPicker') || {}
 
   const {
@@ -152,25 +151,30 @@ const ColorPicker = () => {
     <div
       id="color-picker"
       css={css`
-        background: #fff;
-        border-radius: 10px;
+        * {
+          color: ${`${theme.text.primary}`};
+          border-color: ${`${theme.border.primary}`};
+        }
+
+        background: ${`${theme.background.main}`};
+        border-radius: 8px;
         max-height: 50vh;
         max-width: 70vw;
         padding: 0 1em 1em 1em;
         overflow-x: hidden;
         overflow-y: scroll;
         &::-webkit-scrollbar {
-          width: 8px;
-          height: 8px;
+          width: 0.5em;
+          height: 0.5em;
         }
         &::-webkit-scrollbar-track {
-          background: transparent;
+          background: ${`${commonTheme.scrollBar.track}`};
         }
         &::-webkit-scrollbar-thumb {
-          background: #ccc;
-          border-radius: 4px;
+          background: ${`${commonTheme.scrollBar.thumb}`};
+          border-radius: 0.25em;
           &:hover {
-            background-color: #666;
+            background-color: ${`${commonTheme.scrollBar.thumbHover}`};
           }
         }
         @media (max-width: 800px) {
