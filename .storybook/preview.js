@@ -17,7 +17,7 @@ export const parameters = {
         palette: colorPalette,
       },
       {
-        name: 'Greyscale palette',
+        name: 'Grayscale palette',
         palette: colorPaletteArray,
       },
     ],
