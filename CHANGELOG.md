@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.1.0
+
+20.11.2022.
+
+Dependencies updated
+
+**Added**
+
+* Theme support
+
 ### v3.0.1
 
 19.06.2022.

@@ -281,3 +281,19 @@ Primary.parameters = {
 ### Disable default palettes
 
 To disable default palettes just add `disableDefaultPalettes: true` to global, component or story parameters.
+
+## Theme
+
+Storybook-color-picker will adjust automatically to the theme set on storybook.
+
+To override the storybook theme:
+
+```jsx
+
+export const parameters = {
+  ...
+  colorPicker: {
+    theme: 'light' | 'dark' | 'auto' // Default 'auto'
+  }
+};
+```
