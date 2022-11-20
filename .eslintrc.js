@@ -34,7 +34,12 @@ module.exports = {
   rules: {
     "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     'linebreak-style': ['error', 'unix'],
-    'prettier/prettier': ['error'],
+    'prettier/prettier': [
+      'error',
+      {
+        'endOfLine': 'lf',
+      }
+    ],
     'consistent-return': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
