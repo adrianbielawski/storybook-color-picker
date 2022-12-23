@@ -66,7 +66,7 @@
     "@types/pluralize": "^0.0.29",
     "@types/react": "^17.0.45",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "@typescript-eslint/parser": "^5.43.0",
+    "@typescript-eslint/parser": "^5.47.0",
     "babel-jest": "^29.3.1",
     "babel-loader": "^8.2.2",
     "concurrently": "^7.5.0",
