@@ -70,7 +70,7 @@
     "babel-jest": "^29.3.1",
     "babel-loader": "^8.2.2",
     "concurrently": "^7.5.0",
-    "eslint": "^8.28.0",
+    "eslint": "^8.34.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
