@@ -14,7 +14,7 @@ const PalettesList: FC<Props> = ({ palettes, current, onChange }) => {
     (item: StatePalette, index: number) => {
       onChange(index)
     },
-    [onChange]
+    [onChange],
   )
 
   const label = palettes.length > 1 ? palettes[current].name : palettes[0].name

@@ -1,7 +1,12 @@
 /** @jsx jsx */
 import { useEffect, useState, useCallback, FC } from 'react'
 import { css, jsx } from '@emotion/react'
-import { useArgs, useAddonState, useStorybookState, Args } from '@storybook/api'
+import {
+  useArgs,
+  useAddonState,
+  useStorybookState,
+} from '@storybook/manager-api'
+import { Args } from '@storybook/types'
 import copy from 'copy-to-clipboard'
 import { ADDON_ID } from '../constants'
 import { AddonState, TransformedShadeType } from './types'
@@ -14,8 +19,7 @@ type Props = {
 }
 
 const Shade: FC<Props> = ({ shade }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [args, updateArgs] = useArgs()
+  const [, updateArgs] = useArgs()
   const state = useStorybookState()
   const [addonState] = useAddonState<AddonState>(ADDON_ID)
   const [copied, setCopied] = useState(false)
@@ -51,7 +55,9 @@ const Shade: FC<Props> = ({ shade }) => {
       newArgs[control] = shade.value
     })
 
-    updateArgs(newArgs)
+    if (state.viewMode === 'story') {
+      updateArgs(newArgs)
+    }
 
     if (storyState.copyOnClick) {
       setCopied(true)
@@ -60,6 +66,7 @@ const Shade: FC<Props> = ({ shade }) => {
   }, [
     storyState.selectedControls,
     storyState.copyOnClick,
+    state.viewMode,
     shade.value,
     updateArgs,
   ])

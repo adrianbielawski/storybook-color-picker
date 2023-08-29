@@ -32,6 +32,6 @@ describe('validateShades', () => {
 
       expect(output.validShades).toHaveLength(expectedValidColors)
       expect(output.invalidShades).toHaveLength(expectedInvalidColors)
-    }
+    },
   )
 })

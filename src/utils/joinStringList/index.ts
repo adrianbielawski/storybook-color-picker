@@ -3,7 +3,7 @@ import pluralize from 'pluralize'
 const joinStringList = (
   strings: string[],
   limit?: number,
-  suffixText?: string
+  suffixText?: string,
 ) => {
   const count = strings.length
 

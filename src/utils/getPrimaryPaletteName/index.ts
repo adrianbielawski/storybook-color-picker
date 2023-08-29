@@ -2,7 +2,7 @@ import { StatePalettes } from 'src/colorPicker/types'
 
 const getPrimaryPaletteName = (
   statePalettes?: StatePalettes,
-  primaryPaletteIndex?: number
+  primaryPaletteIndex?: number,
 ) => {
   if (!statePalettes?.palettes.length) {
     return null

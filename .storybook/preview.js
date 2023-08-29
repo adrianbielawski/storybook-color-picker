@@ -1,8 +1,8 @@
-import colorPalette from './colorPalette.json';
-import colorPaletteArray from './colorPaletteArray.json';
+import colorPalette from './colorPalette.json'
+import colorPaletteArray from './colorPaletteArray.json'
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -21,5 +21,5 @@ export const parameters = {
         palette: colorPaletteArray,
       },
     ],
-  }
+  },
 }

@@ -1,16 +1,19 @@
 import React, { useCallback, useState } from 'react'
-import { useParameter } from '@storybook/api'
-import { Icons, IconButton, WithTooltip } from '@storybook/components'
+import { useParameter } from '@storybook/manager-api'
+import { IconButton, Icons, WithTooltip } from '@storybook/components'
 import { TOOL_ID } from './constants'
 import ColorPicker from './colorPicker/colorPicker'
 import { ColorPickerParameters } from './colorPicker/types'
 
 const ColorPickerIcon = () => {
   const [isActive, setIsActive] = useState(false)
+
   const colorPicker = useParameter<ColorPickerParameters>('colorPicker')
   const colorPalettes = useParameter<ColorPickerParameters>('colorPalettes')
+
   const disableDefaultPalettes =
     colorPicker?.disableDefaultPalettes || colorPalettes?.disableDefaultPalettes
+
   const palettes = colorPicker?.palettes || colorPalettes?.palettes
 
   const toggleColorPicker = useCallback(
@@ -19,7 +22,7 @@ const ColorPickerIcon = () => {
         setIsActive(!isActive)
       }
     },
-    [isActive]
+    [isActive],
   )
 
   if (!palettes?.length && disableDefaultPalettes) {
@@ -30,10 +33,10 @@ const ColorPickerIcon = () => {
     <WithTooltip
       placement="bottom"
       trigger="click"
-      tooltipShown
+      defaultVisible
       tooltip={<ColorPicker />}
-      closeOnClick
-      onVisibilityChange={toggleColorPicker}
+      closeOnOutsideClick
+      onVisibleChange={toggleColorPicker}
     >
       <IconButton key={TOOL_ID} active={isActive} title="Color palettes">
         <Icons icon="paintbrush" />

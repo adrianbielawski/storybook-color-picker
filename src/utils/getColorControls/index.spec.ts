@@ -17,6 +17,6 @@ describe('getColorControls', () => {
     (desc, argTypes, extraControls, expected) => {
       const output = getColorControls(argTypes, extraControls)
       expect(output).toEqual(expected)
-    }
+    },
   )
 })

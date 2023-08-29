@@ -18,7 +18,7 @@ describe('reportInvalidPalettes', () => {
     expect(getInvalidPaletteMessageMock).toBeCalledTimes(1)
     expect(getInvalidPaletteMessageMock).toBeCalledWith(
       expectedInvalidColors,
-      'foo'
+      'foo',
     )
     expect(warnMock).toBeCalledTimes(1)
     expect(warnMock).toBeCalledWith('expected string')

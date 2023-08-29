@@ -119,7 +119,7 @@ describe('Dropdown', () => {
       expect(dropdownLabel.textContent).toBe(label)
       expect(!!dropdownChevron).toBe(expectedChevron)
       expect(!!dropdownList).toBe(expectedList)
-    }
+    },
   )
 
   it.each([
@@ -153,6 +153,6 @@ describe('Dropdown', () => {
       } else {
         expect(onLabelClick).not.toHaveBeenCalled()
       }
-    }
+    },
   )
 })

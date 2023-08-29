@@ -1,6 +1,5 @@
 import useOutsideClick from './useOutsideClick'
-import { act, renderHook } from '@testing-library/react-hooks'
-import { fireEvent } from '@testing-library/react'
+import { fireEvent, act, renderHook } from '@testing-library/react'
 
 const countAddEventListenerCalls = () => {
   const spiedAddEventListener =
@@ -9,7 +8,7 @@ const countAddEventListenerCalls = () => {
     >
 
   spiedAddEventListener.mock.calls = spiedAddEventListener.mock.calls.filter(
-    ([fn]) => fn !== 'selectionchange'
+    ([fn]) => fn !== 'selectionchange',
   )
 
   return spiedAddEventListener
@@ -33,7 +32,7 @@ describe('useOutsideClick', () => {
     expect(countAddEventListenerCalls()).toBeCalledTimes(1)
     expect(countAddEventListenerCalls()).toHaveBeenCalledWith(
       'click',
-      expect.anything()
+      expect.anything(),
     )
   })
 
@@ -48,7 +47,7 @@ describe('useOutsideClick', () => {
     expect(mockRemoveEventListener).toHaveBeenCalledTimes(1)
     expect(mockRemoveEventListener).toHaveBeenCalledWith(
       'click',
-      expect.anything()
+      expect.anything(),
     )
   })
 

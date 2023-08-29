@@ -1,4 +1,4 @@
-import { State } from '@storybook/api'
+import { State } from '@storybook/manager-api'
 
 export type ShadeType = {
   label: string

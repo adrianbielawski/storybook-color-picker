@@ -69,6 +69,6 @@ describe('getColorPalettes', () => {
         expect(transformPaletteMock).toBeCalledTimes(0)
       }
       expect(output).toEqual(expected)
-    }
+    },
   )
 })

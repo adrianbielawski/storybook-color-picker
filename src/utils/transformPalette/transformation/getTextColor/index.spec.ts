@@ -54,7 +54,7 @@ describe('getTextColor', () => {
     expect(chroma.mix).toHaveBeenCalledWith(
       chromaMock.mockedColor,
       '#FFFFFF',
-      expected
+      expected,
     )
   })
 })

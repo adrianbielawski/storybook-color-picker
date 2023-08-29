@@ -17,7 +17,7 @@ const Colors: FC<Props> = ({ colors }) => {
       colors.values.map((shade, i) => (
         <Shade shade={shade} key={`Shade_${shade.value}_${i}`} />
       )),
-    [colors]
+    [colors],
   )
 
   return (
