@@ -6,27 +6,32 @@ A Storybook addon. It allows you to quickly find any color from your custom colo
 
 Add one or multiple color palettes and set the primary palette globally, for component or single story.
 
-
 ![storybook-color-picker](./assets/showcase.gif)
 
 ## Usage
 
-`$ npm i storybook-color-picker`
+```
+$ npm i -D storybook-color-picker@latest
+```
+
+> :information_source: Storybook support
+> </br> `storybook-color-picker` v4 doesn't support `storybook` v6.
+> </br>
+> To use `storybook-color-picker` with `storybook` v6, install `storybook-color-picker` v3
+>
+> ```
+> npm i -D storybook-color-picker@3
+> ```
 
 ### Add to your Storybook
 
 In your `.storybook` folder find `main.js` file and add this addon like below.
 
 ```tsx
-  module.exports = {
-    ...
-    "addons": [
-      ...
-      "storybook-color-picker"
-    ]
-  };
+module.exports = {
+  addons: ['storybook-color-picker'],
+}
 ```
-
 
 ### Add palettes
 
@@ -66,10 +71,9 @@ This will add color picker and palettes to all component's stories.
 In `MyComponent.stories.js` add:
 
 ```tsx
-export default {
+const meta = {
   ...
   parameters: {
-    ...
     colorPicker: {
       primaryPalette: 'Your first palette name',
       palettes: [
@@ -84,7 +88,11 @@ export default {
       ]
     }
   }
-};
+}
+
+export const PrimaryComponent = { args: {...} }
+
+export default meta
 ```
 
 #### On story
@@ -94,18 +102,16 @@ This will add color picker and palettes to specific story.
 In `MyComponent.stories.js` add:
 
 ```tsx
-export const Primary = Template.bind({});
-
-Primary.parameters = {
+export const SecondaryComponent = {
   ...
+  parameters: {
     colorPicker: {
-      palettes: [
-        {
-          name: 'Your first palette name',
-          palette: yourFirstColorPalette,
-        },
-      ]
-    }
+      primaryPalette: 'Colorful palette',
+      applyColorTo: ['label'],
+      disableDefaultPalettes: true,
+      theme: 'dark',
+    },
+  }
 }
 ```
 
@@ -114,22 +120,23 @@ Primary.parameters = {
 ### as Object
 
 ```tsx
-type ColorPaletteAsObject = Record<string, Record<string, string> | string>;
+type ColorPaletteAsObject = Record<string, Record<string, string> | string>
 ```
+
 Example:
 
 ```tsx
   {
-    "white": "#fff", // valid hex, rgb, rgba, hsl, hsla
-    "black": "#000",
-    "light": {
+    white: "#fff", // valid hex, rgb, rgba, hsl, hsla
+    black: "#000",
+    light: {
       " 500": "#aaa",
       " 100": "rgba(238, 238, 238, .8)",
       " 200": "rgb(238, 238, 238)",
       " 300": "hsla(0, 0%, 73%, .8)",
       " 400": "hsl(0, 0%, 73%)"
     },
-    "dark": {
+    dark: {
       "0100": "#888",
       "0500": "#000",
       "0400": "#222",
@@ -144,47 +151,48 @@ Example:
 ### as Array
 
 ```tsx
-  type ColorPaletteAsArray = {
-    label: string,
-    values: [
-      {
-        label: string,
-        value: string,
-      }
-    ],
-  };
+type ColorPaletteAsArray = {
+  label: string
+  values: [
+    {
+      label: string
+      value: string
+    },
+  ]
+}
 ```
+
 Example:
 
 ```tsx
-  [
-    {
-      "label": "light",
-      "values": [
-        {
-          "label": "100",
-          "value": "#fff"
-        },
-        {
-          "label": "200",
-          "value": "#aaa"
-        }
-      ]
-    },
-    {
-      "label": "dark",
-      "values": [
-        {
-          "label": "100",
-          "value": "#222"
-        },
-        {
-          "label": "200",
-          "value": "#000000"
-        }
-      ]
-    }
-  ]
+const myArrayPalette = [
+  {
+    label: 'light',
+    values: [
+      {
+        label: '100',
+        value: '#fff',
+      },
+      {
+        label: '200',
+        value: '#aaa',
+      },
+    ],
+  },
+  {
+    label: 'dark',
+    values: [
+      {
+        label: '100',
+        value: '#222',
+      },
+      {
+        label: '200',
+        value: '#000000',
+      },
+    ],
+  },
+]
 ```
 
 ### Set primary palette on component or its stories
@@ -196,7 +204,7 @@ This will apply for all component's stories.
 In `MyComponent.stories.js` add:
 
 ```tsx
-export default {
+const meta = {
   ...
   parameters: {
     colorPicker: {
@@ -213,12 +221,12 @@ This will apply for specific story.
 In `MyComponent.stories.js` add:
 
 ```tsx
-export const Primary = Template.bind({});
-
-Primary.parameters = {
+export const SecondaryComponent = {
   ...
-  colorPicker: {
-    primaryPalette: 'Your first palette name',
+  parameters: {
+    colorPicker: {
+      primaryPalette: 'Your first palette name',
+    }
   }
 }
 ```
@@ -243,7 +251,7 @@ Add list of extra controls to all component's stories.
 In `MyComponent.stories.js` add:
 
 ```jsx
-export default {
+const meta = {
   ...
   argTypes: {
     backgroundColor: { control: 'color' }, // Color controls will be detected automatically
@@ -251,7 +259,6 @@ export default {
     text: { control: 'text' }, // Text controls may be added as extra
   },
   parameters: {
-    ...
     colorPicker: {
       applyColorTo: ['label'] // Must match argType key
     }
@@ -266,12 +273,12 @@ Add list of extra controls to selected story to overwrite list added to componen
 In `MyComponent.stories.js` add:
 
 ```jsx
-export const Primary = Template.bind({});
-
-Primary.parameters = {
+export const SecondaryComponent = {
   ...
-  colorPicker: {
-    applyColorTo: ['text'], // Pass empty array to clear extra controls
+  parameters: {
+    colorPicker: {
+      applyColorTo: ['text'], // Pass empty array to clear extra controls
+    }
   }
 };
 ```
@@ -289,11 +296,13 @@ Storybook-color-picker will adjust automatically to the theme set on storybook.
 To override the storybook theme:
 
 ```jsx
-
-export const parameters = {
+const meta = {
   ...
-  colorPicker: {
-    theme: 'light' | 'dark' | 'auto' // Default 'auto'
+  parameters: {
+    colorPicker: {
+      theme: 'light' | 'dark' | 'auto' // Default 'auto'
+    }
+    ...
   }
 };
 ```

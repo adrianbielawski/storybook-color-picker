@@ -1,5 +1,15 @@
 # Changelog
 
+### v4.0.0
+
+3.9.2023.
+
+**Breaking changes**
+
+- Dropped storybook v6 support.
+
+- Dependencies updated
+
 ### v3.1.0
 
 20.11.2022.
@@ -8,7 +18,7 @@ Dependencies updated
 
 **Added**
 
-* Theme support
+- Theme support
 
 ### v3.0.1
 
@@ -18,7 +28,7 @@ Dependencies updated
 
 **Changed**
 
-* Build size decreased
+- Build size decreased
 
 ### v3.0.1
 
@@ -32,17 +42,17 @@ Dependencies updated
 
 **Breaking changes**
 
-* Dropped support of deprecated in v.2.3.9 parameter names
+- Dropped support of deprecated in v.2.3.9 parameter names
 
-- `colorPalettes` -> `colorPicker`.
+* `colorPalettes` -> `colorPicker`.
 
-- `defaultColorPalette` -> `primaryPalette`.
+* `defaultColorPalette` -> `primaryPalette`.
 
 **Changed**
 
-* Invalid colors warnings
+- Invalid colors warnings
 
------
+---
 
 ### v2.3.1
 
@@ -52,11 +62,11 @@ No breaking changes
 
 **Bug Fix**
 
-* Visibility of color value on color popup for colors with alpha.
+- Visibility of color value on color popup for colors with alpha.
 
-* Active state highlight of color picker icon.
+- Active state highlight of color picker icon.
 
------
+---
 
 ### v2.3.0
 
@@ -64,29 +74,31 @@ No breaking changes
 
 **Changed**
 
-* Added default palettes.
+- Added default palettes.
 
-* `colorPalettes` parameter replaced with `colorPicker`.
+- `colorPalettes` parameter replaced with `colorPicker`.
 
-* `default` and `defaultColorPalette` parameters replaced with `primaryPalette`.
+- `default` and `defaultColorPalette` parameters replaced with `primaryPalette`.
 
-* Changed width of color group name for better display of long names.
+- Changed width of color group name for better display of long names.
 
 **Deprecation**
 
-* `colorPalettes` parameter name is deprecated.
-    - Use `colorPicker` instead.
-    - It will be removed in next major release.
+- `colorPalettes` parameter name is deprecated.
 
-* `default` parameter name in `preview.js` parameters is deprecated.
-    - Use `primaryPalette` instead.
-    - It will be removed in next major release.
+  - Use `colorPicker` instead.
+  - It will be removed in next major release.
 
-* `defaultColorPalette` parameter name in component and story parameters is deprecated. Use `primaryPalette` instead.
-    - Use `primaryPalette` instead.
-    - It will be removed in next major release.
+- `default` parameter name in `preview.js` parameters is deprecated.
 
------
+  - Use `primaryPalette` instead.
+  - It will be removed in next major release.
+
+- `defaultColorPalette` parameter name in component and story parameters is deprecated. Use `primaryPalette` instead.
+  - Use `primaryPalette` instead.
+  - It will be removed in next major release.
+
+---
 
 ### v2.2.1
 
@@ -96,12 +108,12 @@ No breaking changes
 
 No breaking changes
 
-* Color validation added.
-    Automatically removes all invalid color values from palettes
+- Color validation added.
+  Automatically removes all invalid color values from palettes
 
-* Keep picker settings for each story.
+- Keep picker settings for each story.
 
------
+---
 
 ### v2.1.5
 
@@ -111,9 +123,9 @@ No breaking changes
 
 No breaking changes
 
-* Dependencies update.
+- Dependencies update.
 
------
+---
 
 ### v2.1.4
 
@@ -121,9 +133,9 @@ No breaking changes
 
 **Changed**
 
-* Auto detect color controls.
+- Auto detect color controls.
 
------
+---
 
 ### v2.1.3
 
@@ -131,11 +143,11 @@ No breaking changes
 
 **Changed**
 
-* Styles
-    1. Highlight selected palette.
-    2. Fixed dropdowns display on mobile.
+- Styles
+  1. Highlight selected palette.
+  2. Fixed dropdowns display on mobile.
 
------
+---
 
 ### v2.1.2
 
@@ -143,9 +155,9 @@ No breaking changes
 
 **Bug fix**
 
-* Do not render addon if no color palette received.
+- Do not render addon if no color palette received.
 
------
+---
 
 ### v2.1.1
 
@@ -153,9 +165,9 @@ No breaking changes
 
 **Changed**
 
-* README.md update.
+- README.md update.
 
------
+---
 
 ### v2.1.0
 
@@ -163,13 +175,13 @@ No breaking changes
 
 **Added**
 
-* Set color on selected component's control.
+- Set color on selected component's control.
 
 **Changed**
 
-* Copy color to clipboard is now optional.
+- Copy color to clipboard is now optional.
 
------
+---
 
 ### v2.0.2
 
@@ -177,9 +189,9 @@ No breaking changes
 
 **Added**
 
-* Default names.
+- Default names.
 
------
+---
 
 ### v2.0.1
 
@@ -187,9 +199,9 @@ No breaking changes
 
 **Added**
 
-* Support for default color palette on stories.
+- Support for default color palette on stories.
 
------
+---
 
 ### v2.0.0
 
@@ -197,10 +209,10 @@ No breaking changes
 
 **Breaking changes**
 
-* Changed format of color palette passed to Storybook parameters.
+- Changed format of color palette passed to Storybook parameters.
 
 **Added**
 
-* Support for multiple color palettes.
+- Support for multiple color palettes.
 
------
+---
