@@ -32,9 +32,8 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v3
-      - run: git config --global --add safe.directory /github/workspace
       - name: Tag on NPM Package Version Change
-        uses: neverendingqs/gh-action-tag-on-npm-version@v1.0.1
+        uses: neverendingqs/gh-action-tag-on-npm-version
         with:
           git-user-email: ${{ github.event.pusher.email }}
           git-user-name: ${{ github.event.pusher.name }}
