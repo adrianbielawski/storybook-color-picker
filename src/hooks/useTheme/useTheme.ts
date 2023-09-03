@@ -1,4 +1,4 @@
-import { useParameter } from '@storybook/api'
+import { useParameter } from '@storybook/manager-api'
 import { Theme, ThemeVars, useTheme as useSBTheme } from '@storybook/theming'
 import { ColorPickerParameters } from 'src/colorPicker/types'
 import { themes, commonTheme } from './constants'
@@ -8,12 +8,12 @@ interface SBTheme extends Theme {
 }
 
 const useTheme = () => {
-  const sbTheme = useSBTheme<SBTheme>()
+  const sbTheme = useSBTheme() as SBTheme
   const colorPicker = useParameter<ColorPickerParameters>('colorPicker') || {}
   let themeType = sbTheme.base
 
-  if (colorPicker.theme) {
-    themeType = colorPicker.theme === 'auto' ? sbTheme.base : colorPicker.theme
+  if (colorPicker.theme && colorPicker.theme !== 'auto') {
+    themeType = colorPicker.theme
   }
 
   return {

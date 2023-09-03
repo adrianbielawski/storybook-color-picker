@@ -1,16 +1,14 @@
-const airbnbBase = require('eslint-config-airbnb-base/rules/best-practices');
+const airbnbBase = require('eslint-config-airbnb-base/rules/best-practices')
 
 // Note: EsLint does not appear to support full glob patterns.
-const testFilePattern = [
-  '**/*.spec.ts',
-  '**/*.spec.tsx',
-];
+const testFilePattern = ['**/*.spec.ts', '**/*.spec.tsx']
 
 module.exports = {
   extends: [
     'airbnb',
     'airbnb-typescript',
     'prettier',
+    'plugin:storybook/recommended',
   ],
   parserOptions: { project: './tsconfig.eslint.json' },
   ignorePatterns: ['*.js'],
@@ -19,26 +17,20 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  plugins: [
-    'react',
-    'react-hooks',
-    'prettier',
-    'jest',
-    '@emotion'
-  ],
+  plugins: ['react', 'react-hooks', 'prettier', 'jest', '@emotion'],
   settings: {
     react: {
       version: 'detect',
     },
   },
   rules: {
-    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
+    'react/no-unknown-property': ['error', { ignore: ['css'] }],
     'linebreak-style': ['error', 'unix'],
     'prettier/prettier': [
       'error',
       {
-        'endOfLine': 'lf',
-      }
+        endOfLine: 'lf',
+      },
     ],
     'consistent-return': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
@@ -66,7 +58,7 @@ module.exports = {
     'prefer-exponentiation-operator': 'off',
     'no-restricted-properties': airbnbBase.rules[
       'no-restricted-properties'
-    ].filter(item => item.object !== 'Math' && item.property !== 'pow'),
+    ].filter((item) => item.object !== 'Math' && item.property !== 'pow'),
     // allow either nesting or htmlFor
     'jsx-a11y/label-has-associated-control': [
       'error',
@@ -199,4 +191,4 @@ module.exports = {
       },
     },
   ],
-};
+}

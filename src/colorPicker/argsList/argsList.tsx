@@ -24,7 +24,7 @@ const ArgsList: FC<Props> = ({ args, selected, onChange }) => {
       }
       onChange(newArgs)
     },
-    [selected, onChange]
+    [selected, onChange],
   )
 
   const label =

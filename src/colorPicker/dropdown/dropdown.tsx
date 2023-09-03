@@ -67,7 +67,7 @@ const Dropdown: FC<Props<any>> = ({
       setActive(!active)
       onLabelClick?.(!active)
     },
-    [active, onLabelClick]
+    [active, onLabelClick],
   )
 
   const handleItemClick = useCallback(
@@ -77,7 +77,7 @@ const Dropdown: FC<Props<any>> = ({
       }
       onItemClick(item, index)
     },
-    [closeOnItemClick, closeList, onItemClick]
+    [closeOnItemClick, closeList, onItemClick],
   )
 
   const showList =

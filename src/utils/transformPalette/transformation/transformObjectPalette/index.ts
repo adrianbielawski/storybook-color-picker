@@ -8,11 +8,12 @@ import transformShades from '../transformShades'
 
 const transformObjectPalette = (paletteObj: PaletteAsObject) => {
   const validatedPalette = Object.entries(paletteObj.palette).map(
-    ([colorLabel, colorValues]) => validateObjectColors(colorLabel, colorValues)
+    ([colorLabel, colorValues]) =>
+      validateObjectColors(colorLabel, colorValues),
   )
 
   const invalidColors: ColorPaletteAsArray[] = validatedPalette.flatMap(
-    (p) => p.invalidColors || []
+    (p) => p.invalidColors || [],
   )
 
   const transformedPalette: TransformedColorPalette[] =

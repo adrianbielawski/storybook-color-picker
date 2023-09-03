@@ -1,11 +1,11 @@
 import useTheme from './useTheme'
 import { lightTheme, commonTheme, darkTheme } from './constants'
-import { useParameter } from '@storybook/api'
+import { useParameter } from '@storybook/manager-api'
 import { useTheme as useSBTheme } from '@storybook/theming'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 
 jest.mock('@storybook/theming')
-jest.mock('@storybook/api')
+jest.mock('@storybook/manager-api')
 
 const mockUseSBTheme = jest.mocked(useSBTheme)
 const mockUseParameter = jest.mocked(useParameter)
@@ -29,7 +29,7 @@ describe('useTheme', () => {
   ])(
     'Returns correct object when storybook SBTheme === %s, addonTheme === %s',
     (SBTheme, addonTheme, theme, expectedThemeType) => {
-      mockUseSBTheme.mockReturnValue({ base: SBTheme })
+      mockUseSBTheme.mockReturnValue({ base: SBTheme } as any)
       mockUseParameter.mockReturnValue({ theme: addonTheme })
       const { result } = renderHook(() => useTheme())
 
@@ -41,6 +41,6 @@ describe('useTheme', () => {
         commonTheme,
         themeType: expectedThemeType,
       })
-    }
+    },
   )
 })

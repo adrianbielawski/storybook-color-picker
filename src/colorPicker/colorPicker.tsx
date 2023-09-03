@@ -5,7 +5,8 @@ import {
   useStorybookState,
   useAddonState,
   useStorybookApi,
-} from '@storybook/api'
+} from '@storybook/manager-api'
+import { ArgTypes } from '@storybook/types'
 import { css, jsx } from '@emotion/react'
 import {
   findPrimaryPaletteIndex,
@@ -39,7 +40,7 @@ const ColorPicker = () => {
   const state = useStorybookState() as StorybookState
   const [addonState, setAddonState] = useAddonState<AddonState>(
     ADDON_ID,
-    initialAddonState
+    initialAddonState,
   )
   const storyId = state.storyId
   const storyState = addonState?.storyStates?.[storyId]
@@ -52,7 +53,7 @@ const ColorPicker = () => {
 
     const validatedStoryPalettes = getColorPalettes(
       disableDefaultPalettes,
-      palettes
+      palettes,
     )
 
     const initialStoryPalettes = {
@@ -68,14 +69,16 @@ const ColorPicker = () => {
 
     const primaryPaletteName = getPrimaryPaletteName(
       initialStoryPalettes,
-      primaryPaletteIndex
+      primaryPaletteIndex,
     )
 
-    const argTypes = storybookApi.getCurrentStoryData()
+    const storyData = storybookApi.getCurrentStoryData() as {
+      argTypes?: ArgTypes
+    }
 
     const controls = getColorControls(
-      (argTypes.parameters as Record<string, any>)?.argTypes,
-      additionalControls
+      storyData?.argTypes || {},
+      additionalControls,
     )
 
     const newState = {
@@ -109,7 +112,7 @@ const ColorPicker = () => {
 
       setAddonState(newState)
     },
-    [addonState, setAddonState, storyId]
+    [addonState, setAddonState, storyId],
   )
 
   const handlePaletteChange = useCallback(
@@ -125,7 +128,7 @@ const ColorPicker = () => {
 
       setAddonState(newState)
     },
-    [addonState, setAddonState, storyId]
+    [addonState, setAddonState, storyId],
   )
 
   const handleCopyBoxClick = useCallback(() => {

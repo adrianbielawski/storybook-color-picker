@@ -73,7 +73,7 @@ const List = ({
           </div>
         )
       }),
-    [items, itemProps, theme, ItemComponent, onItemClick]
+    [items, itemProps, theme, ItemComponent, onItemClick],
   )
 
   return (

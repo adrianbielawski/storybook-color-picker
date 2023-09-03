@@ -1,7 +1,7 @@
 export const getDeprecationMessage = (
   deprecated: string,
   removedIn?: string,
-  alternative?: string
+  alternative?: string,
 ) => {
   const message1 = `Color picker warning: ${deprecated} is DEPRECATED`
   const message2 = removedIn ? ` and will be removed in ${removedIn}.` : ''
@@ -22,7 +22,7 @@ export const deprecationWarning = (message: string) => {
 const warnDeprecated = (
   deprecated: string,
   removedIn?: string,
-  alternative?: string
+  alternative?: string,
 ) => {
   const message = getDeprecationMessage(deprecated, removedIn, alternative)
   deprecationWarning(message)

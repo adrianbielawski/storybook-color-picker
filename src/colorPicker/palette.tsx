@@ -33,7 +33,7 @@ const Palette: FC<Props> = ({ palette }) => {
           <Colors colors={c} />
         </Fragment>
       )),
-    [palette, theme]
+    [palette, theme],
   )
 
   return (
