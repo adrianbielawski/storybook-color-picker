@@ -14,8 +14,11 @@ Add one or multiple color palettes and set the primary palette globally, for com
 $ npm i -D storybook-color-picker@latest
 ```
 
-> :information_source: Storybook support
-> </br> `storybook-color-picker` v4 doesn't support `storybook` v6.
+> <span style="font-size: 1.25em; color: steelblue">
+>  ℹ️ Storybook support
+> </span>
+> </br>
+> `storybook-color-picker` v4 doesn't support `storybook` v6.
 > </br>
 > To use `storybook-color-picker` with `storybook` v6, install `storybook-color-picker` v3
 >
