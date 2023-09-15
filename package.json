@@ -52,7 +52,7 @@
     "@emotion/eslint-plugin": "^11.10.0",
     "@storybook/addon-actions": "^7.4.0",
     "@storybook/addon-essentials": "^7.4.0",
-    "@storybook/addon-links": "^7.4.0",
+    "@storybook/addon-links": "^7.4.2",
     "@storybook/blocks": "^7.4.0",
     "@storybook/components": "^7.4.0",
     "@storybook/manager-api": "^7.4.0",
