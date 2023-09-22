@@ -50,7 +50,7 @@
     "@babel/cli": "^7.22.10",
     "@babel/core": "^7.22.11",
     "@emotion/eslint-plugin": "^11.10.0",
-    "@storybook/addon-actions": "^7.4.0",
+    "@storybook/addon-actions": "^7.4.3",
     "@storybook/addon-essentials": "^7.4.0",
     "@storybook/addon-links": "^7.4.0",
     "@storybook/blocks": "^7.4.0",
