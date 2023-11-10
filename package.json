@@ -58,7 +58,7 @@
     "@storybook/manager-api": "^7.4.0",
     "@storybook/mdx2-csf": "^1.1.0",
     "@storybook/preview-api": "^7.4.0",
-    "@storybook/react": "^7.4.0",
+    "@storybook/react": "^7.5.3",
     "@storybook/react-webpack5": "^7.4.0",
     "@storybook/theming": "^7.4.0",
     "@testing-library/react": "^14.0.0",
