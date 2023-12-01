@@ -60,7 +60,7 @@
     "@storybook/preview-api": "^7.4.0",
     "@storybook/react": "^7.4.0",
     "@storybook/react-webpack5": "^7.4.0",
-    "@storybook/theming": "^7.4.0",
+    "@storybook/theming": "^7.6.3",
     "@testing-library/react": "^14.0.0",
     "@types/chroma-js": "^2.1.4",
     "@types/jest": "^29.5.4",
