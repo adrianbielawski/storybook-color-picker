@@ -54,7 +54,7 @@
     "@storybook/addon-essentials": "^7.4.0",
     "@storybook/addon-links": "^7.4.0",
     "@storybook/blocks": "^7.4.0",
-    "@storybook/components": "^7.4.0",
+    "@storybook/components": "^7.6.3",
     "@storybook/manager-api": "^7.4.0",
     "@storybook/mdx2-csf": "^1.1.0",
     "@storybook/preview-api": "^7.4.0",
